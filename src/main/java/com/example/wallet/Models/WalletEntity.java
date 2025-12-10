@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 
 @Entity
 @Table
-public class Wallet {
+public class WalletEntity {
     @Id
     @SequenceGenerator(
             name = "user_sequence",
@@ -17,29 +17,29 @@ public class Wallet {
     )
 
     private Long id;
-    private String name;
+    private String walletName;
     private String userId;
 
-    public Wallet() {
+    public WalletEntity() {
     }
 
-    public Wallet(Long id, String name, String userId) {
+    public WalletEntity(Long id, String name, String userId) {
         this.id = id;
-        this.name = name;
+        this.walletName = name;
         this.userId = userId;
     }
 
-    public Wallet(String name, String userId) {
-        this.name = name;
+    public WalletEntity(String name, String userId) {
+        this.walletName = name;
         this.userId = userId;
     }
 
     public String getName() {
-        return name;
+        return walletName;
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.walletName = name;
     }
 
     public String getUserId() {
@@ -62,7 +62,7 @@ public class Wallet {
     public String toString() {
         return "Wallet{" +
                 "id=" + id +
-                ", name='" + name + '\'' +
+                ", name='" + walletName + '\'' +
                 ", userId=" + userId +
                 '}';
     }

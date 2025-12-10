@@ -2,11 +2,10 @@ package com.example.wallet.Models;
 
 import com.example.wallet.Enum.Categories;
 import com.example.wallet.Enum.TransactionType;
-import jakarta.persistence.*;
 
 import java.time.LocalDate;
 
-public class Transaction {
+public class TransactionEntity {
 
     private Long walletId;
     private Categories billCategory;
@@ -15,11 +14,11 @@ public class Transaction {
     private String description;
     private LocalDate date;
 
-    public Transaction() {
+    public TransactionEntity() {
     }
 
-    public Transaction(Categories billCategory, TransactionType type,
-                       double amount, Long walletId, String description, LocalDate date) {
+    public TransactionEntity(Categories billCategory, TransactionType type,
+                             double amount, Long walletId, String description, LocalDate date) {
         this.billCategory = billCategory;
         this.type = type;
         this.amount = amount;

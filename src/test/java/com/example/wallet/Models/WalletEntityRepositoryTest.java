@@ -4,12 +4,12 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class WalletTest {
-    Wallet wallet = new Wallet("Emeka", "75");
+class WalletEntityRepositoryTest {
+    WalletEntity walletEntity = new WalletEntity("Emeka", "75");
 
     @Test
     void toVerifyName() {
-        String name = wallet.getName();
+        String name = walletEntity.getName();
         assertEquals("Emeka", name);
     }
 

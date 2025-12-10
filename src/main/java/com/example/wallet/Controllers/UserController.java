@@ -1,6 +1,6 @@
 package com.example.wallet.Controllers;
 
-import com.example.wallet.Models.User;
+import com.example.wallet.Models.UserEntity;
 import com.example.wallet.Services.UserServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,7 +21,7 @@ public class UserController {
     }
 
     @GetMapping
-    public List<User> getUsers(){
+    public List<UserEntity> getUsers(){
         return userServices.getUsers();
 
     }

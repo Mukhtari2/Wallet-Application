@@ -6,38 +6,38 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class TransactionTest {
-    Transaction transaction = new Transaction();
+class TransactionEntityRepositoryTest {
+    TransactionEntity transactionEntity = new TransactionEntity();
 
     @Test
     void toVerifyTheBillCategory() {
-        transaction.setBillCategory(Categories.RENT);
-        Categories category = transaction.getBillCategory();
+        transactionEntity.setBillCategory(Categories.RENT);
+        Categories category = transactionEntity.getBillCategory();
         assertEquals(Categories.RENT, category);
     }
 
     @Test
     void toVerifyWalletType() {
-        transaction.setType(TransactionType.DEBIT);
-        TransactionType walletType =  transaction.getType();
+        transactionEntity.setType(TransactionType.DEBIT);
+        TransactionType walletType =  transactionEntity.getType();
         assertEquals(TransactionType.DEBIT, walletType);
     }
 
     @Test
     void toVerifyTheAmount() {
         try {
-            transaction.setAmount(8);
+            transactionEntity.setAmount(8);
         } catch (IllegalStateException e){
             System.err.printf("%nException: %s%n", e);
         }
-        double amount = transaction.getAmount();
+        double amount = transactionEntity.getAmount();
         assertEquals(8.0, amount);
     }
 
     @Test
     void toVerifyWalletDescription() {
-        transaction.setDescription("Occupational Wallet");
-        String walletDescription = transaction.getDescription();
+        transactionEntity.setDescription("Occupational Wallet");
+        String walletDescription = transactionEntity.getDescription();
         assertEquals("Occupational Wallet", walletDescription);
     }
 
