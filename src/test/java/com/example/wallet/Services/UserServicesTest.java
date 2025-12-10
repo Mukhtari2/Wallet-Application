@@ -21,7 +21,7 @@ class UserServicesTest {
     @Test
     void toVerifyAllUsersCreated() {
         List result = userServices.getUsers();
-        assertArrayEquals(result.toArray(), result);
+        assertArrayEquals(result.toArray( ), result);
     }
 
     @Test
