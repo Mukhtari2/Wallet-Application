@@ -12,7 +12,6 @@ public class WalletEntity {
     private UserEntity userEntity;
     private String userId;
 
-
     public WalletEntity() {
     }
 
