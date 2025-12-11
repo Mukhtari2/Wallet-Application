@@ -7,6 +7,6 @@ import java.util.List;
 
 public interface User {
     List<UserEntity> getUsers();
-
     List<WalletEntity> createWalletForUser();
+    void createNewUser();
 }

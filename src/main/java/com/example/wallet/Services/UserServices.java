@@ -11,9 +11,9 @@ import java.util.List;
 
 @Service
 public class UserServices implements User {
+    @Autowired
     private final UserRepository userRepository;
 
-    @Autowired
     public UserServices(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
@@ -21,20 +21,26 @@ public class UserServices implements User {
     @GetMapping
     @Override
     public List<UserEntity> getUsers() {
-           return userRepository.findAll();
-
+           return List.of(
+                   new UserEntity(
+                           "Musa",
+                           "Musa23@gmail.com"
+                   ),
+                  new UserEntity(
+                "Amos",
+                "Amos3@gmail.com"
+                  )
+           );
     }
 
     @Override
     public List<WalletEntity> createWalletForUser() {
+        return  List.of();
+    }
 
-        return List.of(
-                 new WalletEntity(
-                        10L,
-                        "Binance",
-                        "l"
-                )
-        );
+    @Override
+    public void createNewUser() {
+
     }
 }
 

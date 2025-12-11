@@ -2,12 +2,19 @@ package com.example.wallet.Models;
 
 import com.example.wallet.Enum.Categories;
 import com.example.wallet.Enum.TransactionType;
+import jakarta.persistence.*;
 
 import java.time.LocalDate;
-
+@Entity
+@Table
 public class TransactionEntity {
-
+    @Id
+    @GeneratedValue(
+            strategy = GenerationType.IDENTITY
+    )
     private Long walletId;
+    @ManyToOne
+    @JoinColumn(name = "wallet_id")
     private Categories billCategory;
     private TransactionType type;
     private double amount;

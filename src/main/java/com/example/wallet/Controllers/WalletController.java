@@ -12,9 +12,9 @@ import java.util.List;
 @RestController
 @RequestMapping(path = "api/v1/wallet")
 public class WalletController {
+    @Autowired
     private final UserServices userServices;
 
-    @Autowired
     public WalletController(UserServices userServices) {
         this.userServices = userServices;
     }
