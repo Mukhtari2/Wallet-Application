@@ -1,84 +1,60 @@
 package com.example.wallet.Models;
 
-import com.example.wallet.Enum.Categories;
-import com.example.wallet.Enum.TransactionType;
 import jakarta.persistence.*;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
+
+
 @Entity
-@Table
 public class TransactionEntity {
     @Id
-    @GeneratedValue(
-            strategy = GenerationType.IDENTITY
-    )
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long walletId;
-    @ManyToOne
-    @JoinColumn(name = "wallet_id")
-    private Categories billCategory;
-    private TransactionType type;
-    private double amount;
+//    @ManyToOne
+//    @JoinColumn(name = "wallet_id")
+    private WalletEntity walletEntity;
+    private String billCategory;
+    private String type;
+    private BigDecimal amount;
     private String description;
     private LocalDate date;
 
     public TransactionEntity() {
     }
 
-    public TransactionEntity(Categories billCategory, TransactionType type,
-                             double amount, Long walletId, String description, LocalDate date) {
+    public TransactionEntity(String billCategory, WalletEntity walletEntity,
+                             String  type, BigDecimal amount, String description, LocalDate date) {
         this.billCategory = billCategory;
+        this.walletEntity = walletEntity;
         this.type = type;
         this.amount = amount;
-        this.walletId = walletId;
         this.description = description;
         this.date = date;
     }
 
-    public void setWalletId(Long walletId) {
+    public TransactionEntity(Long walletId, String billCategory,
+                             WalletEntity walletEntity, String type, BigDecimal amount,
+                             String description, LocalDate date) {
         this.walletId = walletId;
-    }
-    public Long getWalletId() {
-        return walletId;
-    }
-
-
-
-
-    public void setBillCategory(Categories billCategory) {
         this.billCategory = billCategory;
-    }
-    public Categories getBillCategory() {
-        return billCategory;
-    }
-
-    public void setType(TransactionType type) {
+        this.walletEntity = walletEntity;
         this.type = type;
-    }
-    public TransactionType getType() {
-        return type;
-    }
-
-    public void setAmount(double amount) {
-        if(amount > 0) {
-            this.amount = amount;
-        }else
-            throw new IllegalStateException("Invalid Amount");
-    }
-    public double getAmount() {
-        return amount;
-    }
-
-    public void setDescription(String description) {
+        this.amount = amount;
         this.description = description;
-    }
-    public String getDescription() {
-        return description;
+        this.date = date;
     }
 
-    public LocalDate getDate() {
-        return date;
-    }
-    public void setDate(LocalDate date) {
-        this.date = date;
+    @Override
+    public String toString() {
+        return "TransactionEntity{" +
+                "walletId=" + walletId +
+                ", billCategory=" + billCategory +
+                ", walletEntity=" + walletEntity +
+                ", type=" + type +
+                ", amount=" + amount +
+                ", description='" + description + '\'' +
+                ", date=" + date +
+                '}';
     }
 }

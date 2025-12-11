@@ -18,8 +18,8 @@ public class WalletController {
     public WalletController(UserServices userServices) {
         this.userServices = userServices;
     }
-    @GetMapping
-    public List<WalletEntity> getWalletCreated(){
-        return  userServices.createWalletForUser();
-    }
+//    @GetMapping
+//    public List<WalletEntity> getWalletCreated(){
+//        return  userServices.createWalletForUser();
+//    }
 }

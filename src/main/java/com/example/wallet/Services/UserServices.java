@@ -1,5 +1,6 @@
 package com.example.wallet.Services;
 
+import com.example.wallet.Dtos.UserDTO;
 import com.example.wallet.Models.UserEntity;
 import com.example.wallet.Models.WalletEntity;
 import com.example.wallet.Repositories.UserRepository;
@@ -18,29 +19,24 @@ public class UserServices implements User {
         this.userRepository = userRepository;
     }
 
-    @GetMapping
     @Override
-    public List<UserEntity> getUsers() {
-           return List.of(
-                   new UserEntity(
-                           "Musa",
-                           "Musa23@gmail.com"
-                   ),
-                  new UserEntity(
-                "Amos",
-                "Amos3@gmail.com"
-                  )
-           );
+    public UserDTO createNewUser(UserDTO userDTO) {
+        UserEntity userEntity = new UserEntity();
+        userEntity.setName(userDTO.getName());
+        userEntity.setEmail(userDTO.getName());
+        UserEntity saveUser = userRepository.save(userEntity);
+        return mapToUserDTO(saveUser);
     }
 
-    @Override
-    public List<WalletEntity> createWalletForUser() {
-        return  List.of();
+    private UserDTO mapToUserDTO(UserEntity userEntity){
+        UserDTO userDTO = new UserDTO();
+        userDTO.setId(userEntity.getId());
+        userDTO.setName(userEntity.getName());
+        userDTO.setEmail(userEntity.getEmail());
+        return userDTO;
+
     }
 
-    @Override
-    public void createNewUser() {
 
-    }
 }
 

@@ -1,5 +1,6 @@
 package com.example.wallet.Controllers;
 
+import com.example.wallet.Dtos.UserDTO;
 import com.example.wallet.Models.UserEntity;
 import com.example.wallet.Services.UserServices;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,13 +18,8 @@ public class UserController {
         this.userServices = userServices;
     }
 
-    @GetMapping
-    public List<UserEntity> getUsers(){
-        return userServices.getUsers();
-    }
-
     @PostMapping
-    public void  createUser(@RequestBody UserEntity userEntity){
-        userServices.createNewUser();
+    public UserDTO getNewUserCreated(){
+        return userServices.createNewUser(new UserDTO());
     }
 }

@@ -3,16 +3,15 @@ package com.example.wallet.Models;
 import jakarta.persistence.*;
 
 @Entity
-@Table
 public class UserEntity {
     @Id
-    @GeneratedValue(
-        strategy = GenerationType.IDENTITY,
-        generator = "user_sequence"
-    )
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
     private String email;
+
+    public UserEntity() {
+    }
 
     public UserEntity(String name, String email) {
         this.name = name;
