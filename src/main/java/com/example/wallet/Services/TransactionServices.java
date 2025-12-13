@@ -14,6 +14,6 @@ public class TransactionServices implements Transaction{
 
     @Override
     public List<TransactionEntity> listAllTransaction() {
-        return List.of();
+        return transactionRepository.findAll();
     }
 }
