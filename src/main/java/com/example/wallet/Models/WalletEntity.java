@@ -7,8 +7,8 @@ public class WalletEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-//    @ManyToOne
-//    @JoinColumn(name = "user_id")
+    @ManyToOne
+    @JoinColumn(name = "user_entity_id")
     private UserEntity userEntity;
     private String userId;
 

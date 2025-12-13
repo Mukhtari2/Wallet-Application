@@ -7,12 +7,13 @@ import java.time.LocalDate;
 
 
 @Entity
+
 public class TransactionEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long walletId;
-//    @ManyToOne
-//    @JoinColumn(name = "wallet_id")
+    @ManyToOne
+    @JoinColumn(name = "wallet_entity_id")
     private WalletEntity walletEntity;
     private String billCategory;
     private String type;

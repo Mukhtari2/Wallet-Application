@@ -28,6 +28,11 @@ public class UserServices implements User {
         return mapToUserDTO(saveUser);
     }
 
+    @Override
+    public List<UserEntity> getAllUser() {
+        return userRepository.findAll();
+    }
+
     private UserDTO mapToUserDTO(UserEntity userEntity){
         UserDTO userDTO = new UserDTO();
         userDTO.setId(userEntity.getId());
