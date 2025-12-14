@@ -19,14 +19,14 @@ public class UserController {
         this.user = user;
     }
 
-    @PostMapping()
+    @PostMapping
     public UserDTO createUser(@RequestBody UserDTO userDTO){
-        return user.createNewUser(new UserDTO());
+        return user.createNewUser(userDTO);
     }
 
     @PostMapping
-    public List<UserDTO> saveAllUsers(@RequestBody List<UserDTO> list){
-        return user.saveAllUsers(list);
+    public List<UserEntity> saveAllUsers(@RequestBody List<UserDTO> userDTOS){
+        return user.saveAllUsers(userDTOS);
     }
     @GetMapping
     public List<UserEntity> getAllUsersCreated(){

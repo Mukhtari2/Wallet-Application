@@ -12,5 +12,5 @@ public interface User {
 
     List<UserEntity> getAllUser();
 
-    List<UserDTO> saveAllUsers(List<UserDTO> list);
+    List<UserEntity> saveAllUsers(List<UserDTO> list);
 }

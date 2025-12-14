@@ -43,22 +43,32 @@ public class UserServices implements User {
     }
 
     @Override
-    public List<UserDTO> saveAllUsers(List<UserDTO> userDTOS) {
+    public List<UserEntity> saveAllUsers(List<UserDTO> userDTOS) {
         List<UserEntity> userEntities = new ArrayList<>();
         for(UserDTO userDTO : userDTOS){
-            UserEntity userEntity = new UserEntity(userDTO.getName(), userDTO.getEmail());
+            UserEntity userEntity = mapToSaveAllDTO(userDTO);
             userEntities.add(userEntity);
         }
-        UserEntity saveAllUser = userRepository.saveAll(userDTO);
-        return List.of(mapToSaveAllDTO(saveAllUser));
+        return userRepository.saveAll(userEntities);
+
     }
 
-    private UserDTO mapToSaveAllDTO(UserEntity userEntity){
-            UserDTO userDTO = new UserDTO();
-            userDTO.setName(userEntity.getName());
-            userDTO.setEmail(userEntity.getEmail());
-            return  userDTO;
+    private UserEntity mapToSaveAllDTO(UserDTO userDto){
+            return  new UserEntity(userDto.getName(), userDto.getEmail());
     }
+
+    private List<UserDTO> getAllUserDtos(){
+        List<UserEntity> userEntities = userRepository.findAll();
+        List<UserDTO> userDTOS = new ArrayList<>();
+        for (UserEntity entity : userEntities){
+            UserDTO userDTO = new UserDTO();
+            userDTO.setName(entity.getName());
+            userDTO.setEmail(entity.getEmail());
+            userDTOS.add(userDTO);
+        }
+        return userDTOS;
+    }
+
 
 
 

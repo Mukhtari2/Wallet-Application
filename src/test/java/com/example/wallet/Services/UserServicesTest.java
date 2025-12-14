@@ -2,19 +2,30 @@ package com.example.wallet.Services;
 
 import com.example.wallet.Dtos.UserDTO;
 import com.example.wallet.Models.UserEntity;
+import com.example.wallet.Repositories.UserRepository;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
+@ActiveProfiles("test")
 class UserServicesTest {
 
     @Autowired
     private UserServices userServices;
 
+    @Autowired
+    private UserRepository userRepository;
+
+    @BeforeEach
+    void setUp(){
+        userRepository.deleteAll();
+    }
 
     @Test
     void testToVerifyNewUserCreated() {
