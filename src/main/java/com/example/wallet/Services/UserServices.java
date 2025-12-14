@@ -53,11 +53,11 @@ public class UserServices implements User {
         return List.of(mapToSaveAllDTO(saveAllUser));
     }
 
-    private UserDTO mapToSaveAllDTO(UserEntity userEntity){
+    private UserDTO mapToSaveAllDTO(UserDTO userDTO){
         List<UserDTO> userDTOS = new ArrayList<>();
-        for(UserEntity userEntity1 : userEntity){
-            UeserDTO userit -m :progress"" +
-                "git push" +
+        for(UserDTO userDTO1 : userDTOS){
+             = new UserDTO();
+
 
         }
         )
