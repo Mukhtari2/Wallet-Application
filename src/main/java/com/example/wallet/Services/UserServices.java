@@ -54,10 +54,10 @@ public class UserServices implements User {
     }
 
     private UserDTO mapToSaveAllDTO(UserEntity userEntity){
-
-
-        )
-
+            UserDTO userDTO = new UserDTO();
+            userDTO.setName(userEntity.getName());
+            userDTO.setEmail(userEntity.getEmail());
+            return  userDTO;
     }
 
 
