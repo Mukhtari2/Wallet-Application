@@ -54,12 +54,8 @@ public class UserServices implements User {
     }
 
     private UserDTO mapToSaveAllDTO(UserEntity userEntity){
-        List<UserDTO> userDTOS = new ArrayList<>();
-        for(UserDTO userDTO1 : userDTOS){
-             = new UserDTO();
 
 
-        }
         )
 
     }
