@@ -11,4 +11,6 @@ public interface User {
     UserDTO createNewUser(UserDTO userDTO);
 
     List<UserEntity> getAllUser();
+
+    List<UserDTO> saveAllUsers(List<UserDTO> list);
 }

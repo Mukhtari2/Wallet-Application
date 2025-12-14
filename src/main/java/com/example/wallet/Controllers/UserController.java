@@ -24,6 +24,10 @@ public class UserController {
         return user.createNewUser(new UserDTO());
     }
 
+    @PostMapping
+    public List<UserDTO> saveAllUsers(@RequestBody List<UserDTO> list){
+        return user.saveAllUsers(list);
+    }
     @GetMapping
     public List<UserEntity> getAllUsersCreated(){
         return user.getAllUser();

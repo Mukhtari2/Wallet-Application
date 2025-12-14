@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -23,14 +24,9 @@ public class UserServices implements User {
     public UserDTO createNewUser(UserDTO userDTO) {
         UserEntity userEntity = new UserEntity();
         userEntity.setName(userDTO.getName());
-        userEntity.setEmail(userDTO.getName());
+        userEntity.setEmail(userDTO.getEmail());
         UserEntity saveUser = userRepository.save(userEntity);
         return mapToUserDTO(saveUser);
-    }
-
-    @Override
-    public List<UserEntity> getAllUser() {
-        return userRepository.findAll();
     }
 
     private UserDTO mapToUserDTO(UserEntity userEntity){
@@ -39,8 +35,34 @@ public class UserServices implements User {
         userDTO.setName(userEntity.getName());
         userDTO.setEmail(userEntity.getEmail());
         return userDTO;
+    }
+
+    @Override
+    public List<UserEntity> getAllUser() {
+        return userRepository.findAll();
+    }
+
+    @Override
+    public List<UserDTO> saveAllUsers(List<UserDTO> userDTOS) {
+        List<UserEntity> userEntities = new ArrayList<>();
+        for(UserDTO userDTO : userDTOS){
+            UserEntity userEntity = new UserEntity(userDTO.getName(), userDTO.getEmail());
+            userEntities.add(userEntity);
+        }
+        UserEntity saveAllUser = userRepository.saveAll(userDTO);
+        return List.of(mapToSaveAllDTO(saveAllUser));
+    }
+
+    private UserDTO mapToSaveAllDTO(UserEntity userEntity){
+        List<UserDTO> userDTOS = new ArrayList<>();
+        for(UserEntity userEntity1 : userEntity){
+            UserEntity savedAllUsers = ne
+        }
+        )
 
     }
+
+
 
 
 }
