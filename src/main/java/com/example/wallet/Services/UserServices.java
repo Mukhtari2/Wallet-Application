@@ -56,7 +56,9 @@ public class UserServices implements User {
     private UserDTO mapToSaveAllDTO(UserEntity userEntity){
         List<UserDTO> userDTOS = new ArrayList<>();
         for(UserEntity userEntity1 : userEntity){
-            UeserDTO user
+            UeserDTO userit -m :progress"" +
+                "git push" +
+
         }
         )
 
