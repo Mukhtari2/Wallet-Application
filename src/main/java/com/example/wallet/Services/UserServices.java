@@ -74,8 +74,11 @@ public class UserServices implements User {
     }
 
     public UserEntity mapToUser(UserDTO userDTO) {
-        UserEntity userEntity = new UserEntity();
-        userEntity.setId(userDTO.getId());
+        UserEntity user = new UserEntity();
+        user.setId(userDTO.getId());
+        user.setName(userDTO.getName());
+        user.setEmail(userDTO.getEmail());
+        return userRepository.save(user);
     }
 }
 
