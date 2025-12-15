@@ -32,7 +32,7 @@ class UserServicesTest {
         UserDTO userDTO = new UserDTO();
         userDTO.setName("Musa");
         userDTO.setEmail("MusaHAfiz@gmail.com");
-        UserDTO user1 = userServices.createNewUser(userDTO);
+        UserEntity user1 = userServices.createNewUser(userDTO);
 
         assertNotNull(userDTO);
         assertEquals("Musa", user1.getName());

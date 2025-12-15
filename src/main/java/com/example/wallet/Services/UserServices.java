@@ -20,20 +20,11 @@ public class UserServices implements User {
     }
 
     @Override
-    public UserDTO createNewUser(UserDTO userDTO) {
+    public UserEntity createNewUser(UserDTO userDTO) {
         UserEntity userEntity = new UserEntity();
         userEntity.setName(userDTO.getName());
         userEntity.setEmail(userDTO.getEmail());
-        UserEntity saveUser = userRepository.save(userEntity);
-        return mapToUserDTO(saveUser);
-    }
-
-    private UserDTO mapToUserDTO(UserEntity userEntity){
-        UserDTO userDTO = new UserDTO();
-        userDTO.setId(userEntity.getId());
-        userDTO.setName(userEntity.getName());
-        userDTO.setEmail(userEntity.getEmail());
-        return userDTO;
+        return userRepository.save(userEntity);
     }
 
     @Override
