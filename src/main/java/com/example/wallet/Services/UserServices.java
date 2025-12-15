@@ -27,6 +27,19 @@ public class UserServices implements User {
         return userRepository.save(userEntity);
     }
 
+    @Transactional
+    @Override
+    public List<UserEntity> saveAllUsers(List<UserDTO> userDTOS) {
+        List<UserEntity> userEntities = new ArrayList<>();
+        for(UserDTO userDTO : userDTOS){
+            UserEntity userEntity = new UserEntity(userDTO.getName(), userDTO.getEmail());
+            userEntities.add(userEntity);
+        }
+        return userRepository.saveAll(userEntities);
+
+    }
+
+    @Transactional
     @Override
     public List<UserDTO> getAllUser() {
         List<UserEntity> userEntities = userRepository.findAll();
@@ -38,18 +51,6 @@ public class UserServices implements User {
             userDTOS.add(userDTO);
         }
         return userDTOS;
-    }
-
-//    @Transactional
-    @Override
-    public List<UserEntity> saveAllUsers(List<UserDTO> userDTOS) {
-        List<UserEntity> userEntities = new ArrayList<>();
-        for(UserDTO userDTO : userDTOS){
-            UserEntity userEntity = new UserEntity(userDTO.getName(), userDTO.getEmail());
-            userEntities.add(userEntity);
-        }
-        return userRepository.saveAll(userEntities);
-
     }
 
     private List<UserDTO> getAllUserDtos(){
