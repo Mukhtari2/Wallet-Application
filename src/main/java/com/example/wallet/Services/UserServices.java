@@ -3,6 +3,7 @@ package com.example.wallet.Services;
 import com.example.wallet.Dtos.UserDTO;
 import com.example.wallet.Models.UserEntity;
 import com.example.wallet.Repositories.UserRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -36,23 +37,28 @@ public class UserServices implements User {
     }
 
     @Override
-    public List<UserEntity> getAllUser() {
-        return userRepository.findAll();
+    public List<UserDTO> getAllUser() {
+        List<UserEntity> userEntities = userRepository.findAll();
+        List<UserDTO> userDTOS = new ArrayList<>();
+        for (UserEntity user : userEntities){
+            UserDTO userDTO = new UserDTO();
+            userDTO.setName(user.getName());
+            userDTO.setEmail(user.getEmail());
+            userDTOS.add(userDTO);
+        }
+        return userDTOS;
     }
 
+//    @Transactional
     @Override
     public List<UserEntity> saveAllUsers(List<UserDTO> userDTOS) {
         List<UserEntity> userEntities = new ArrayList<>();
         for(UserDTO userDTO : userDTOS){
-            UserEntity userEntity = mapToSaveAllDTO(userDTO);
+            UserEntity userEntity = new UserEntity(userDTO.getName(), userDTO.getEmail());
             userEntities.add(userEntity);
         }
         return userRepository.saveAll(userEntities);
 
-    }
-
-    private UserEntity mapToSaveAllDTO(UserDTO userDto){
-            return  new UserEntity(userDto.getName(), userDto.getEmail());
     }
 
     private List<UserDTO> getAllUserDtos(){

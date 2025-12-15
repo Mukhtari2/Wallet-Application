@@ -46,14 +46,23 @@ class UserServicesTest {
         userDTO.setEmail("MusaHAfiz@gmail.com");
 
         UserDTO userDTO2 = new UserDTO();
-        userDTO.setName("Musa");
-        userDTO.setEmail("MusaHAfiz@gmail.com");
+        userDTO.setName("Isah");
+        userDTO.setEmail("IsahHAfiz@gmail.com");
 
-        userServices.saveAllUsers(List.of(userDTO, userDTO2));
+        UserDTO userDTO3 = new UserDTO();
+        userDTO.setName("Joy");
+        userDTO.setEmail("JoyMakinde23@rocketmail.com");
 
-        List<UserEntity> viewUsers = userServices.getAllUser();
+        userServices.saveAllUsers(List.of(userDTO, userDTO2, userDTO3));
+
+        List <UserDTO> viewUsers = userServices.getAllUser();
 
         assertNotNull(viewUsers);
-        assertEquals(2, viewUsers.size());
+        System.out.println(viewUsers.getFirst());
+        System.out.println(viewUsers.get(1));
+        System.out.println(viewUsers.get(2));
+        assertEquals(4, viewUsers.size());
+        assertEquals("Isah", viewUsers.get(0).getName());
+        assertEquals("IsahHAfiz@gmail.com", viewUsers.get(0).getEmail() );
     }
 }
