@@ -2,11 +2,9 @@ package com.example.wallet.Services;
 
 import com.example.wallet.Dtos.UserDTO;
 import com.example.wallet.Models.UserEntity;
-import com.example.wallet.Models.WalletEntity;
 import com.example.wallet.Repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.GetMapping;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -68,10 +66,5 @@ public class UserServices implements User {
         }
         return userDTOS;
     }
-
-
-
-
-
 }
 

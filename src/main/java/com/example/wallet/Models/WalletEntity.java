@@ -2,6 +2,8 @@ package com.example.wallet.Models;
 
 import jakarta.persistence.*;
 
+import java.util.Optional;
+
 @Entity
 public class WalletEntity {
     @Id
@@ -9,29 +11,54 @@ public class WalletEntity {
     private Long id;
     @ManyToOne
     @JoinColumn(name = "user_entity_id")
-    private UserEntity userEntity;
-    private String userId;
+    private UserEntity user;
+    private String name;
+
 
     public WalletEntity() {
     }
 
-    public WalletEntity(UserEntity userEntity, String userId) {
-        this.userEntity = userEntity;
-        this.userId = userId;
+    public WalletEntity(UserEntity user, String name) {
+        this.user = user;
+        this.name = name;
     }
 
-    public WalletEntity(Long id, UserEntity userEntity, String userId) {
+    public WalletEntity(Long id, UserEntity user, String name) {
         this.id = id;
-        this.userEntity = userEntity;
-        this.userId = userId;
+        this.user = user;
+        this.name = name;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public UserEntity getUser() {
+        return user;
+    }
+
+    public void setUser(UserEntity user) {
+        this.user = user;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     @Override
     public String toString() {
         return "WalletEntity{" +
                 "id=" + id +
-                ", userEntity=" + userEntity +
-                ", userId='" + userId + '\'' +
+                ", userEntity=" + user +
+                ", userId='" + name + '\'' +
                 '}';
     }
 }
