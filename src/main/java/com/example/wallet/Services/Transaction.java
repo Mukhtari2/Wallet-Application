@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface Transaction {
     List<TransactionEntity> listAllTransaction();
+    TransactionEntity createNewTransaction(TransactionDTO transactionDTO);
 }
