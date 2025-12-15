@@ -64,5 +64,18 @@ public class UserServices implements User {
         }
         return userDTOS;
     }
+
+    public UserDTO mapToUserDTO(UserEntity user) {
+        UserDTO userDTO = new UserDTO();
+        userDTO.setId(user.getId());
+        userDTO.setName(user.getName());
+        userDTO.setEmail(user.getEmail());
+        return userDTO;
+    }
+
+    public UserEntity mapToUser(UserDTO userDTO) {
+        UserEntity userEntity = new UserEntity();
+        userEntity.setId(userDTO.getId());
+    }
 }
 

@@ -20,12 +20,14 @@ public class WalletService implements Wallet{
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private UserServices userServices;
+
 
     @Override
     public WalletDTO createNewWalletForUser(WalletDTO walletDTO) {
-        Optional<UserEntity> userEntity = userRepository.findUserById(walletDTO.getId());
         WalletEntity walletEntity = new WalletEntity();
-        walletEntity.setUser(userEntity.get());
+        walletEntity.setUser(userServices.mapToUser(walletDTO.getUserName()));
         walletEntity.setName(walletDTO.getName());
         WalletEntity saveWallet = walletRepository.save(walletEntity);
         return mapToWalletUser(saveWallet);
@@ -35,24 +37,10 @@ public class WalletService implements Wallet{
     private WalletDTO mapToWalletUser(WalletEntity walletEntity) {
         WalletDTO walletDTO = new WalletDTO();
         walletDTO.setId(walletEntity.getId());
-        walletDTO.setUserName(createNewWalletForUser(walletDTO).getUserName());
+        walletDTO.setUserName(userServices.mapToUserDTO(walletEntity.getUser()));
         walletDTO.setName(walletEntity.getName());
         return walletDTO;
     }
-//    private UserDTO mapToUserDTO(UserEntity userEntity){
-//        UserDTO userDTO = new UserDTO();
-//        userDTO.setId(userEntity.getId());
-//        userDTO.setName(userEntity.getName());
-//        userDTO.setEmail(userEntity.getEmail());
-//        return userDTO;
-//    }
-//    private UserEntity mapToUserEntity(UserDTO userDTO){
-//        UserEntity userEntity = new UserEntity();
-//        userEntity.setId(userDTO.getId());
-//        userEntity.setName(userDTO.getName());
-//        userEntity.setEmail(userEntity.getEmail());
-//        return userEntity;
-//    }
 
     @Override
     public List<WalletEntity> listAllWalletForUser() {
