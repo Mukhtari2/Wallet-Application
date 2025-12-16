@@ -80,5 +80,13 @@ public class UserServices implements User {
         user.setEmail(userDTO.getEmail());
         return userRepository.save(user);
     }
+
+    public UserEntity mapToWalletDTO(UserDTO userName) {
+        UserEntity userEntity = new UserEntity();
+        userEntity.setId(userName.getId());
+        userEntity.setName(userName.getName());
+        userEntity.setEmail(userName.getEmail());
+        return userEntity;
+    }
 }
 
