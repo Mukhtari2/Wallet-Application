@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface User {
 
-    UserEntity createNewUser(UserDTO userDTO);
+    UserDTO createNewUser(UserDTO userDTO);
 
     List<UserDTO> getAllUser();
 

@@ -20,13 +20,13 @@ public class TransactionController {
     }
 
     @PostMapping("save")
-    public TransactionEntity createTransaction(@RequestBody TransactionDTO transactionDTO){
-        return transaction.createNewTransaction(TransactionDTO);
+    public TransactionDTO createTransaction(@RequestBody TransactionDTO transactionDTO){
+        return transaction.createNewTransaction(transactionDTO);
     }
 
 
     @GetMapping
     public List<TransactionEntity> getAllTransaction(){
-        return transactionServices.listAllTransaction();
+        return transaction.listAllTransaction();
     }
 }

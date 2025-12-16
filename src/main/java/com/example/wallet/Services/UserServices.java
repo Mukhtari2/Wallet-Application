@@ -19,12 +19,21 @@ public class UserServices implements User {
         this.userRepository = userRepository;
     }
 
+
     @Override
-    public UserEntity createNewUser(UserDTO userDTO) {
+    public UserDTO createNewUser(UserDTO userDTO) {
         UserEntity userEntity = new UserEntity();
         userEntity.setName(userDTO.getName());
         userEntity.setEmail(userDTO.getEmail());
-        return userRepository.save(userEntity);
+        UserEntity saveNewUser = userRepository.save(userEntity);
+        return mapToUserEntity(saveNewUser);
+    }
+
+    private UserDTO mapToUserEntity(UserEntity newUser) {
+        UserDTO userDTO = new UserDTO();
+        userDTO.setName(newUser.getName());
+        userDTO.setEmail(newUser.getEmail());
+        return userDTO;
     }
 
     @Transactional
