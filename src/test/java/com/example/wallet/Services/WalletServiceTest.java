@@ -31,22 +31,21 @@ class WalletServiceTest {
     }
 
 
-//    @Test
-//    void createNewWalletForUser() {
-//        UserDTO userDTO = new UserDTO();
-//        userDTO.setEmail("ZubbyMicheal23@gmail.com");
-//        userDTO.setName("Zubby");
-//        UserDTO newUser = userServices.createNewUser(userDTO);
-//
-//
-//
-//        WalletDTO walletDTO = new WalletDTO();
-//        UserEntity userEntity = new UserEntity();
-//        walletDTO.setName("Monday");
-//        walletDTO.setUserName();
-//        WalletDTO wallet1 = walletService.createNewWalletForUser(walletDTO);
-//
-//        assertNotNull(walletDTO);
-//        assertEquals("Monday", wallet1.getName());
-//    }
+    @Test
+    void createNewWalletForUser() {
+        UserDTO userDTO = new UserDTO();
+        userDTO.setEmail("ZubbyMicheal23@gmail.com");
+        userDTO.setName("Zubby");
+        UserDTO newUser = userServices.createNewUser(userDTO);
+
+        WalletDTO walletDTO = new WalletDTO();
+        walletDTO.setName("Binance");
+        walletDTO.setUserName(newUser);
+
+        WalletDTO newWallet = walletService.createNewWalletForUser(walletDTO);
+
+        assertNotNull(walletDTO);
+        assertEquals(walletDTO.getName(), newWallet.getName());
+        assertEquals(walletDTO.getUserName().getName(), newWallet.getUserName().getName());
+    }
 }
