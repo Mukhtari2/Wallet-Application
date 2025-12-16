@@ -22,7 +22,7 @@ public class TransactionServices implements Transaction{
     }
 
     @Override
-    public TransactionEntity createNewTransaction(TransactionDTO transactionDTO) {
+    public TransactionDTO createNewTransaction(TransactionDTO transactionDTO) {
         TransactionEntity transaction = new TransactionEntity();
         transaction.setWalletId(transactionDTO.getWalletId());
         transaction.setWalletEntity(walletService.mapToTransactionDTO(transactionDTO.getWallet()));
@@ -34,5 +34,14 @@ public class TransactionServices implements Transaction{
         return mapToTransactionDTO(createdTransaction);
     }
 
-
+    private TransactionDTO mapToTransactionDTO(TransactionEntity transactionEntity) {
+        TransactionDTO transactionDTO = new TransactionDTO();
+        transactionDTO.setWalletId(transactionEntity.getWalletId());
+        transactionDTO.setWallet(walletService.mapToTransactionEntity(transactionEntity.getWalletEntity()));
+        transactionDTO.setType(transactionEntity.getType());
+        transactionDTO.setAmount(transactionEntity.getAmount());
+        transactionDTO.setBillCategory(transactionEntity.getBillCategory());
+        transactionDTO.setDate(transactionEntity.getDate());
+        return transactionDTO;
+    }
 }

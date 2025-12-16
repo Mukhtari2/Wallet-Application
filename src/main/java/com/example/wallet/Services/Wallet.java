@@ -9,4 +9,6 @@ public interface Wallet {
     WalletDTO createNewWalletForUser(WalletDTO walletDTO);
 
     List<WalletEntity> listAllWalletForUser();
+
+    WalletDTO mapToTransactionEntity(WalletEntity walletEntity);
 }

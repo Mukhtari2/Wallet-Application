@@ -47,6 +47,15 @@ public class WalletService implements Wallet{
         return walletRepository.findAll();
     }
 
+    @Override
+    public WalletDTO mapToTransactionEntity(WalletEntity walletEntityForTransaction) {
+        WalletDTO walletTransactionDTO = new WalletDTO();
+        walletTransactionDTO.setId(walletEntityForTransaction.getId());
+        walletTransactionDTO.setName(walletTransactionDTO.getName());
+        walletTransactionDTO.setUserName(userServices.mapToWalletEntity(walletEntityForTransaction.getUser()));
+        return walletTransactionDTO;
+    }
+
     public WalletEntity mapToTransactionDTO(WalletDTO walletDTO) {
         WalletEntity walletEntity = new WalletEntity();
         walletEntity.setId(walletDTO.getId());

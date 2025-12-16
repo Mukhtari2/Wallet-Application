@@ -39,6 +39,15 @@ public class UserServices implements User {
 
     }
 
+    @Override
+    public UserDTO mapToWalletEntity(UserEntity user) {
+        UserDTO userWalletDTO = new UserDTO();
+        userWalletDTO.setId(user.getId());
+        userWalletDTO.setName(user.getName());
+        userWalletDTO.setEmail(user.getEmail());
+        return userWalletDTO;
+    }
+
     @Transactional
     @Override
     public List<UserDTO> getAllUser() {
@@ -65,6 +74,7 @@ public class UserServices implements User {
         return userDTOS;
     }
 
+    @Override
     public UserDTO mapToUserDTO(UserEntity user) {
         UserDTO userDTO = new UserDTO();
         userDTO.setId(user.getId());
@@ -73,6 +83,7 @@ public class UserServices implements User {
         return userDTO;
     }
 
+    @Override
     public UserEntity mapToUser(UserDTO userDTO) {
         UserEntity user = new UserEntity();
         user.setId(userDTO.getId());
@@ -81,6 +92,7 @@ public class UserServices implements User {
         return userRepository.save(user);
     }
 
+    @Override
     public UserEntity mapToWalletDTO(UserDTO userName) {
         UserEntity userEntity = new UserEntity();
         userEntity.setId(userName.getId());
