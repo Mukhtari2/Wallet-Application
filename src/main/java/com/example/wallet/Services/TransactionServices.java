@@ -25,7 +25,7 @@ public class TransactionServices implements Transaction{
     public TransactionDTO createNewTransaction(TransactionDTO transactionDTO) {
         TransactionEntity transaction = new TransactionEntity();
         transaction.setWalletId(transactionDTO.getWalletId());
-        transaction.setWalletEntity(walletService.mapToTransactionEntity(transactionDTO.getWallet()));
+        transaction.setWalletEntity(walletService.mapToWalletTransaction(transactionDTO.getWallet()));
         transaction.setType(transactionDTO.getType());
         transaction.setAmount(transactionDTO.getAmount());
         transaction.setBillCategory(transactionDTO.getBillCategory());
@@ -37,7 +37,7 @@ public class TransactionServices implements Transaction{
     private TransactionDTO mapToTransactionDTO(TransactionEntity transactionEntity) {
         TransactionDTO transactionDTO = new TransactionDTO();
         transactionDTO.setWalletId(transactionEntity.getWalletId());
-        transactionDTO.setWallet(walletService.mapToTransactionDTO(transactionEntity.getWalletEntity()));
+        transactionDTO.setWallet(walletService.mapToWalletTransactionDTO(transactionEntity.getWalletEntity()));
         transactionDTO.setType(transactionEntity.getType());
         transactionDTO.setAmount(transactionEntity.getAmount());
         transactionDTO.setBillCategory(transactionEntity.getBillCategory());

@@ -48,20 +48,21 @@ public class WalletService implements Wallet{
     }
 
     @Override
-    public WalletEntity mapToTransactionEntity(WalletDTO walletEntityForTransaction) {
+    public WalletEntity mapToWalletTransaction(WalletDTO walletEntityForTransaction) {
         WalletEntity walletTransactionEntity = new WalletEntity();
         walletTransactionEntity.setId(walletEntityForTransaction.getId());
         walletTransactionEntity.setName(walletTransactionEntity.getName());
-        walletTransactionEntity.setUser(mapToWalletUser(walletEntityForTransaction.getUserName()));
+        walletTransactionEntity.setUser(userServices.mapToWalletEntity(walletEntityForTransaction.getUserName()));
         return walletTransactionEntity;
     }
 
+
     @Override
-    public WalletDTO mapToTransactionDTO( WalletEntity walletDTO) {
-        WalletEntity walletEntity = new WalletEntity();
-        walletEntity.setId(walletDTO.getId());
-        walletEntity.setName(walletDTO.getName());
-        walletEntity.setUser(userServices.mapToWalletDTO(walletDTO.getUserName()));
-        return walletEntity;
+    public WalletDTO mapToWalletTransactionDTO(WalletEntity walletTransactionEntity) {
+        WalletDTO walletTransactionDTO = new WalletDTO();
+        walletTransactionDTO.setId(walletTransactionEntity.getId());
+        walletTransactionDTO.setName(walletTransactionEntity.getName());
+        walletTransactionDTO.setUserName(userServices.mapToWalletTransaction(walletTransactionEntity.getUser()));
+        return walletTransactionDTO;
     }
 }

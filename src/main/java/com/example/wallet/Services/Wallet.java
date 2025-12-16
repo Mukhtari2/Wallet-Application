@@ -8,6 +8,7 @@ import java.util.List;
 public interface Wallet {
     WalletDTO createNewWalletForUser(WalletDTO walletDTO);
     List<WalletEntity> listAllWalletForUser();
-    WalletEntity mapToTransactionEntity(WalletDTO walletTransactionDTO);
-    WalletDTO mapToTransactionDTO(WalletEntity walletTransactionEntity);
+    WalletEntity mapToWalletTransaction(WalletDTO walletTransactionDTO);
+    WalletDTO mapToWalletTransactionDTO(WalletEntity walletTransactionEntity);
+
 }
