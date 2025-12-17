@@ -1,12 +1,16 @@
 package com.example.wallet.Services;
 
 import com.example.wallet.Dtos.TransactionDTO;
+import com.example.wallet.Dtos.WalletDTO;
 import com.example.wallet.Models.TransactionEntity;
 import com.example.wallet.Repositories.TransactionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 public class TransactionServices implements Transaction{
     @Autowired
@@ -17,8 +21,14 @@ public class TransactionServices implements Transaction{
     private  WalletService walletService;
 
     @Override
-    public List<TransactionEntity> listAllTransaction() {
-        return transactionRepository.findAll();
+    public List<TransactionDTO> listAllTransaction() {
+        List<TransactionEntity> transactionEntities = transactionRepository.findAll();
+        List<TransactionDTO> transactionDTOS = new ArrayList<>();
+        for (TransactionEntity transaction : transactionEntities){
+            TransactionDTO transactionDTO = mapToTransactionDTO(transaction);
+            transactionDTOS.add(transactionDTO);
+        }
+        return transactionDTOS;
     }
 
     @Override
@@ -43,5 +53,22 @@ public class TransactionServices implements Transaction{
         transactionDTO.setBillCategory(transactionEntity.getBillCategory());
         transactionDTO.setDate(transactionEntity.getDate());
         return transactionDTO;
+    }
+
+    public TransactionDTO gerTransactionById(Long id){
+        TransactionEntity transaction = transactionRepository.findById(id).orElseThrow();
+        return mapToTransactionDTO(transaction);
+    }
+
+    public List <TransactionDTO> getTransactionByWalletId(Long walletId){
+        WalletDTO walletDTO = walletService.getWalletById(walletId);
+        List<TransactionEntity> transactionEntities = transactionRepository.findByWalletId(walletDTO);
+        List<TransactionDTO> transactionDTOS = new ArrayList<>();
+        for (TransactionEntity transaction : transactionEntities){
+            TransactionDTO transactionDTO = mapToTransactionDTO(transaction);
+            transactionDTOS.add(transactionDTO);
+        }
+        return  transactionDTOS;
+
     }
 }

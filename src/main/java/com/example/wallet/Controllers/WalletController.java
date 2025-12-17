@@ -25,7 +25,7 @@ public class WalletController {
 
     }
     @GetMapping
-    public List<WalletEntity> getListOfAllWallet(){
+    public List<WalletDTO> getListOfAllWallet(){
         return wallet.listAllWalletForUser();
     }
 }

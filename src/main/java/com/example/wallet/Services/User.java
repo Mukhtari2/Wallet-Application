@@ -13,9 +13,6 @@ public interface User {
     List<UserDTO> getAllUser();
 
     @Transactional
-    List<UserEntity> saveAllUsers(List<UserDTO> list);
-    UserEntity mapToWalletEntity(UserDTO userWalletDTO);
-    UserEntity mapToUser(UserDTO userDTO);
-    UserDTO mapToUserDTO(UserEntity user);
-    UserDTO mapToWalletTransaction(UserEntity user);
+    List<UserDTO> saveAllUsers(List<UserDTO> list);
+
 }

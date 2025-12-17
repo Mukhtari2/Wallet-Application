@@ -38,17 +38,24 @@ public class UserServices implements User {
 
     @Transactional
     @Override
-    public List<UserEntity> saveAllUsers(List<UserDTO> userDTOS) {
-        List<UserEntity> userEntities = new ArrayList<>();
-        for(UserDTO userDTO : userDTOS){
-            UserEntity userEntity = new UserEntity(userDTO.getName(), userDTO.getEmail());
-            userEntities.add(userEntity);
+    public List<UserDTO> saveAllUsers(List<UserDTO> userDTOS) {
+      List<UserEntity> userEntities = new ArrayList<>();
+      for (UserDTO dto : userDTOS){
+          UserEntity user =  new UserEntity();
+          user.setName(dto.getName());
+          user.setEmail(dto.getEmail());
+          userEntities.add(user);
+      }
+      List<UserEntity> saveNewUserEntities = userRepository.saveAll(userEntities);
+      List<UserDTO> savedUserDto = new ArrayList<>();
+        for(UserEntity userEntity : saveNewUserEntities){
+            UserDTO userDto = mapToUserDTO(userEntity);
+            savedUserDto.add(userDto);
         }
-        return userRepository.saveAll(userEntities);
-
+      return savedUserDto;
     }
 
-    @Override
+
     public UserEntity mapToWalletEntity(UserDTO userWalletDTO) {
         UserEntity userWalletEntity = new UserEntity();
         userWalletEntity.setId(userWalletDTO.getId());
@@ -57,7 +64,7 @@ public class UserServices implements User {
         return userWalletEntity;
     }
 
-    @Override
+
     public UserDTO mapToWalletTransaction(UserEntity user) {
         UserDTO userWalletDTO = new UserDTO();
         userWalletDTO.setId(user.getId());
@@ -72,27 +79,12 @@ public class UserServices implements User {
         List<UserEntity> userEntities = userRepository.findAll();
         List<UserDTO> userDTOS = new ArrayList<>();
         for (UserEntity user : userEntities){
-            UserDTO userDTO = new UserDTO();
-            userDTO.setName(user.getName());
-            userDTO.setEmail(user.getEmail());
+            UserDTO userDTO = mapToUserDTO(user);
             userDTOS.add(userDTO);
         }
         return userDTOS;
     }
 
-    private List<UserDTO> getAllUserDtos(){
-        List<UserEntity> userEntities = userRepository.findAll();
-        List<UserDTO> userDTOS = new ArrayList<>();
-        for (UserEntity entity : userEntities){
-            UserDTO userDTO = new UserDTO();
-            userDTO.setName(entity.getName());
-            userDTO.setEmail(entity.getEmail());
-            userDTOS.add(userDTO);
-        }
-        return userDTOS;
-    }
-
-    @Override
     public UserDTO mapToUserDTO(UserEntity user) {
         UserDTO userDTO = new UserDTO();
         userDTO.setId(user.getId());
@@ -101,13 +93,18 @@ public class UserServices implements User {
         return userDTO;
     }
 
-    @Override
+
     public UserEntity mapToUser(UserDTO userDTO) {
         UserEntity user = new UserEntity();
         user.setId(userDTO.getId());
         user.setName(userDTO.getName());
         user.setEmail(userDTO.getEmail());
-        return userRepository.save(user);
+        return user;
+    }
+
+    public UserDTO getUserById(Long id){
+        UserEntity userEntity = userRepository.findUserById(id).orElseThrow();
+        return mapToUserDTO(userEntity);
     }
 
 }

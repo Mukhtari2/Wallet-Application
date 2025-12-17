@@ -6,6 +6,6 @@ import com.example.wallet.Models.TransactionEntity;
 import java.util.List;
 
 public interface Transaction {
-    List<TransactionEntity> listAllTransaction();
+    List<TransactionDTO> listAllTransaction();
     TransactionDTO createNewTransaction(TransactionDTO transactionDTO);
 }
