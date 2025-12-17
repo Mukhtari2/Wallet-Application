@@ -78,5 +78,6 @@ public class WalletService implements Wallet{
         UserDTO userDTO = userServices.getUserById(userId);
         WalletEntity walletEntity = walletRepository.findByUserId(userDTO.getId()).orElseThrow();
         return mapToWalletUserDTO(walletEntity);
+
     }
 }
