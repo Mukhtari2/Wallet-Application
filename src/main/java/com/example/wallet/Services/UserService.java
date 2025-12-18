@@ -27,6 +27,7 @@ public class UserService implements UserServiceInterface {
             throw new IllegalStateException("Email already registered");
         }
         UserEntity userEntity = new UserEntity();
+        userEntity.setId(userDTO.getId());
         userEntity.setName(userDTO.getName());
         userEntity.setEmail(userDTO.getEmail());
         UserEntity saveNewUserEntity = userRepository.save(userEntity);
@@ -71,7 +72,7 @@ public class UserService implements UserServiceInterface {
 
     public UserDTO mapToUserDTO(UserEntity userEntity) {
         UserDTO dto = new UserDTO();
-        dto.setUserId(userEntity.getId());
+        dto.setId(userEntity.getId());
         dto.setName(userEntity.getName());
         dto.setEmail(userEntity.getEmail());
         return dto;

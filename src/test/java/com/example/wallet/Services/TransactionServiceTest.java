@@ -41,8 +41,9 @@ class TransactionServiceTest {
 
         WalletDTO walletDTO = new WalletDTO();
         walletDTO.setName("Binance");
-        walletDTO.setUserId(newUser.getUserId());
-        WalletDTO savedWallet = walletService.createNewWalletForUser(walletDTO.getUserId(), walletDTO.getName());
+        walletDTO.setUserId(newUser.getId());
+        walletDTO.setId(54L);
+        WalletDTO savedWallet = walletService.createNewWalletForUser(walletDTO.getUserId(), walletDTO.getName(), walletDTO.getId());
 
         TransactionDTO transactionDTO = new TransactionDTO();
         transactionDTO.setWalletId(savedWallet.getId());

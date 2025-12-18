@@ -9,21 +9,21 @@ public class Wallet {
     private Long id;
     @ManyToOne
     @JoinColumn(name = "user_entity_id")
-    private UserEntity userEntity;
+    private UserEntity userId;
     private String name;
 
 
     public Wallet() {
     }
 
-    public Wallet(UserEntity userEntity, String name) {
-        this.userEntity = userEntity;
+    public Wallet(UserEntity userId, String name) {
+        this.userId = userId;
         this.name = name;
     }
 
-    public Wallet(Long id, UserEntity userEntity, String name) {
+    public Wallet(Long id, UserEntity userId, String name) {
         this.id = id;
-        this.userEntity = userEntity;
+        this.userId = userId;
         this.name = name;
     }
 
@@ -36,11 +36,11 @@ public class Wallet {
     }
 
     public UserEntity getUser() {
-        return userEntity;
+        return userId;
     }
 
     public void setUser(UserEntity userEntity) {
-        this.userEntity = userEntity;
+        this.userId = userEntity;
     }
 
     public String getName() {
@@ -55,7 +55,7 @@ public class Wallet {
     public String toString() {
         return "WalletEntity{" +
                 "id=" + id +
-                ", userEntity=" + userEntity +
+                ", userEntity=" + userId +
                 ", userId='" + name + '\'' +
                 '}';
     }
