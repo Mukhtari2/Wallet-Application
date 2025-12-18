@@ -38,7 +38,7 @@ class TransactionServiceInterfaceServicesTest {
 
         WalletDTO walletDTO = new WalletDTO();
         walletDTO.setName("Binance");
-        walletDTO.setUserId(newUser.getId());
+        walletDTO.setUserId(1L);
 
         TransactionDTO transactionDTO = new TransactionDTO();
         transactionDTO.setType("Bank transaction");

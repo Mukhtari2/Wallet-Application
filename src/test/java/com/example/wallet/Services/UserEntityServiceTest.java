@@ -62,7 +62,7 @@ class UserEntityServiceTest {
 
         userServices.saveAllUsers(List.of(userDTO, userDTO2,  userDTO3, userDTO4));
 
-        List <UserDTO> viewUsers = userServices.getAllUser();
+        List <UserDTO> viewUsers = userServices.getAllUsers();
 
         assertNotNull(viewUsers);viewUsers.contains(userDTO3);
         System.out.println(viewUsers.getFirst());
