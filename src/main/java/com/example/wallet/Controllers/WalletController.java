@@ -21,7 +21,7 @@ public class WalletController {
 
     @PostMapping("/{userId}/wallet")
     public WalletDTO createWalletForUser( @RequestBody WalletDTO walletDTO){
-        return wallet.createNewWalletForUser(walletDTO.getUserId(), walletDTO);
+        return wallet.createNewWalletForUser(walletDTO.getUserId(), walletDTO.getName());
 
     }
     @GetMapping
