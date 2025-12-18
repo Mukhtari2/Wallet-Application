@@ -25,11 +25,10 @@ public class WalletService implements WalletServiceInterface{
 
 
     @Override
-    public WalletDTO createNewWalletForUser(Long userId, String walletName, Long id) {
+    public WalletDTO createNewWalletForUser(Long userId, WalletDTO walletName) {
         UserEntity userEntity = userRepository.findById(userId)
                 .orElseThrow(()-> new EntityNotFoundException("No user available for the wallet"));
         Wallet wallet = new Wallet();
-        wallet.setId(id);
         wallet.setName(walletName);
         wallet.setUser(userEntity);
         Wallet saveWallet = walletRepository.save(wallet);

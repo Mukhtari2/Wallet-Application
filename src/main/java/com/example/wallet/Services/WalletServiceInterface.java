@@ -5,7 +5,7 @@ import com.example.wallet.Dtos.WalletDTO;
 import java.util.List;
 
 public interface WalletServiceInterface {
-    WalletDTO createNewWalletForUser(Long userId, String walletName, Long id);
+    WalletDTO createNewWalletForUser(Long userId, String walletName);
     List<WalletDTO> listAllWalletForUser();
 
 }
