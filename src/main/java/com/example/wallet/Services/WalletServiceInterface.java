@@ -1,12 +1,11 @@
 package com.example.wallet.Services;
 
 import com.example.wallet.Dtos.WalletDTO;
-import com.example.wallet.Models.WalletEntity;
 
 import java.util.List;
 
-public interface Wallet {
-    WalletDTO createNewWalletForUser(WalletDTO walletDTO);
+public interface WalletServiceInterface {
+    WalletDTO createNewWalletForUser(Long userId, WalletDTO walletDTO);
     List<WalletDTO> listAllWalletForUser();
 
 }

@@ -2,8 +2,8 @@ package com.example.wallet.Controllers;
 
 
 import com.example.wallet.Dtos.WalletDTO;
-import com.example.wallet.Models.WalletEntity;
-import com.example.wallet.Services.Wallet;
+import com.example.wallet.Models.Wallet;
+import com.example.wallet.Services.WalletServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,15 +13,15 @@ import java.util.List;
 @RequestMapping(path = "api/v1/wallet")
 public class WalletController {
     @Autowired
-    private final Wallet wallet;
+    private final WalletServiceInterface wallet;
 
-    public WalletController(Wallet wallet) {
+    public WalletController(WalletServiceInterface wallet) {
         this.wallet = wallet;
     }
 
-    @PostMapping
-    public WalletDTO createWalletForUser(@RequestBody WalletDTO walletDTO){
-        return wallet.createNewWalletForUser(walletDTO);
+    @PostMapping("/{userId}/wallet")
+    public WalletDTO createWalletForUser(@PathVariable Long userId, @RequestBody WalletDTO walletDTO){
+        return wallet.createNewWalletForUser(userId, walletDTO);
 
     }
     @GetMapping

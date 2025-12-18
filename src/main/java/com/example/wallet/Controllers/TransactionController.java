@@ -1,27 +1,26 @@
 package com.example.wallet.Controllers;
 
 import com.example.wallet.Dtos.TransactionDTO;
-import com.example.wallet.Models.TransactionEntity;
-import com.example.wallet.Services.Transaction;
-import com.example.wallet.Services.TransactionServices;
+import com.example.wallet.Models.Transaction;
+import com.example.wallet.Services.TransactionServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping(path = "api/v1/wallet_transactions")
+@RequestMapping(path = "api/v1/transactions")
 public class TransactionController {
     @Autowired
-    private final Transaction transaction;
+    private final TransactionServiceInterface transaction;
 
-    public TransactionController(Transaction transaction) {
+    public TransactionController(TransactionServiceInterface transaction) {
         this.transaction = transaction;
     }
 
-    @PostMapping("save")
-    public TransactionDTO createTransaction(@RequestBody TransactionDTO transactionDTO){
-        return transaction.createNewTransaction(transactionDTO);
+    @PostMapping("/{walletId}/transactions")
+    public TransactionDTO createTransaction(@PathVariable Long walletId, @RequestBody TransactionDTO dto){
+        return transaction.createNewTransaction(walletId, dto);
     }
 
 

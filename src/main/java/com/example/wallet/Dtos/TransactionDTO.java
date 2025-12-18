@@ -1,17 +1,18 @@
 package com.example.wallet.Dtos;
 
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
 public class TransactionDTO {
-
     private Long walletId;
-    private WalletDTO wallet;
     private String billCategory;
     private String type;
     private BigDecimal amount;
     private String description;
+    @JsonFormat(pattern = "d/M/yyyy")
     private LocalDate date;
 
     public Long getWalletId() {
@@ -20,14 +21,6 @@ public class TransactionDTO {
 
     public void setWalletId(Long walletId) {
         this.walletId = walletId;
-    }
-
-    public WalletDTO getWallet() {
-        return wallet;
-    }
-
-    public void setWallet(WalletDTO wallet) {
-        this.wallet = wallet;
     }
 
     public String getBillCategory() {

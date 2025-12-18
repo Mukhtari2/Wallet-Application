@@ -2,30 +2,28 @@ package com.example.wallet.Models;
 
 import jakarta.persistence.*;
 
-import java.util.Optional;
-
 @Entity
-public class WalletEntity {
+public class Wallet {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @ManyToOne
     @JoinColumn(name = "user_entity_id")
-    private UserEntity user;
+    private UserEntity userEntity;
     private String name;
 
 
-    public WalletEntity() {
+    public Wallet() {
     }
 
-    public WalletEntity(UserEntity user, String name) {
-        this.user = user;
+    public Wallet(UserEntity userEntity, String name) {
+        this.userEntity = userEntity;
         this.name = name;
     }
 
-    public WalletEntity(Long id, UserEntity user, String name) {
+    public Wallet(Long id, UserEntity userEntity, String name) {
         this.id = id;
-        this.user = user;
+        this.userEntity = userEntity;
         this.name = name;
     }
 
@@ -38,11 +36,11 @@ public class WalletEntity {
     }
 
     public UserEntity getUser() {
-        return user;
+        return userEntity;
     }
 
-    public void setUser(UserEntity user) {
-        this.user = user;
+    public void setUser(UserEntity userEntity) {
+        this.userEntity = userEntity;
     }
 
     public String getName() {
@@ -57,7 +55,7 @@ public class WalletEntity {
     public String toString() {
         return "WalletEntity{" +
                 "id=" + id +
-                ", userEntity=" + user +
+                ", userEntity=" + userEntity +
                 ", userId='" + name + '\'' +
                 '}';
     }

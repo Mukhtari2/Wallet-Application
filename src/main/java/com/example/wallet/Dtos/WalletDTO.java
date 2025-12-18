@@ -2,7 +2,7 @@ package com.example.wallet.Dtos;
 
 public class WalletDTO {
     private Long id;
-    private UserDTO userName;
+    private Long userId;
     private String name;
 
     public Long getId() {
@@ -13,12 +13,12 @@ public class WalletDTO {
         this.id = id;
     }
 
-    public UserDTO getUserName() {
-        return userName;
+    public Long getUserId() {
+        return userId;
     }
 
-    public void setUserName(UserDTO userName) {
-        this.userName = userName;
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
     public String getName() {

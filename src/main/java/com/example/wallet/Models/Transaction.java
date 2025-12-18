@@ -8,58 +8,58 @@ import java.time.LocalDate;
 
 @Entity
 
-public class TransactionEntity {
+public class Transaction {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long walletId;
+    private Long id;
     @ManyToOne
-    @JoinColumn(name = "wallet_entity_id")
-    private WalletEntity walletEntity;
+    @JoinColumn(name = "wallet_id")
+    private Wallet wallet;
     private String billCategory;
     private String type;
     private BigDecimal amount;
     private String description;
     private LocalDate date;
 
-    public TransactionEntity() {
+    public Transaction() {
     }
 
-    public TransactionEntity(String billCategory, WalletEntity walletEntity,
-                             String  type, BigDecimal amount, String description, LocalDate date) {
+    public Transaction(String billCategory, Wallet wallet,
+                       String  type, BigDecimal amount, String description, LocalDate date) {
         this.billCategory = billCategory;
-        this.walletEntity = walletEntity;
+        this.wallet = wallet;
         this.type = type;
         this.amount = amount;
         this.description = description;
         this.date = date;
     }
 
-    public TransactionEntity(Long walletId, String billCategory,
-                             WalletEntity walletEntity, String type, BigDecimal amount,
-                             String description, LocalDate date) {
-        this.walletId = walletId;
+    public Transaction(Long id, String billCategory,
+                       Wallet wallet, String type, BigDecimal amount,
+                       String description, LocalDate date) {
+        this.id = id;
         this.billCategory = billCategory;
-        this.walletEntity = walletEntity;
+        this.wallet = wallet;
         this.type = type;
         this.amount = amount;
         this.description = description;
         this.date = date;
     }
 
-    public Long getWalletId() {
-        return walletId;
+    public Long getId() {
+        return id;
     }
 
-    public void setWalletId(Long walletId) {
-        this.walletId = walletId;
+    public void setId(Long walletId) {
+        this.id = walletId;
     }
 
-    public WalletEntity getWalletEntity() {
-        return walletEntity;
+    public Wallet getWallet() {
+        return wallet;
     }
 
-    public void setWalletEntity(WalletEntity walletEntity) {
-        this.walletEntity = walletEntity;
+    public void setWallet(Wallet wallet) {
+        this.wallet = wallet;
     }
 
     public String getBillCategory() {
@@ -105,9 +105,9 @@ public class TransactionEntity {
     @Override
     public String toString() {
         return "TransactionEntity{" +
-                "walletId=" + walletId +
+                "id=" + id +
                 ", billCategory=" + billCategory +
-                ", walletEntity=" + walletEntity +
+                ", wallet=" + wallet +
                 ", type=" + type +
                 ", amount=" + amount +
                 ", description='" + description + '\'' +

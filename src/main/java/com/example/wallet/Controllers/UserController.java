@@ -1,25 +1,24 @@
 package com.example.wallet.Controllers;
 
 import com.example.wallet.Dtos.UserDTO;
-import com.example.wallet.Models.UserEntity;
-import com.example.wallet.Services.User;
-import jakarta.transaction.Transactional;
+import com.example.wallet.Services.UserServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping(path = "api/v1/wallet_user")
+@RequestMapping(path = "api/v1/users")
 public class UserController {
     @Autowired
-    private final User user;
+    private final UserServiceInterface user;
 
-    public UserController(User user) {
+
+    public UserController(UserServiceInterface user) {
         this.user = user;
     }
 
-    @PostMapping
+    @PostMapping("/new_users")
     public UserDTO createUser(@RequestBody UserDTO userDTO){
         return user.createNewUser(userDTO);
     }
@@ -31,8 +30,8 @@ public class UserController {
     }
 
 
-    @GetMapping("/users")
+    @GetMapping()
     public List<UserDTO> getAllUsersCreated(){
-        return user.getAllUser();
+        return user.getAllUsers();
     }
 }

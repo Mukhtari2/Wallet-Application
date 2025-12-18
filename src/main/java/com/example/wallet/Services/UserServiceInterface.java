@@ -1,18 +1,15 @@
 package com.example.wallet.Services;
 
 import com.example.wallet.Dtos.UserDTO;
-import com.example.wallet.Models.UserEntity;
-import jakarta.transaction.Transactional;
 
 import java.util.List;
 
-public interface User {
+public interface UserServiceInterface {
 
     UserDTO createNewUser(UserDTO userDTO);
 
-    List<UserDTO> getAllUser();
+    List<UserDTO> getAllUsers();
 
-    @Transactional
     List<UserDTO> saveAllUsers(List<UserDTO> list);
 
 }

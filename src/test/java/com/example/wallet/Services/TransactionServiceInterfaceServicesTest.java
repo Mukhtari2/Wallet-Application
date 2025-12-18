@@ -11,19 +11,18 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.Date;
 
 import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
-class TransactionServicesTest {
+class TransactionServiceInterfaceServicesTest {
     @Autowired
-    private TransactionServices transactionServices;
+    private TransactionServiceInterface transactionServices;
 
     @Autowired
     private TransactionRepository transactionRepository;
 
     @Autowired
-    private UserServices userServices;
+    private UserService userServices;
 
     @BeforeEach
     void setUp() {
@@ -39,17 +38,17 @@ class TransactionServicesTest {
 
         WalletDTO walletDTO = new WalletDTO();
         walletDTO.setName("Binance");
-        walletDTO.setUserName(newUser);
+        walletDTO.setUserId(newUser.getId());
 
         TransactionDTO transactionDTO = new TransactionDTO();
         transactionDTO.setType("Bank transaction");
         transactionDTO.setBillCategory("FOOD");;
         transactionDTO.setAmount(new BigDecimal("300"));
         transactionDTO.setDate(LocalDate.now());
-        transactionDTO.setWallet(walletDTO);
         transactionDTO.setDescription("transferring money for the feeding of month December");
+        transactionDTO.setWalletId(newUser.getId());
 
-        TransactionDTO newTransaction = transactionServices.createNewTransaction(transactionDTO);
+        TransactionDTO newTransaction = transactionServices.createNewTransaction(walletDTO.getUserId(), transactionDTO);
 
         assertNotNull(newTransaction);
     }
