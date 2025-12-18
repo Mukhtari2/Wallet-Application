@@ -24,12 +24,6 @@ public class UserController {
     }
 
 
-    @PostMapping("/all_users")
-    public List<UserDTO> saveAllUsers(@RequestBody List<UserDTO> userDTOS){
-        return user.saveAllUsers(userDTOS);
-    }
-
-
     @GetMapping()
     public List<UserDTO> getAllUsersCreated(){
         return user.getAllUsers();

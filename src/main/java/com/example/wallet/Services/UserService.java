@@ -41,7 +41,6 @@ public class UserService implements UserServiceInterface {
     }
 
     @Transactional
-    @Override
     public List<UserDTO> saveAllUsers(List<UserDTO> userDTOS) {
       List<UserEntity> userEntityEntities = new ArrayList<>();
       for (UserDTO dto : userDTOS){
@@ -72,7 +71,7 @@ public class UserService implements UserServiceInterface {
 
     public UserDTO mapToUserDTO(UserEntity userEntity) {
         UserDTO dto = new UserDTO();
-        dto.setId(userEntity.getId());
+        dto.setUserId(userEntity.getId());
         dto.setName(userEntity.getName());
         dto.setEmail(userEntity.getEmail());
         return dto;

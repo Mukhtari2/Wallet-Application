@@ -10,6 +10,5 @@ public interface UserServiceInterface {
 
     List<UserDTO> getAllUsers();
 
-    List<UserDTO> saveAllUsers(List<UserDTO> list);
 
 }

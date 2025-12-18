@@ -39,38 +39,30 @@ class UserEntityServiceTest {
     }
 
     @Test
-    void testToViewAllUsersCreated(){
+    void testToViewAllUsersCreated()throws IllegalStateException{
             UserDTO userDTO = new UserDTO();
             userDTO.setName("Musa");
             userDTO.setEmail("MusaHAfiz@gmail.com");
-            userServices.createNewUser(userDTO);
 
             UserDTO userDTO2 = new UserDTO();
-            userDTO.setName("Isah");
-            userDTO.setEmail("IsahHAfiz@gmail.com");
-            userServices.createNewUser(userDTO2);
+            userDTO2.setName("Isah");
+            userDTO2.setEmail("IsahHAfiz@gmail.com");
 
             UserDTO userDTO3 = new UserDTO();
-            userDTO.setName("Joy");
-            userDTO.setEmail("JoyMakinde23@rocketmail.com");
-            userServices.createNewUser(userDTO3);
+            userDTO3.setName("Joy");
+            userDTO3.setEmail("JoyMakinde23@rocketmail.com");
 
             UserDTO userDTO4 = new UserDTO();
-            userDTO.setName("amos");
-            userDTO.setEmail("amog2@gmail.com");
-//            userServices.createNewUser(userDTO4);
+            userDTO4.setName("amos");
+            userDTO4.setEmail("amog2@gmail.com");
 
         userServices.saveAllUsers(List.of(userDTO, userDTO2,  userDTO3, userDTO4));
 
         List <UserDTO> viewUsers = userServices.getAllUsers();
 
-        assertNotNull(viewUsers);viewUsers.contains(userDTO3);
-        System.out.println(viewUsers.getFirst());
-        System.out.println(viewUsers.get(1));
-        System.out.println(viewUsers.get(2));
-        System.out.println(viewUsers.get(3));
-        assertEquals(6, viewUsers.size());
-        assertEquals("Isah", viewUsers.get(0).getName());
-        assertEquals("IsahHAfiz@gmail.com", viewUsers.get(0).getEmail() );
+        assertNotNull(viewUsers);
+        assertEquals(4, viewUsers.size());
+        assertEquals("Isah", viewUsers.get(1).getName());
+        assertEquals("JoyMakinde23@rocketmail.com", viewUsers.get(2).getEmail() );
     }
 }

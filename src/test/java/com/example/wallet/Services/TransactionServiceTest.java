@@ -41,16 +41,17 @@ class TransactionServiceTest {
 
         WalletDTO walletDTO = new WalletDTO();
         walletDTO.setName("Binance");
-        walletDTO.setUserId(newUser.getId());
-        WalletDTO savedWallet = walletService.createNewWalletForUser(walletDTO.getUserId(), walletDTO);
+        walletDTO.setUserId(newUser.getUserId());
+        WalletDTO savedWallet = walletService.createNewWalletForUser(walletDTO.getUserId(), walletDTO.getName());
 
         TransactionDTO transactionDTO = new TransactionDTO();
+        transactionDTO.setWalletId(savedWallet.getId());
         transactionDTO.setType("Bank transaction");
         transactionDTO.setBillCategory("FOOD");;
         transactionDTO.setAmount(new BigDecimal("300"));
         transactionDTO.setDate(LocalDate.now());
         transactionDTO.setDescription("transferring money for the feeding of month December");
-        transactionDTO.setWalletId(newUser.getId());
+
 
         TransactionDTO newTransaction = transactionServices.createNewTransaction(savedWallet.getUserId(), transactionDTO);
 

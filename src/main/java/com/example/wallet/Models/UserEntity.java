@@ -5,7 +5,7 @@ import jakarta.persistence.*;
 @Entity
 public class UserEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_entity_sequence")
     private Long id;
     private String name;
     private String email;
