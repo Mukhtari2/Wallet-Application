@@ -11,6 +11,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
@@ -76,5 +77,13 @@ class TransactionServiceTest {
         wallet1.setName("Bianance");
         wallet1.setBalance(new BigDecimal("3000.00"));
         WalletDTO savedWallet = walletService.createNewWalletForUser(user1.getId(), wallet1.getName());
+
+        TransactionDTO transactionDTO = new TransactionDTO();
+        transactionDTO.setAmount(new BigDecimal(390.00));
+        transactionDTO.setDate(LocalDate.now());
+        transactionDTO.setType("Feeding");
+        transactionDTO.setBillCategory("Monthly stipends");
+        transactionDTO.setWalletId(savedWallet.getId());
+        List<TransactionDTO> listOfTransactions = transactionServices.createNewTransaction(savedWallet.getId(), transactionDTO);
     }
 }

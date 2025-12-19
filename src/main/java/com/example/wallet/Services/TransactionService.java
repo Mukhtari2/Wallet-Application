@@ -25,17 +25,6 @@ public class TransactionService implements TransactionServiceInterface {
     private WalletRepository walletRepository;
 
     @Override
-    public List<TransactionDTO> listAllTransaction() {
-        List<Transaction> transactionEntities = transactionRepository.findAll();
-        List<TransactionDTO> transactionDTOS = new ArrayList<>();
-        for (Transaction transaction : transactionEntities){
-            TransactionDTO transactionDTO = mapToTransactionDTO(transaction);
-            transactionDTOS.add(transactionDTO);
-        }
-        return transactionDTOS;
-    }
-
-    @Override
     @Transactional
     public TransactionDTO createNewTransaction(Long walletId, TransactionDTO dto) {
         Wallet wallet  = walletRepository.findById(walletId)
@@ -60,6 +49,17 @@ public class TransactionService implements TransactionServiceInterface {
         dto.setDate(transaction.getDate());
         dto.setDescription(transaction.getDescription());
         return dto;
+    }
+
+    @Override
+    public List<TransactionDTO> listAllTransaction() {
+        List<Transaction> transactionEntities = transactionRepository.findAll();
+        List<TransactionDTO> transactionDTOS = new ArrayList<>();
+        for (Transaction transaction : transactionEntities){
+            TransactionDTO transactionDTO = mapToTransactionDTO(transaction);
+            transactionDTOS.add(transactionDTO);
+        }
+        return transactionDTOS;
     }
 
 }
