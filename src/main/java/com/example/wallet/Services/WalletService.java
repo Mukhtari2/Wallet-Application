@@ -38,8 +38,9 @@ public class WalletService implements WalletServiceInterface{
 
     private WalletDTO mapToWalletUserDTO(Wallet wallet) {
         WalletDTO walletDTO = new WalletDTO();
-        walletDTO.setUserId(wallet.getUser().getId());
+        walletDTO.setId(wallet.getId());
         walletDTO.setName(wallet.getName());
+        walletDTO.setUserId(wallet.getUser().getId());
         return walletDTO;
     }
 

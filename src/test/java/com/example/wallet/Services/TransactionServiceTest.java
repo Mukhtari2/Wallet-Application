@@ -42,7 +42,6 @@ class TransactionServiceTest {
         WalletDTO walletDTO = new WalletDTO();
         walletDTO.setName("Binance");
         walletDTO.setUserId(newUser.getId());
-        walletDTO.setId(54L);
         WalletDTO savedWallet = walletService.createNewWalletForUser(walletDTO.getUserId(), walletDTO.getName());
 
         TransactionDTO transactionDTO = new TransactionDTO();
@@ -57,5 +56,12 @@ class TransactionServiceTest {
         TransactionDTO newTransaction = transactionServices.createNewTransaction(savedWallet.getUserId(), transactionDTO);
 
         assertNotNull(newTransaction);
+        assertEquals("Bank transaction", newTransaction.getType());
+        assertEquals("yahaya32@gmail.com", newUser.getEmail());
+        assertEquals("Binance", savedWallet.getName());
+        assertEquals(LocalDate.now(),newTransaction.getDate());
+        assertEquals(new BigDecimal("300"), newTransaction.getAmount());
+        assertEquals(1, savedWallet.getUserId());
+        assertEquals(savedWallet.getUserId(), newTransaction.getWalletId());
     }
 }

@@ -35,10 +35,8 @@ public class UserService implements UserServiceInterface {
     }
 
     private UserDTO mapToUserEntity(UserEntity newUserEntity) {
-        UserDTO userDTO = new UserDTO();
-        userDTO.setName(newUserEntity.getName());
-        userDTO.setEmail(newUserEntity.getEmail());
-        return userDTO;
+        UserDTO dto = new UserDTO(newUserEntity.getId(), newUserEntity.getName(), newUserEntity.getEmail());
+        return dto;
     }
 
     @Transactional

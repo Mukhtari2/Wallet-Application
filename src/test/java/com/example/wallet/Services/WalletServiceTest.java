@@ -12,6 +12,10 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
@@ -41,20 +45,34 @@ class WalletServiceTest {
     void testToCreateNewWalletForUser() {
             UserDTO userDTO = new UserDTO();
             userDTO.setEmail("ZubbyMicheal23@gmail.com");
-            userDTO.setName("Zubby");
+            userDTO.setName("Zubby") ;
 
             UserDTO newUser = userServices.createNewUser(userDTO);
 
             WalletDTO walletDTO = new WalletDTO();
             walletDTO.setName("Binance");
             walletDTO.setUserId(newUser.getId());
-            walletDTO.setId(2L);
 
-
-            WalletDTO newWallet = walletService.createNewWalletForUser(newUser.getId(), walletDTO.getName());
+            WalletDTO newWallet = walletService.createNewWalletForUser(newUser.getId(), "Binance");
 
             assertNotNull(walletDTO);
             assertEquals("Binance", newWallet.getName());
             assertEquals(newUser.getId(), newWallet.getUserId());
+            assertEquals("Zubby", newUser.getName());
+    }
+
+    @Test
+    void testToViewAllWalletCreated(){
+        UserDTO userDTO = new UserDTO();
+        userDTO.setEmail("ZubbyMicheal23@gmail.com");
+        userDTO.setName("Zubby") ;
+        UserDTO newUser = userServices.createNewUser(userDTO);
+
+        List<WalletDTO> walletDTO = new WalletDTO(newUser.getId(), "nino wallet");
+
+
+        List<Wallet> wallets = walletService.listAllWalletForUser(walletDTO);
+        List<WalletDTO> newWallet = Arrays.asList(new WalletDTO(newUser.getId(), "nino wallet"));
+        List<WalletDTO> walletDTOList = walletService.listAllWalletForUser(newWallet);
     }
 }

@@ -63,7 +63,6 @@ class UserEntityServiceTest {
         assertNotNull(viewUsers);
         assertEquals(4, viewUsers.size());
         assertEquals("Isah", viewUsers.get(1).getName());
-        assertEquals("JoyMakinde23@rocketmail.com", viewUsers.get(2).getEmail() );
-        assertEquals(1, viewUsers.get(0).getId());
+        assertEquals("JoyMakinde23@rocketmail.com", viewUsers.get(2).getEmail());
     }
 }

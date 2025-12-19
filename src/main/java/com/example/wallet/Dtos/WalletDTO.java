@@ -5,6 +5,20 @@ public class WalletDTO {
     private Long userId;
     private String name;
 
+    public WalletDTO() {
+    }
+
+    public WalletDTO(Long userId, String name) {
+        this.userId = userId;
+        this.name = name;
+    }
+
+    public WalletDTO(Long id, Long userId, String name) {
+        this.id = id;
+        this.userId = userId;
+        this.name = name;
+    }
+
     public Long getId() {
         return id;
     }
