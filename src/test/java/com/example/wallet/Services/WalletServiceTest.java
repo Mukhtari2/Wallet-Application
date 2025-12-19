@@ -12,12 +12,12 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 class WalletServiceTest {
@@ -44,7 +44,7 @@ class WalletServiceTest {
     @Test
     void testToCreateNewWalletForUser() {
             UserDTO userDTO = new UserDTO();
-            userDTO.setEmail("ZubbyMicheal23@gmail.com");
+            userDTO.setEmail("ZbbyMicheal23@gmail.com");
             userDTO.setName("Zubby") ;
 
             UserDTO newUser = userServices.createNewUser(userDTO);
@@ -63,16 +63,35 @@ class WalletServiceTest {
 
     @Test
     void testToViewAllWalletCreated(){
-        UserDTO userDTO = new UserDTO();
-        userDTO.setEmail("ZubbyMicheal23@gmail.com");
-        userDTO.setName("Zubby") ;
-        UserDTO newUser = userServices.createNewUser(userDTO);
+        UserDTO user1 = new UserDTO();
+        user1.setEmail("ZubbyMicheal23@gmail.com");
+        user1.setName("Zubby") ;
+        UserDTO newUser = userServices.createNewUser(user1);
 
-        List<WalletDTO> walletDTO = new WalletDTO(newUser.getId(), "nino wallet");
+        WalletDTO wallet1   = new WalletDTO();
+        wallet1.setName("Nino wallet");
+        wallet1.setBalance(new BigDecimal(9000.00));
+        wallet1.setUserId(newUser.getId());
 
+        UserDTO user2 = new UserDTO();
+        user2.setEmail("MusaDanladi21@gmail.com");
+        user2.setName("Musa") ;
+        UserDTO newUser2 = userServices.createNewUser(user2);
 
-        List<Wallet> wallets = walletService.listAllWalletForUser(walletDTO);
-        List<WalletDTO> newWallet = Arrays.asList(new WalletDTO(newUser.getId(), "nino wallet"));
-        List<WalletDTO> walletDTOList = walletService.listAllWalletForUser(newWallet);
+        WalletDTO wallet2 = new WalletDTO();
+        wallet2.setName("Binance");
+        wallet2.setBalance(new BigDecimal(45000.00));
+        wallet2.setUserId(newUser2.getId());
+
+       walletService.saveAllWallets(List.of(wallet1, wallet2));
+
+        List<WalletDTO> savedWallets = walletService.listAllWalletForUser();
+
+        assertNotNull(savedWallets);
+        assertEquals(2, savedWallets.size());
+        assertEquals("Nino wallet", savedWallets.getFirst().getName());
+        assertEquals("MusaDanladi21@gmail.com", user2.getEmail());
+        assertEquals(new BigDecimal("9000.00"), savedWallets.getFirst().getBalance());
+
     }
 }

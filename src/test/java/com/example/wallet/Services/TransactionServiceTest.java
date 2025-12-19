@@ -64,4 +64,17 @@ class TransactionServiceTest {
         assertEquals(1, savedWallet.getUserId());
         assertEquals(savedWallet.getUserId(), newTransaction.getWalletId());
     }
+
+    @Test
+    void testToViewAllTransactionsMade(){
+        UserDTO user1 = new UserDTO();
+        user1.setName("Hafeez Abdallah");
+        user1.setEmail("HafeezAbdallah12@gmail.com");
+        UserDTO saveUser = userServices.createNewUser(user1);
+
+        WalletDTO wallet1 = new WalletDTO();
+        wallet1.setName("Bianance");
+        wallet1.setBalance(new BigDecimal("3000.00"));
+        WalletDTO savedWallet = walletService.createNewWalletForUser(user1.getId(), wallet1.getName());
+    }
 }

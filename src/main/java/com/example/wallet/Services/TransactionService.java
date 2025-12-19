@@ -58,6 +58,7 @@ public class TransactionService implements TransactionServiceInterface {
         dto.setAmount(transaction.getAmount());
         dto.setBillCategory(transaction.getBillCategory());
         dto.setDate(transaction.getDate());
+        dto.setDescription(transaction.getDescription());
         return dto;
     }
 

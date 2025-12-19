@@ -102,13 +102,14 @@ public class Transaction {
         this.date = date;
     }
 
+
     @Override
     public String toString() {
-        return "TransactionEntity{" +
+        return "Transaction{" +
                 "id=" + id +
-                ", billCategory=" + billCategory +
                 ", wallet=" + wallet +
-                ", type=" + type +
+                ", billCategory='" + billCategory + '\'' +
+                ", type='" + type + '\'' +
                 ", amount=" + amount +
                 ", description='" + description + '\'' +
                 ", date=" + date +

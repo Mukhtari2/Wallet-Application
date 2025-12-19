@@ -62,4 +62,16 @@ public class TransactionDTO {
     public void setDate(LocalDate date) {
         this.date = date;
     }
+
+    @Override
+    public String toString() {
+        return "TransactionDTO{" +
+                "walletId=" + walletId +
+                ", billCategory='" + billCategory + '\'' +
+                ", type='" + type + '\'' +
+                ", amount=" + amount +
+                ", description='" + description + '\'' +
+                ", date=" + date +
+                '}';
+    }
 }

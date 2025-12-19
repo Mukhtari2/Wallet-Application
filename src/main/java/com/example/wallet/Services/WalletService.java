@@ -40,8 +40,31 @@ public class WalletService implements WalletServiceInterface{
         WalletDTO walletDTO = new WalletDTO();
         walletDTO.setId(wallet.getId());
         walletDTO.setName(wallet.getName());
+        walletDTO.setBalance(wallet.getBalance());
         walletDTO.setUserId(wallet.getUser().getId());
         return walletDTO;
+    }
+
+    public List<WalletDTO> saveAllWallets (List<WalletDTO> dtoList){
+        List<Wallet> saveWallet = new ArrayList<>();
+        for (WalletDTO dto : dtoList){
+            UserEntity user = userRepository.findById(dto.getUserId())
+                    .orElseThrow(() -> new EntityNotFoundException
+                    ("No user found with the id " + dto.getUserId()));
+            Wallet wallet = new Wallet();
+            wallet.setId(dto.getId());
+            wallet.setName(dto.getName());
+            wallet.setBalance(dto.getBalance());
+            wallet.setUser(user);
+            saveWallet.add(wallet);
+        }
+        List<Wallet> walletList = walletRepository.saveAll(saveWallet);
+
+        List<WalletDTO> dtoWalletList = new ArrayList<>();
+        for (Wallet savedWallet : walletList){
+            dtoWalletList.add(mapToWalletUserDTO(savedWallet));
+        }
+        return dtoWalletList;
     }
 
     @Override
