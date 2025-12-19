@@ -1,7 +1,9 @@
 package com.example.wallet.Services;
 
 import com.example.wallet.Dtos.TransactionDTO;
+import com.example.wallet.Dtos.WalletDTO;
 import com.example.wallet.Models.Transaction;
+import com.example.wallet.Models.UserEntity;
 import com.example.wallet.Models.Wallet;
 import com.example.wallet.Repositories.TransactionRepository;
 import com.example.wallet.Repositories.WalletRepository;
@@ -60,6 +62,29 @@ public class TransactionService implements TransactionServiceInterface {
             transactionDTOS.add(transactionDTO);
         }
         return transactionDTOS;
+    }
+
+    public List<TransactionDTO> savedAllTransactions(List<TransactionDTO> dtoList){
+
+        List<Transaction> savedTransaction = new ArrayList<>();
+
+        for (TransactionDTO dto : dtoList){
+            Wallet wallet = walletRepository.findById(dto.getWalletId()).
+                    orElseThrow(() -> new EntityNotFoundException
+                            ("No wallet found with the id " + dto.getWalletId()));
+
+            Transaction transaction = new Transaction();
+            transaction.setWallet(wallet);
+            transaction.setDescription(dto.getDescription());
+            transaction.setType(dto.getType());
+            transaction.setBillCategory(dto.getBillCategory());
+            transaction.setAmount(dto.getAmount());
+            transaction.setDate(dto.getDate());
+            savedTransaction.add(transaction);
+        }
+        List<Transaction> savedEntities = transactionRepository.saveAll(savedTransaction);
+
+        List<TransactionDTO>
     }
 
 }
