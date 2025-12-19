@@ -26,6 +26,6 @@ public class TransactionController {
 
     @GetMapping
     public List<TransactionDTO> getAllTransaction(){
-        return transaction.listAllTransaction();
+        return transaction.getAllTransactions();
     }
 }

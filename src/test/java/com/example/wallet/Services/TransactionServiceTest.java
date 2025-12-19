@@ -17,7 +17,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 class TransactionServiceTest {
     @Autowired
-    private TransactionServiceInterface transactionServices;
+    private TransactionService transactionService;
 
     @Autowired
     private TransactionRepository transactionRepository;
@@ -54,7 +54,7 @@ class TransactionServiceTest {
         transactionDTO.setDescription("transferring money for the feeding of month December");
 
 
-        TransactionDTO newTransaction = transactionServices.createNewTransaction(savedWallet.getUserId(), transactionDTO);
+        TransactionDTO newTransaction = transactionService.createNewTransaction(savedWallet.getUserId(), transactionDTO);
 
         assertNotNull(newTransaction);
         assertEquals("Bank transaction", newTransaction.getType());
@@ -74,16 +74,27 @@ class TransactionServiceTest {
         UserDTO saveUser = userServices.createNewUser(user1);
 
         WalletDTO wallet1 = new WalletDTO();
-        wallet1.setName("Bianance");
+        wallet1.setName("Binance");
         wallet1.setBalance(new BigDecimal("3000.00"));
-        WalletDTO savedWallet = walletService.createNewWalletForUser(user1.getId(), wallet1.getName());
+        wallet1.setUserId(saveUser.getId());
+        WalletDTO savedWallet = walletService.createNewWalletForUser(saveUser.getId(), wallet1.getName());
 
         TransactionDTO transactionDTO = new TransactionDTO();
-        transactionDTO.setAmount(new BigDecimal(390.00));
+        transactionDTO.setAmount(new BigDecimal("390.00"));
         transactionDTO.setDate(LocalDate.now());
         transactionDTO.setType("Feeding");
         transactionDTO.setBillCategory("Monthly stipends");
         transactionDTO.setWalletId(savedWallet.getId());
-        List<TransactionDTO> listOfTransactions = transactionServices.createNewTransaction(savedWallet.getId(), transactionDTO);
+        List<TransactionDTO> savedListOfTransaction = transactionService.saveAllTransactions(List.of(transactionDTO));
+
+
+
+        assertNotNull(transactionDTO);
+        assertEquals("Binance", savedWallet.getName());
+        assertEquals(new BigDecimal("3000.00"), savedWallet.getBalance());
+        assertEquals(new BigDecimal("390.00"), transactionDTO.getAmount());
+        assertEquals("Hafeez Abdallah", saveUser.getName());
+        assertEquals("HafeezAbdallah12@gmail.com", saveUser.getEmail());
+
     }
 }

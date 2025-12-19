@@ -54,7 +54,7 @@ public class TransactionService implements TransactionServiceInterface {
     }
 
     @Override
-    public List<TransactionDTO> listAllTransaction() {
+    public List<TransactionDTO> getAllTransactions() {
         List<Transaction> transactionEntities = transactionRepository.findAll();
         List<TransactionDTO> transactionDTOS = new ArrayList<>();
         for (Transaction transaction : transactionEntities){
@@ -64,8 +64,7 @@ public class TransactionService implements TransactionServiceInterface {
         return transactionDTOS;
     }
 
-    public List<TransactionDTO> savedAllTransactions(List<TransactionDTO> dtoList){
-
+    public List<TransactionDTO> saveAllTransactions(List<TransactionDTO> dtoList){
         List<Transaction> savedTransaction = new ArrayList<>();
 
         for (TransactionDTO dto : dtoList){
@@ -84,7 +83,11 @@ public class TransactionService implements TransactionServiceInterface {
         }
         List<Transaction> savedEntities = transactionRepository.saveAll(savedTransaction);
 
-        List<TransactionDTO>
+        List<TransactionDTO> transactionDTOList = new ArrayList<>();
+        for (Transaction transactionEntity : savedEntities){
+            transactionDTOList.add(mapToTransactionDTO(transactionEntity));
+        }
+        return transactionDTOList;
     }
 
 }
