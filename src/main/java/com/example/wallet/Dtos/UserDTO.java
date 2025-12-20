@@ -41,7 +41,11 @@ public class UserDTO {
     }
 
     public void setName(String name) {
-        this.name = name;
+        if (name != null) {
+            this.name = name.trim().replace("\\c+", " ");
+        }else {
+            this.name = null;
+        }
     }
 
     public String getEmail() {
@@ -49,6 +53,11 @@ public class UserDTO {
     }
 
     public void setEmail(String email) {
+        if(email != null) {
+            this.email = email.toLowerCase().trim();
+        }else {
+            this.email = null;
+        }
         this.email = email;
     }
 
