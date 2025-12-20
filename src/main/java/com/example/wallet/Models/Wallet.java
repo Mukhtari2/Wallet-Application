@@ -61,7 +61,11 @@ public class Wallet {
     }
 
     public void setName(String name) {
-        this.name = name;
+        if (name != null){
+            this.name = name.trim().replace("\\c+", " ");
+        }else {
+            this.name = null;
+        }
     }
 
     public BigDecimal getBalance() {
