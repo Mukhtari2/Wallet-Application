@@ -3,6 +3,7 @@ package com.example.wallet.Services;
 import com.example.wallet.Dtos.UserDTO;
 import com.example.wallet.Models.UserEntity;
 import com.example.wallet.Repositories.UserRepository;
+import jakarta.persistence.EntityExistsException;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,7 +25,7 @@ public class UserService implements UserServiceInterface {
     @Transactional
     public UserDTO createNewUser(UserDTO userDTO) {
         if (userRepository.existsByEmail(userDTO.getEmail())) {
-            throw new IllegalStateException("Email already registered");
+            throw new EntityExistsException("Email already registered");
         }
         UserEntity userEntity = new UserEntity();
         userEntity.setId(userDTO.getId());

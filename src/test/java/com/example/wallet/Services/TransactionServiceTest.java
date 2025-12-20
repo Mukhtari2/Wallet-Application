@@ -4,6 +4,7 @@ import com.example.wallet.Dtos.TransactionDTO;
 import com.example.wallet.Dtos.UserDTO;
 import com.example.wallet.Dtos.WalletDTO;
 import com.example.wallet.Repositories.TransactionRepository;
+import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +34,7 @@ class TransactionServiceTest {
         transactionRepository.deleteAll();
     }
 
+    @Transactional
     @Test
     void createNewTransaction() {
         UserDTO userDTO = new UserDTO();
@@ -66,6 +68,7 @@ class TransactionServiceTest {
         assertEquals(savedWallet.getUserId(), newTransaction.getWalletId());
     }
 
+    @Transactional
     @Test
     void testToViewAllTransactionsMade(){
         UserDTO user1 = new UserDTO();
@@ -87,14 +90,13 @@ class TransactionServiceTest {
         transactionDTO.setWalletId(savedWallet.getId());
         List<TransactionDTO> savedListOfTransaction = transactionService.saveAllTransactions(List.of(transactionDTO));
 
-
-
-        assertNotNull(transactionDTO);
+        assertNotNull(savedListOfTransaction);
         assertEquals("Binance", savedWallet.getName());
-        assertEquals(new BigDecimal("3000.00"), savedWallet.getBalance());
+        assertEquals(new BigDecimal("3000.00"), wallet1.getBalance());
         assertEquals(new BigDecimal("390.00"), transactionDTO.getAmount());
         assertEquals("Hafeez Abdallah", saveUser.getName());
         assertEquals("HafeezAbdallah12@gmail.com", saveUser.getEmail());
+        assertEquals(LocalDate.now(), transactionDTO.getDate());
 
     }
 }
