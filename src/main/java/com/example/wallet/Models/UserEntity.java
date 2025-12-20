@@ -1,13 +1,23 @@
 package com.example.wallet.Models;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
 @Entity
 public class UserEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_entity_sequence")
     private Long id;
+
+    @NotBlank(message = "User name is required")
+    @Size(min = 1, max = 50, message = "Name must be between the range of 1 to 50 characters")
     private String name;
+
+    @NotBlank(message = "Email is required")
+    @Email(message = "Invalid email, must be in lower case")
+    @Column(unique = true)
     private String email;
 
     public UserEntity() {
@@ -37,7 +47,11 @@ public class UserEntity {
     }
 
     public void setName(String name) {
-        this.name = name;
+        if (name != null) {
+            this.name = name.trim().replace("\\s+", " ");
+        } else {
+            this.name = name;
+        }
     }
 
     public String getEmail() {
@@ -45,7 +59,11 @@ public class UserEntity {
     }
 
     public void setEmail(String email) {
-        this.email = email;
+        if(email != null) {
+            this.email = email.toLowerCase().trim();
+        }else {
+            this.email = null;
+        }
     }
 
     @Override

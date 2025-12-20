@@ -1,6 +1,8 @@
 package com.example.wallet.Models;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
 import java.math.BigDecimal;
 
@@ -12,6 +14,9 @@ public class Wallet {
     @ManyToOne
     @JoinColumn(name = "user_entity_id")
     private UserEntity userId;
+
+    @NotBlank(message = "Username must not be empty")
+    @Size(min = 1, max = 50, message = "wallet name must between the ranges of 1 and 50")
     private String name;
     private BigDecimal balance;
 
@@ -45,6 +50,9 @@ public class Wallet {
     }
 
     public void setUser(UserEntity userEntity) {
+        if(userEntity != null && userEntity.getEmail() != null){
+            userEntity.setEmail(userEntity.getEmail().toLowerCase().trim());
+        }
         this.userId = userEntity;
     }
 

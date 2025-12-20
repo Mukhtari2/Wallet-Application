@@ -1,8 +1,17 @@
 package com.example.wallet.Dtos;
 
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
+
 public class UserDTO {
     private Long id;
+    @NotBlank(message = "User name is required")
+    @Size(min = 1, max = 5, message = "Name must be between the range of 1 to 50 characters")
     private String name;
+
+    @NotBlank(message = "Email is required")
+    @Email(message = "Invalid email, must be in lower case")
     private String email;
 
     public UserDTO() {
