@@ -22,24 +22,16 @@ public class UserDTO {
         this.name = name;
         this.email = email;
     }
-
     public UserDTO(String name, String email) {
         this.name = name;
         this.email = email;
     }
-
     public Long getId() {
         return id;
     }
-
     public void setId(Long id) {
         this.id = id;
     }
-
-    public String getName() {
-        return name;
-    }
-
     public void setName(String name) {
         if (name != null) {
             this.name = name.trim().replace("\\c+", " ");
@@ -47,18 +39,18 @@ public class UserDTO {
             this.name = null;
         }
     }
-
-    public String getEmail() {
-        return email;
+    public String getName() {
+        return name;
     }
-
     public void setEmail(String email) {
         if(email != null) {
             this.email = email.toLowerCase().trim();
         }else {
             this.email = null;
         }
-        this.email = email;
+    }
+    public String getEmail() {
+        return email;
     }
 
     @Override
