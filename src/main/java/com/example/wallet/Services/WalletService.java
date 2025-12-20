@@ -23,7 +23,6 @@ public class WalletService implements WalletServiceInterface{
     @Autowired
     private UserService userServices;
 
-
     @Override
     public WalletDTO createNewWalletForUser(Long userId, String walletName) {
         UserEntity userEntity = userRepository.findById(userId)
