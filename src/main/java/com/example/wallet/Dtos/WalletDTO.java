@@ -8,9 +8,11 @@ import java.math.BigDecimal;
 public class WalletDTO {
     private Long id;
     private Long userId;
+
     @NotBlank(message = "Wallet name is required")
     @Size(min = 1, max = 50, message = "Name must be between 1 and 50 characters")
     private String name;
+
     private BigDecimal balance;
 
     public WalletDTO() {
@@ -52,7 +54,11 @@ public class WalletDTO {
     }
 
     public void setName(String name) {
-        this.name = name;
+        if(name != null){
+            this.name = name.trim().replace("\\s+", " ");
+        }else {
+            this.name = null;
+        }
     }
 
     public BigDecimal getBalance() {
