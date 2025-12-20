@@ -32,7 +32,6 @@ public class Wallet {
         this.balance = balance;
     }
 
-
     public Long getId() {
         return id;
     }
