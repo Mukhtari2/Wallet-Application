@@ -24,7 +24,9 @@ public class UserController {
     }
 
 
-    @GetMapping()
+    @GetMapping(
+            
+    )
     public List<UserDTO> getAllUsersCreated(){
         return user.getAllUsers();
     }
