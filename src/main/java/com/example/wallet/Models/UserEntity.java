@@ -10,9 +10,6 @@ public class UserEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_entity_sequence")
     private Long id;
-
-    @NotBlank(message = "User name is required")
-    @Size(min = 1, max = 50, message = "Name must be between the range of 1 to 50 characters")
     private String name;
 
     @NotBlank(message = "Email is required")
@@ -47,11 +44,8 @@ public class UserEntity {
     }
 
     public void setName(String name) {
-        if (name != null) {
-            this.name = name.trim().replace("\\s+", " ");
-        } else {
             this.name = name;
-        }
+
     }
 
     public String getEmail() {

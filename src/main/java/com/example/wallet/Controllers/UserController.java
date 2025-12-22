@@ -21,7 +21,7 @@ public class UserController {
     }
 
     @PostMapping("/new_users")
-    public ResponseEntity<UserDTO> createUser(@giot Valid @RequestBody UserDTO userDTO){
+    public ResponseEntity<UserDTO> createUser(@Valid @RequestBody UserDTO userDTO){
         UserDTO createdUser = user.createNewUser(userDTO);
         return new ResponseEntity<>(createdUser, HttpStatus.CREATED);
     }

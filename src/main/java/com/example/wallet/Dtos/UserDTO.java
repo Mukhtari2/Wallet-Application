@@ -1,18 +1,27 @@
 package com.example.wallet.Dtos;
 
+import jakarta.persistence.Column;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
 public class UserDTO {
     private Long id;
-    @NotBlank(message = "User name is required")
+    @NotBlank(message = "name is required")
     @Size(min = 1, max = 5, message = "Name must be between the range of 1 to 50 characters")
     private String name;
 
     @NotBlank(message = "Email is required")
     @Email(message = "Invalid email, must be in lower case")
     private String email;
+
+    private String verificationToken;
+    private boolean isVerified;
+
+    @Column(name = "reset_token")
+    private String resetToken;
+
+
 
     public UserDTO() {
     }
@@ -33,8 +42,8 @@ public class UserDTO {
         this.id = id;
     }
     public void setName(String name) {
-        if (name != null) {
-            this.name = name.trim().replace("\\c+", " ");
+        if (name != null && !name.isBlank()) {
+            this.name = name.trim();
         }else {
             this.name = null;
         }
@@ -53,12 +62,39 @@ public class UserDTO {
         return email;
     }
 
+    public String getVerificationToken() {
+        return verificationToken;
+    }
+
+    public void setVerificationToken(String verificationToken) {
+        this.verificationToken = verificationToken;
+    }
+
+    public boolean isVerified() {
+        return isVerified;
+    }
+
+    public void setVerified(boolean verified) {
+        isVerified = verified;
+    }
+
+    public String getResetToken() {
+        return resetToken;
+    }
+
+    public void setResetToken(String resetToken) {
+        this.resetToken = resetToken;
+    }
+
     @Override
     public String toString() {
         return "UserDTO{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", email='" + email + '\'' +
+                ", verificationToken='" + verificationToken + '\'' +
+                ", isVerified=" + isVerified +
+                ", resetToken='" + resetToken + '\'' +
                 '}';
     }
 }

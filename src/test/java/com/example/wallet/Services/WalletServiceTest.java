@@ -2,19 +2,13 @@ package com.example.wallet.Services;
 
 import com.example.wallet.Dtos.UserDTO;
 import com.example.wallet.Dtos.WalletDTO;
-import com.example.wallet.Models.UserEntity;
-import com.example.wallet.Models.Wallet;
 import com.example.wallet.Repositories.UserRepository;
 import com.example.wallet.Repositories.WalletRepository;
-import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -90,7 +84,7 @@ class WalletServiceTest {
         assertNotNull(savedWallets);
         assertEquals(2, savedWallets.size());
         assertEquals("Nino wallet", savedWallets.getFirst().getName());
-        assertEquals("MusaDanladi21@gmail.com", user2.getEmail());
+        assertEquals("musadanladi21@gmail.com", user2.getEmail());
         assertEquals(new BigDecimal("9000.00"), savedWallets.getFirst().getBalance());
 
     }

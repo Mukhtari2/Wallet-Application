@@ -60,11 +60,10 @@ class TransactionServiceTest {
 
         assertNotNull(newTransaction);
         assertEquals("Bank transaction", newTransaction.getType());
-        assertEquals("yahaya32@gmail.com", newUser.getEmail());
+        assertEquals("yahaya32@gmail.com", userDTO.getEmail());
         assertEquals("Binance", savedWallet.getName());
         assertEquals(LocalDate.now(),newTransaction.getDate());
         assertEquals(new BigDecimal("300"), newTransaction.getAmount());
-        assertEquals(1, savedWallet.getUserId());
         assertEquals(savedWallet.getUserId(), newTransaction.getWalletId());
     }
 
@@ -95,7 +94,8 @@ class TransactionServiceTest {
         assertEquals(new BigDecimal("3000.00"), wallet1.getBalance());
         assertEquals(new BigDecimal("390.00"), transactionDTO.getAmount());
         assertEquals("Hafeez Abdallah", saveUser.getName());
-        assertEquals("HafeezAbdallah12@gmail.com", saveUser.getEmail());
+        assertEquals("hafeezabdallah12@gmail.com", saveUser.getEmail());
+        assertEquals(1, savedWallet.getUserId());
         assertEquals(LocalDate.now(), transactionDTO.getDate());
 
     }

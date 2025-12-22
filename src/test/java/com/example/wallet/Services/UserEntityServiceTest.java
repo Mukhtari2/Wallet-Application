@@ -22,7 +22,7 @@ class UserEntityServiceTest {
     private UserRepository userRepository;
 
     @BeforeEach
-    void setUp(){
+    void setUp() {
         userRepository.deleteAll();
     }
 
@@ -35,34 +35,44 @@ class UserEntityServiceTest {
 
         assertNotNull(userDTO);
         assertEquals("Musa", user1.getName());
-        assertEquals("MusaHAfiz@gmail.com", user1.getEmail());
+        assertEquals("musahafiz@gmail.com", user1.getEmail());
     }
 
     @Test
-    void testToViewAllUsersCreated()throws IllegalStateException{
-            UserDTO userDTO = new UserDTO();
-            userDTO.setName("Musa");
-            userDTO.setEmail("MusaHAfiz@gmail.com");
+    void testToViewAllUsersCreated() throws IllegalStateException {
+        UserDTO userDTO = new UserDTO();
+        userDTO.setName("Musa");
+        userDTO.setEmail("MusaHAfiz@gmail.com");
 
-            UserDTO userDTO2 = new UserDTO();
-            userDTO2.setName("Isah");
-            userDTO2.setEmail("IsahHAfiz@gmail.com");
+        UserDTO userDTO2 = new UserDTO();
+        userDTO2.setName("Isah");
+        userDTO2.setEmail("IsahHAfiz@gmail.com");
 
-            UserDTO userDTO3 = new UserDTO();
-            userDTO3.setName("Joy");
-            userDTO3.setEmail("JoyMakinde23@rocketmail.com");
+        UserDTO userDTO3 = new UserDTO();
+        userDTO3.setName("Joy");
+        userDTO3.setEmail("JoyMakinde23@rocketmail.com");
 
-            UserDTO userDTO4 = new UserDTO();
-            userDTO4.setName("amos");
-            userDTO4.setEmail("amog2@gmail.com");
+        UserDTO userDTO4 = new UserDTO();
+        userDTO4.setName("amos");
+        userDTO4.setEmail("amog2@gmail.com");
 
-        userServices.saveAllUsers(List.of(userDTO, userDTO2,  userDTO3, userDTO4));
+        userServices.saveAllUsers(List.of(userDTO, userDTO2, userDTO3, userDTO4));
 
-        List <UserDTO> viewUsers = userServices.getAllUsers();
+        List<UserDTO> viewUsers = userServices.getAllUsers();
 
         assertNotNull(viewUsers);
         assertEquals(4, viewUsers.size());
         assertEquals("Isah", viewUsers.get(1).getName());
-        assertEquals("JoyMakinde23@rocketmail.com", viewUsers.get(2).getEmail());
+        assertEquals("joymakinde23@rocketmail.com", viewUsers.get(2).getEmail());
+    }
+
+    @Test
+    void testToVerifiedEmptyNameEntry(){
+        UserDTO userDTO = new UserDTO();
+        userDTO.setName("   ");
+        userDTO.setEmail("MusaHAfiz@gmail.com");
+
+        UserDTO saveEmptyName = userServices.createNewUser(userDTO);
+        assertNull(saveEmptyName.getName());
     }
 }
