@@ -69,7 +69,7 @@ class UserEntityServiceTest {
     @Test
     void testToVerifiedEmptyNameEntry(){
         UserDTO userDTO = new UserDTO();
-        userDTO.setName("   ");
+        userDTO.setName("            ");
         userDTO.setEmail("MusaHAfiz@gmail.com");
 
         UserDTO saveEmptyName = userServices.createNewUser(userDTO);

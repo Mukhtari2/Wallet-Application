@@ -8,7 +8,7 @@ import jakarta.validation.constraints.Size;
 public class UserDTO {
     private Long id;
     @NotBlank(message = "name is required")
-    @Size(min = 1, max = 5, message = "Name must be between the range of 1 to 50 characters")
+    @Size(min = 1, max = 50, message = "Name must be between the range of 1 to 50 characters")
     private String name;
 
     @NotBlank(message = "Email is required")
