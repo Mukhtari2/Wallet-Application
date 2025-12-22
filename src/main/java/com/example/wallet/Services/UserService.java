@@ -13,7 +13,7 @@ import java.util.List;
 
 @Service
 public class UserService implements UserServiceInterface {
-    @Autowired
+
     private final UserRepository userRepository;
 
     public UserService(UserRepository userRepository ) {
@@ -58,8 +58,8 @@ public class UserService implements UserServiceInterface {
     }
 
 
-    @Transactional
     @Override
+    @Transactional()
     public List<UserDTO> getAllUsers() {
         List<UserEntity> userEntityEntities = userRepository.findAll();
         List<UserDTO> userDTOList = new ArrayList<>();

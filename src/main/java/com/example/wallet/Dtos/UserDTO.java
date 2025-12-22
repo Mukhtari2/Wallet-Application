@@ -37,8 +37,6 @@ public class UserDTO {
             this.name = name.trim().replace("\\c+", " ");
         }else {
             this.name = null;
-
-
         }
     }
     public String getName() {
