@@ -44,7 +44,7 @@ class WalletServiceTest {
             UserDTO newUser = userServices.createNewUser(userDTO);
 
             WalletDTO walletDTO = new WalletDTO();
-            walletDTO.setName("Binance");
+            walletDTO.setName("Binance" );
             walletDTO.setUserId(newUser.getId());
 
             WalletDTO newWallet = walletService.createNewWalletForUser(newUser.getId(), "Binance");
