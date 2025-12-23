@@ -1,6 +1,7 @@
 package com.example.wallet.Services;
 
 import com.example.wallet.Dtos.UserDTO;
+import com.example.wallet.Enum.Status;
 import com.example.wallet.Models.User;
 import com.example.wallet.Repositories.UserRepository;
 import jakarta.persistence.EntityExistsException;
@@ -19,10 +20,10 @@ public class UserService implements UserServiceInterface {
 
     private final TokenServiceInterface tokenServiceInterface;
 
-    public UserService(UserRepository userRepository ) {
+    public UserService(UserRepository userRepository, TokenServiceInterface tokenServiceInterface) {
         this.userRepository = userRepository;
+        this.tokenServiceInterface = tokenServiceInterface;
     }
-
 
     @Override
     @Transactional
@@ -34,7 +35,12 @@ public class UserService implements UserServiceInterface {
         user.setId(userDTO.getId());
         user.setName(userDTO.getName());
         user.setEmail(userDTO.getEmail());
+        user.setStatus(Status.INACTIVE);
         User saveNewUser = userRepository.save(user);
+        if (saveNewUser.getId() != null){
+            tokenServiceInterface.createToken(mapToUserEntity(saveNewUser));
+        }
+
         return mapToUserEntity(saveNewUser);
     }
 

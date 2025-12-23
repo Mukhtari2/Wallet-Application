@@ -13,6 +13,10 @@ public class TokenService implements TokenServiceInterface{
     private final TokenRepository tokenRepository;
     private final EmailServiceInterface emailServiceInterface;
 
+    public TokenService(TokenRepository tokenRepository, EmailServiceInterface emailServiceInterface) {
+        this.tokenRepository = tokenRepository;
+        this.emailServiceInterface = emailServiceInterface;
+    }
 
     @Override
     public UserTokenDTO createToken(UserDTO createdUser) {
