@@ -20,10 +20,6 @@ public class UserDTO {
     @Email(message = "Invalid email, must be in lower case")
     private String email;
 
-    private String verificationToken;
-    private boolean isVerified;
-    private String resetToken;
-
 
     public void setName(String name) {
         if (name != null && !name.isBlank()) {

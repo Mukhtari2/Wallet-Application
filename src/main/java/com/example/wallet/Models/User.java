@@ -1,5 +1,6 @@
 package com.example.wallet.Models;
 
+import com.example.wallet.Enum.Status;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -13,7 +14,7 @@ import lombok.*;
 @Table(name = "users")
 public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_entity_sequence")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_sequence")
     private Long id;
     private String name;
 
@@ -23,9 +24,8 @@ public class User {
     @Column(unique = true)
     private String email;
 
-    private String verificationToken;
-    private boolean isVerified;
-    private String resetToken;
+    @Enumerated(EnumType.STRING)
+    private Status status;
 
 
     public void setEmail(String email) {

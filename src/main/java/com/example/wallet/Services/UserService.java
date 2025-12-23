@@ -17,6 +17,8 @@ public class UserService implements UserServiceInterface {
 
     private final UserRepository userRepository;
 
+    private final TokenServiceInterface tokenServiceInterface;
+
     public UserService(UserRepository userRepository ) {
         this.userRepository = userRepository;
     }
