@@ -21,15 +21,11 @@ public class UserService implements UserServiceInterface {
 
     private final TokenService tokenService;
 
-    private final EmailService emailService;
 
-    private final WalletService walletService;
-
-    public UserService(UserRepository userRepository, TokenService tokenService, EmailService emailService, WalletService walletService) {
+    public UserService(UserRepository userRepository, TokenService tokenService) {
         this.userRepository = userRepository;
         this.tokenService = tokenService;
-        this.emailService = emailService;
-        this.walletService = walletService;
+
     }
 
     @Override
@@ -46,9 +42,6 @@ public class UserService implements UserServiceInterface {
         User saveNewUser = userRepository.save(user);
         if (saveNewUser.getId() != null){
            UserTokenDTO token = tokenService.createToken(mapToUserEntity(saveNewUser));
-           emailService.sendEmail(user.getEmail(), token);
-           walletService.createNewWalletForUser(user.getId(), user.getName());
-
         }
 
 
