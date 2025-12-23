@@ -41,6 +41,7 @@ public class UserService implements UserServiceInterface {
         user.setStatus(Status.INACTIVE);
         User saveNewUser = userRepository.save(user);
         if (saveNewUser.getId() != null){
+
            UserTokenDTO token = tokenService.createToken(mapToUserEntity(saveNewUser));
         }
 
