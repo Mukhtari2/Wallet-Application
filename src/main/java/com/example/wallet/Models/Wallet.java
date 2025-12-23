@@ -3,61 +3,39 @@ package com.example.wallet.Models;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
+import lombok.*;
 
 import java.math.BigDecimal;
 
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 public class Wallet {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @ManyToOne
-    @JoinColumn(name = "user_entity_id")
-    private UserEntity userId;
+    @JoinColumn(name = "users_id")
+    private User userId;
 
     @NotBlank(message = "Username must not be empty")
     @Size(min = 1, max = 50, message = "wallet name must between the ranges of 1 and 50")
     private String name;
     private BigDecimal balance;
 
-
-    public Wallet() {
-    }
-
-    public Wallet(UserEntity userId, String name, BigDecimal balance) {
-        this.userId = userId;
-        this.name = name;
+    public Wallet(User user, String name, BigDecimal balance) {
+        setUser(user);
+        setName(name);
         this.balance = balance;
     }
 
-    public Wallet(Long id, UserEntity userId, String name, BigDecimal balance) {
-        this.id = id;
-        this.userId = userId;
-        this.name = name;
-        this.balance = balance;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public UserEntity getUser() {
-        return userId;
-    }
-
-    public void setUser(UserEntity userEntity) {
-        if(userEntity != null && userEntity.getEmail() != null){
-            userEntity.setEmail(userEntity.getEmail().toLowerCase().trim());
+    public void setUser(User user) {
+        if(user != null && user.getEmail() != null){
+            user.setEmail(user.getEmail().toLowerCase().trim());
         }
-        this.userId = userEntity;
-    }
-
-    public String getName() {
-        return name;
+        this.userId = user;
     }
 
     public void setName(String name) {
@@ -68,21 +46,4 @@ public class Wallet {
         }
     }
 
-    public BigDecimal getBalance() {
-        return balance;
-    }
-
-    public void setBalance(BigDecimal balance) {
-        this.balance = balance;
-    }
-
-    @Override
-    public String toString() {
-        return "Wallet{" +
-                "id=" + id +
-                ", userId=" + userId +
-                ", name='" + name + '\'' +
-                ", balance=" + balance +
-                '}';
-    }
 }

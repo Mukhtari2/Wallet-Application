@@ -1,23 +1,26 @@
-package com.example.wallet.Dtos;
+package com.example.wallet.Models;
 
-import jakarta.persistence.Column;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 @Data
-@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserDTO {
+@Entity
+@Table(name = "users")
+public class User {
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_entity_sequence")
     private Long id;
-    @NotBlank(message = "Name is required")
-    @Size(min = 1, max = 50, message = "Name must be between the range of 1 to 50 characters")
     private String name;
 
+    @NotNull(message = "Email must be provided")
     @NotBlank(message = "Email is required")
     @Email(message = "Invalid email, must be in lower case")
+    @Column(unique = true)
     private String email;
 
     private String verificationToken;
@@ -25,17 +28,9 @@ public class UserDTO {
     private String resetToken;
 
 
-    public void setName(String name) {
-        if (name != null && !name.isBlank()) {
-            this.name = name.trim();
-        }else {
-            this.name = null;
-        }
-    }
-
     public void setEmail(String email) {
         if(email != null) {
-            this.email = email.toLowerCase().trim();
+            this.email = email.toLowerCase();
         }else {
             this.email = null;
         }

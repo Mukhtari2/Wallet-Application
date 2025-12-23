@@ -10,5 +10,4 @@ public interface UserServiceInterface {
 
     List<UserDTO> getAllUsers();
 
-
 }

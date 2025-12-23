@@ -1,7 +1,7 @@
 package com.example.wallet.Services;
 
 import com.example.wallet.Dtos.WalletDTO;
-import com.example.wallet.Models.UserEntity;
+import com.example.wallet.Models.User;
 import com.example.wallet.Models.Wallet;
 import com.example.wallet.Repositories.UserRepository;
 import com.example.wallet.Repositories.WalletRepository;
@@ -25,12 +25,12 @@ public class WalletService implements WalletServiceInterface{
 
     @Override
     public WalletDTO createNewWalletForUser(Long userId, String walletName) {
-        UserEntity userEntity = userRepository.findById(userId)
+        User user = userRepository.findById(userId)
                 .orElseThrow(()-> new EntityNotFoundException("No user available for the wallet"));
         Wallet wallet = new Wallet();
         wallet.setId(wallet.getId());
         wallet.setName(walletName);
-        wallet.setUser(userEntity);
+        wallet.setUser(user);
         Wallet saveWallet = walletRepository.save(wallet);
         return mapToWalletUserDTO(saveWallet);
     }
@@ -40,14 +40,14 @@ public class WalletService implements WalletServiceInterface{
         walletDTO.setId(wallet.getId());
         walletDTO.setName(wallet.getName());
         walletDTO.setBalance(wallet.getBalance());
-        walletDTO.setUserId(wallet.getUser().getId());
+        walletDTO.setUserId(wallet.getUserId().getId());
         return walletDTO;
     }
 
     public List<WalletDTO> saveAllWallets (List<WalletDTO> dtoList){
         List<Wallet> saveWallet = new ArrayList<>();
         for (WalletDTO dto : dtoList){
-            UserEntity user = userRepository.findById(dto.getUserId())
+            User user = userRepository.findById(dto.getUserId())
                     .orElseThrow(() -> new EntityNotFoundException
                     ("No user found with the id " + dto.getUserId()));
             Wallet wallet = new Wallet();

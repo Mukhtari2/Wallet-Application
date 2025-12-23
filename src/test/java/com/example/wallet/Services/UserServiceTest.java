@@ -13,7 +13,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 @ActiveProfiles("test")
-class UserEntityServiceTest {
+class UserServiceTest {
 
     @Autowired
     private UserService userServices;

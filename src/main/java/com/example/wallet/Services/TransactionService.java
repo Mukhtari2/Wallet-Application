@@ -1,9 +1,7 @@
 package com.example.wallet.Services;
 
 import com.example.wallet.Dtos.TransactionDTO;
-import com.example.wallet.Dtos.WalletDTO;
 import com.example.wallet.Models.Transaction;
-import com.example.wallet.Models.UserEntity;
 import com.example.wallet.Models.Wallet;
 import com.example.wallet.Repositories.TransactionRepository;
 import com.example.wallet.Repositories.WalletRepository;

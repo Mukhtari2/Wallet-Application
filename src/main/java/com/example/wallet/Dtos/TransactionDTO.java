@@ -2,12 +2,20 @@ package com.example.wallet.Dtos;
 
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
+import lombok.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class TransactionDTO {
     private Long walletId;
+    @NotBlank(message = "Bill Category is required")
+    @Size(min = 2, max = 50, message = "characters must be between 2 - 50 length")
     private String billCategory;
     private String type;
     private BigDecimal amount;
@@ -15,63 +23,4 @@ public class TransactionDTO {
     @JsonFormat(pattern = "d/M/yyyy")
     private LocalDate date;
 
-    public Long getWalletId() {
-        return walletId;
-    }
-
-    public void setWalletId(Long walletId) {
-        this.walletId = walletId;
-    }
-
-    public String getBillCategory() {
-        return billCategory;
-    }
-
-    public void setBillCategory(String billCategory) {
-        this.billCategory = billCategory;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    public BigDecimal getAmount() {
-        return amount;
-    }
-
-    public void setAmount(BigDecimal amount) {
-        this.amount = amount;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public LocalDate getDate() {
-        return date;
-    }
-
-    public void setDate(LocalDate date) {
-        this.date = date;
-    }
-
-    @Override
-    public String toString() {
-        return "TransactionDTO{" +
-                "walletId=" + walletId +
-                ", billCategory='" + billCategory + '\'' +
-                ", type='" + type + '\'' +
-                ", amount=" + amount +
-                ", description='" + description + '\'' +
-                ", date=" + date +
-                '}';
-    }
 }

@@ -1,11 +1,10 @@
 package com.example.wallet.Services;
 
 import com.example.wallet.Dtos.UserDTO;
-import com.example.wallet.Models.UserEntity;
+import com.example.wallet.Models.User;
 import com.example.wallet.Repositories.UserRepository;
 import jakarta.persistence.EntityExistsException;
 import jakarta.transaction.Transactional;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
@@ -29,32 +28,36 @@ public class UserService implements UserServiceInterface {
         if (userRepository.existsByEmail(userDTO.getEmail())) {
             throw new EntityExistsException("Email already registered");
         }
-        UserEntity userEntity = new UserEntity();
-        userEntity.setId(userDTO.getId());
-        userEntity.setName(userDTO.getName());
-        userEntity.setEmail(userDTO.getEmail());
-        UserEntity saveNewUserEntity = userRepository.save(userEntity);
-        return mapToUserEntity(saveNewUserEntity);
+        User user = new User();
+        user.setId(userDTO.getId());
+        user.setName(userDTO.getName());
+        user.setEmail(userDTO.getEmail());
+        User saveNewUser = userRepository.save(user);
+        return mapToUserEntity(saveNewUser);
     }
 
-    private UserDTO mapToUserEntity(UserEntity newUserEntity) {
-        UserDTO dto = new UserDTO(newUserEntity.getId(), newUserEntity.getName(), newUserEntity.getEmail());
-        return dto;
+    private UserDTO mapToUserEntity(User newUser) {
+        return UserDTO.builder()
+                .id(newUser.getId())
+                .name(newUser.getName())
+                .email(newUser.getEmail())
+                .build();
+
     }
 
     @Transactional
     public List<UserDTO> saveAllUsers(List<UserDTO> userDTOS) {
-      List<UserEntity> userEntityEntities = new ArrayList<>();
+      List<User> userEntities = new ArrayList<>();
       for (UserDTO dto : userDTOS){
-          UserEntity userEntity =  new UserEntity();
-          userEntity.setName(dto.getName());
-          userEntity.setEmail(dto.getEmail());
-          userEntityEntities.add(userEntity);
+          User user =  new User();
+          user.setName(dto.getName());
+          user.setEmail(dto.getEmail());
+          userEntities.add(user);
       }
-      List<UserEntity> saveNewUserEntityEntities = userRepository.saveAll(userEntityEntities);
+      List<User> saveNewUserEntities = userRepository.saveAll(userEntities);
       List<UserDTO> savedUserDto = new ArrayList<>();
-        for(UserEntity userEntity : saveNewUserEntityEntities){
-            savedUserDto.add(mapToUserDTO(userEntity));
+        for(User user : saveNewUserEntities){
+            savedUserDto.add(mapToUserDTO(user));
         }
       return savedUserDto;
     }
@@ -63,19 +66,42 @@ public class UserService implements UserServiceInterface {
     @Override
     @Transactional()
     public List<UserDTO> getAllUsers() {
-        List<UserEntity> userEntityEntities = userRepository.findAll();
+        List<User> userEntities = userRepository.findAll();
         List<UserDTO> userDTOList = new ArrayList<>();
-        for (UserEntity userEntity : userEntityEntities){
-            userDTOList.add(mapToUserDTO(userEntity));
+        for (User user : userEntities){
+            userDTOList.add(mapToUserDTO(user));
         }
         return userDTOList;
     }
 
-    public UserDTO mapToUserDTO(UserEntity userEntity) {
+//    @Override
+//    public boolean verifyToken(String token) {
+//        Optional<VerificationToken> verificationTokenOpt = tokenRepository.findByToken(token);
+//
+//        if (verificationTokenOpt.isEmpty()) {
+//            return false;
+//        }
+//        VerificationToken verificationToken = verificationTokenOpt.get();
+//
+//        if (verificationToken.isExpired()) {
+//            tokenRepository.delete(verificationToken); // Clean up expired token
+//            return false;
+//        }
+//        User user = verificationToken.getUser();
+//        user.setEnabled(true);
+//        userRepository.save(user);
+//
+//        tokenRepository.delete(verificationToken);
+//
+//        return true;
+//
+//    }
+
+    public UserDTO mapToUserDTO(User user) {
         UserDTO dto = new UserDTO();
-        dto.setId(userEntity.getId());
-        dto.setName(userEntity.getName());
-        dto.setEmail(userEntity.getEmail());
+        dto.setId(user.getId());
+        dto.setName(user.getName());
+        dto.setEmail(user.getEmail());
         return dto;
     }
 
