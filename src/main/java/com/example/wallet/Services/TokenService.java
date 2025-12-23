@@ -5,9 +5,10 @@ import com.example.wallet.Dtos.UserTokenDTO;
 import com.example.wallet.Enum.Status;
 import com.example.wallet.Models.UserToken;
 import com.example.wallet.Repositories.TokenRepository;
+import org.springframework.stereotype.Service;
 
 import java.util.UUID;
-
+@Service
 public class TokenService implements TokenServiceInterface{
 
     private final TokenRepository tokenRepository;
@@ -32,6 +33,7 @@ public class TokenService implements TokenServiceInterface{
             emailServiceInterface.sendEmail(token,createdUser.getEmail());
 
         }
+        return mapToUserToken(saveToken);
 
     }
 

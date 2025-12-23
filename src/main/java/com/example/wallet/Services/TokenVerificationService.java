@@ -20,16 +20,18 @@ public class TokenVerificationService implements TokenVerificationServiceInterfa
     @Override
     public boolean verify(String token) {
         UserToken userToken = tokenRepository.findByToken(token);
-        if (userToken != null){
+        if (userToken != null) {
             userToken.setStatus(Status.INACTIVE);
             tokenRepository.save(userToken);
+
+            userRepository.findById(userToken.getUserId()).ifPresent(user -> {
+                user.setStatus(Status.ACTIVE);
+                userRepository.save(user);
+            });
+            return true;
         }
 
-        userRepository.findById(userToken.getUserId()).ifPresent(user->{
-            user.setStatus(Status.ACTIVE);
-            userRepository.save(user);
-        });
-
-        return true;
+        return false;
     }
+
 }

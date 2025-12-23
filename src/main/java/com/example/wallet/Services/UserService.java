@@ -1,6 +1,7 @@
 package com.example.wallet.Services;
 
 import com.example.wallet.Dtos.UserDTO;
+import com.example.wallet.Dtos.UserTokenDTO;
 import com.example.wallet.Enum.Status;
 import com.example.wallet.Models.User;
 import com.example.wallet.Repositories.UserRepository;
@@ -18,11 +19,17 @@ public class UserService implements UserServiceInterface {
 
     private final UserRepository userRepository;
 
-    private final TokenServiceInterface tokenServiceInterface;
+    private final TokenService tokenService;
 
-    public UserService(UserRepository userRepository, TokenServiceInterface tokenServiceInterface) {
+    private final EmailService emailService;
+
+    private final WalletService walletService;
+
+    public UserService(UserRepository userRepository, TokenService tokenService, EmailService emailService, WalletService walletService) {
         this.userRepository = userRepository;
-        this.tokenServiceInterface = tokenServiceInterface;
+        this.tokenService = tokenService;
+        this.emailService = emailService;
+        this.walletService = walletService;
     }
 
     @Override
@@ -38,8 +45,15 @@ public class UserService implements UserServiceInterface {
         user.setStatus(Status.INACTIVE);
         User saveNewUser = userRepository.save(user);
         if (saveNewUser.getId() != null){
-            tokenServiceInterface.createToken(mapToUserEntity(saveNewUser));
+           UserTokenDTO token = tokenService.createToken(mapToUserEntity(saveNewUser));
+           emailService.sendEmail(user.getEmail(), token);
+           walletService.createNewWalletForUser(user.getId(), user.getName());
+
         }
+
+
+
+
 
         return mapToUserEntity(saveNewUser);
     }

@@ -14,7 +14,6 @@ public class EmailService implements EmailServiceInterface {
 
     public EmailService(JavaMailSender mailSender) {
         this.mailSender = mailSender;
-
     }
 
     @Async
@@ -33,7 +32,7 @@ public class EmailService implements EmailServiceInterface {
             helper.setText(htmlContent, true); // 'true' enables HTML
             helper.setTo(email);
             helper.setSubject("Confirm your Registration");
-            helper.setFrom("no-reply@yourdomain.com");
+            helper.setFrom("suleimannmukhtar@gmail.com");
 
             mailSender.send(mimeMessage);
         }catch (MessagingException exception){
