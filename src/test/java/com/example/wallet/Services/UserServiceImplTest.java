@@ -13,10 +13,10 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 @ActiveProfiles("test")
-class UserServiceTest {
+class UserServiceImplTest {
 
     @Autowired
-    private UserService userServices;
+    private UserServiceImpl userServicesImpl;
 
     @Autowired
     private UserRepository userRepository;
@@ -31,7 +31,7 @@ class UserServiceTest {
         UserDTO userDTO = new UserDTO();
         userDTO.setName("Musa");
         userDTO.setEmail("MusaHAfiz@gmail.com");
-        UserDTO user1 = userServices.createNewUser(userDTO);
+        UserDTO user1 = userServicesImpl.createNewUser(userDTO);
 
         assertNotNull(userDTO);
         assertEquals("Musa", user1.getName());
@@ -56,9 +56,9 @@ class UserServiceTest {
         userDTO4.setName("amos");
         userDTO4.setEmail("amog2@gmail.com");
 
-        userServices.saveAllUsers(List.of(userDTO, userDTO2, userDTO3, userDTO4));
+        userServicesImpl.saveAllUsers(List.of(userDTO, userDTO2, userDTO3, userDTO4));
 
-        List<UserDTO> viewUsers = userServices.getAllUsers();
+        List<UserDTO> viewUsers = userServicesImpl.getAllUsers();
 
         assertNotNull(viewUsers);
         assertEquals(4, viewUsers.size());
@@ -72,7 +72,7 @@ class UserServiceTest {
         userDTO.setName("            ");
         userDTO.setEmail("MusaHAfiz@gmail.com");
 
-        UserDTO saveEmptyName = userServices.createNewUser(userDTO);
+        UserDTO saveEmptyName = userServicesImpl.createNewUser(userDTO);
         assertNull(saveEmptyName.getName());
     }
 }

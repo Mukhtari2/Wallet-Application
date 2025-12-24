@@ -1,25 +1,21 @@
 package com.example.wallet.Controllers;
 
 import com.example.wallet.Dtos.TransactionDTO;
-import com.example.wallet.Models.Transaction;
-import com.example.wallet.Services.TransactionServiceInterface;
+import com.example.wallet.Services.TransactionService;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.net.http.HttpResponse;
 import java.util.List;
 
 @RestController
 @RequestMapping(path = "api/v1/transactions")
 public class TransactionController {
 
-    private final TransactionServiceInterface transaction;
+    private final TransactionService transaction;
 
-    public TransactionController(TransactionServiceInterface transaction) {
+    public TransactionController(TransactionService transaction) {
         this.transaction = transaction;
     }
 

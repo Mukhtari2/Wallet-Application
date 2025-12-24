@@ -1,9 +1,8 @@
 package com.example.wallet.Controllers;
 
 import com.example.wallet.Dtos.UserDTO;
-import com.example.wallet.Services.UserServiceInterface;
+import com.example.wallet.Services.UserService;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,10 +12,10 @@ import java.util.List;
 @RestController
 @RequestMapping(path = "api/v1/users")
 public class UserController {
-    private final UserServiceInterface user;
+    private final UserService user;
 
 
-    public UserController(UserServiceInterface user) {
+    public UserController(UserService user) {
         this.user = user;
     }
 

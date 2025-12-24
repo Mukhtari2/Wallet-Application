@@ -2,10 +2,8 @@ package com.example.wallet.Controllers;
 
 
 import com.example.wallet.Dtos.WalletDTO;
-import com.example.wallet.Models.Wallet;
-import com.example.wallet.Services.WalletServiceInterface;
+import com.example.wallet.Services.WalletService;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,9 +14,9 @@ import java.util.List;
 @RequestMapping(path = "api/v1/wallet")
 public class WalletController {
 
-    private final WalletServiceInterface wallet;
+    private final WalletService wallet;
 
-    public WalletController(WalletServiceInterface wallet) {
+    public WalletController(WalletService wallet) {
         this.wallet = wallet;
     }
 
