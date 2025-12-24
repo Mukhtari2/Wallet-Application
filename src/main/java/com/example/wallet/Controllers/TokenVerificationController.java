@@ -1,5 +1,6 @@
 package com.example.wallet.Controllers;
 
+import com.example.wallet.Services.TokenVerificationService;
 import com.example.wallet.Services.TokenVerificationServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -10,22 +11,20 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(path = "api/v1/tokenVerification")
 public class TokenVerificationController {
 
     @Autowired
-    private final TokenVerificationServiceInterface tokenVerificationServiceInterface;
+    private final TokenVerificationService tokenVerificationService;
 
-    public TokenVerificationController(TokenVerificationServiceInterface tokenVerificationServiceInterface) {
-        this.tokenVerificationServiceInterface = tokenVerificationServiceInterface;
+    public TokenVerificationController(TokenVerificationService tokenVerificationService) {
+        this.tokenVerificationService = tokenVerificationService;
     }
 
-    @PostMapping
+    @PostMapping("/api/auth/verify")
     public ResponseEntity<String> verify(@RequestParam ("token") String token){
-        if (tokenVerificationServiceInterface.verify(token)){
+        if (tokenVerificationService.verify(token)){
             return ResponseEntity.ok("token is verified successfully");
         }
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("invalid token");
-
     }
 }

@@ -24,7 +24,7 @@ public class TokenService implements TokenServiceInterface{
         String token = UUID.randomUUID().toString();
         UserToken userToken = new UserToken();
         userToken.setUserId(createdUser.getId());
-        userToken.setStatus(Status.INACTIVE);
+        userToken.setStatus(Status.ACTIVE);
         userToken.setToken(token);
         UserToken saveToken = tokenRepository.save(userToken);
 

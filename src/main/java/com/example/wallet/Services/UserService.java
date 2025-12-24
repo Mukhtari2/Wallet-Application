@@ -2,11 +2,14 @@ package com.example.wallet.Services;
 
 import com.example.wallet.Dtos.UserDTO;
 import com.example.wallet.Dtos.UserTokenDTO;
+import com.example.wallet.Dtos.WalletDTO;
 import com.example.wallet.Enum.Status;
 import com.example.wallet.Models.User;
 import com.example.wallet.Repositories.UserRepository;
 import jakarta.persistence.EntityExistsException;
 import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
@@ -15,18 +18,14 @@ import java.util.List;
 
 @Service
 @Validated
+@RequiredArgsConstructor
 public class UserService implements UserServiceInterface {
 
     private final UserRepository userRepository;
-
     private final TokenService tokenService;
-
-
-    public UserService(UserRepository userRepository, TokenService tokenService) {
-        this.userRepository = userRepository;
-        this.tokenService = tokenService;
-
-    }
+    private final EmailServiceInterface emailServiceInterface;
+//    private final WalletServiceInterface walletServiceInterface;
+//    private final WalletService walletService;
 
     @Override
     @Transactional
@@ -40,14 +39,17 @@ public class UserService implements UserServiceInterface {
         user.setEmail(userDTO.getEmail());
         user.setStatus(Status.INACTIVE);
         User saveNewUser = userRepository.save(user);
+
         if (saveNewUser.getId() != null){
+//            walletServiceInterface.createNewWalletForUser(saveNewUser.getId(), saveNewUser.getName());
+//            walletService.createNewWalletForUser(saveNewUser.getId(), saveNewUser.getName());
+           UserDTO userDtoForToken = mapToUserDTO(saveNewUser);
+           UserTokenDTO token = tokenService.createToken(userDtoForToken);
+           String createdToken = token.getToken();
 
-           UserTokenDTO token = tokenService.createToken(mapToUserEntity(saveNewUser));
+           emailServiceInterface.sendEmail(createdToken, saveNewUser.getEmail());
+
         }
-
-
-
-
 
         return mapToUserEntity(saveNewUser);
     }

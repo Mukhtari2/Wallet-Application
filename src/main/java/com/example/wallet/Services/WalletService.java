@@ -6,22 +6,20 @@ import com.example.wallet.Models.Wallet;
 import com.example.wallet.Repositories.UserRepository;
 import com.example.wallet.Repositories.WalletRepository;
 import jakarta.persistence.EntityNotFoundException;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class WalletService implements WalletServiceInterface{
-    @Autowired
-    private WalletRepository walletRepository;
-
-    @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
-    private UserService userServices;
+    private final WalletRepository walletRepository;
+    private final UserRepository userRepository;
+    private final UserService userServices;
 
     @Override
     public WalletDTO createNewWalletForUser(Long userId, String walletName) {
