@@ -21,23 +21,22 @@ public class TransactionServiceImpl implements TransactionService {
     @Autowired
     private WalletService walletService;
 
-    @Autowired
-    private WalletRepository walletRepository;
 
     @Override
     @Transactional
     public TransactionDTO createNewTransaction(Long walletId, TransactionDTO dto) {
-        Wallet wallet  = walletRepository.findById(walletId)
-                .orElseThrow(()-> new EntityNotFoundException("No Wallet available for the transaction"));
-        Transaction transaction = new Transaction();
-        transaction.setWallet(wallet);
-        transaction.setType(dto.getType());
-        transaction.setAmount(dto.getAmount());
-        transaction.setBillCategory(dto.getBillCategory());
-        transaction.setDate(dto.getDate());
-        transaction.setDescription(dto.getDescription());
-        Transaction savedTransaction = transactionRepository.save(transaction);
-        return mapToTransactionDTO(savedTransaction);
+        Wallet wallet  = walletService.findByWalletId(walletId);
+        if (wallet != null) {
+            Transaction transaction = new Transaction();
+            transaction.setWallet(wallet);
+            transaction.setType(dto.getType());
+            transaction.setAmount(dto.getAmount());
+            transaction.setBillCategory(dto.getBillCategory());
+            transaction.setDate(dto.getDate());
+            transaction.setDescription(dto.getDescription());
+            Transaction savedTransaction = transactionRepository.save(transaction);
+            return mapToTransactionDTO(savedTransaction);
+        }else throw new EntityNotFoundException("No Wallet available for the transaction");
     }
 
     private TransactionDTO mapToTransactionDTO(Transaction transaction) {
@@ -66,18 +65,18 @@ public class TransactionServiceImpl implements TransactionService {
         List<Transaction> savedTransaction = new ArrayList<>();
 
         for (TransactionDTO dto : dtoList){
-            Wallet wallet = walletRepository.findById(dto.getWalletId()).
-                    orElseThrow(() -> new EntityNotFoundException
-                            ("No wallet found with the id " + dto.getWalletId()));
-
-            Transaction transaction = new Transaction();
-            transaction.setWallet(wallet);
-            transaction.setDescription(dto.getDescription());
-            transaction.setType(dto.getType());
-            transaction.setBillCategory(dto.getBillCategory());
-            transaction.setAmount(dto.getAmount());
-            transaction.setDate(dto.getDate());
-            savedTransaction.add(transaction);
+            Wallet wallet = walletService.findByWalletId(dto.getWalletId());
+            if (wallet == null) {
+                throw new EntityNotFoundException("No wallet found with the id " + dto.getWalletId());
+            }
+                Transaction transaction = new Transaction();
+                transaction.setWallet(wallet);
+                transaction.setDescription(dto.getDescription());
+                transaction.setType(dto.getType());
+                transaction.setBillCategory(dto.getBillCategory());
+                transaction.setAmount(dto.getAmount());
+                transaction.setDate(dto.getDate());
+                savedTransaction.add(transaction);
         }
         List<Transaction> savedEntities = transactionRepository.saveAll(savedTransaction);
 

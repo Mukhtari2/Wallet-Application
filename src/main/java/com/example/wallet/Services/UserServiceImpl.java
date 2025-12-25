@@ -22,8 +22,6 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final TokenServiceImpl tokenServiceImpl;
     private final EmailService emailService;
-//    private final WalletServiceInterface walletServiceInterface;
-//    private final WalletService walletService;
 
     @Override
     @Transactional
@@ -39,8 +37,8 @@ public class UserServiceImpl implements UserService {
         User saveNewUser = userRepository.save(user);
 
         if (saveNewUser.getId() != null){
-//            walletServiceInterface.createNewWalletForUser(saveNewUser.getId(), saveNewUser.getName());
-//            walletService.createNewWalletForUser(saveNewUser.getId(), saveNewUser.getName());
+           createWalletForUser(saveNewUser.getId(), saveNewUser.getName());
+
            UserDTO userDtoForToken = mapToUserDTO(saveNewUser);
            UserTokenDTO token = tokenServiceImpl.createToken(userDtoForToken);
            String createdToken = token.getToken();
@@ -88,6 +86,19 @@ public class UserServiceImpl implements UserService {
             userDTOList.add(mapToUserDTO(user));
         }
         return userDTOList;
+    }
+
+    public User findByUserId(long id){
+        User userId = new User();
+        userRepository.findById(userId.getId());
+        return userId;
+    }
+
+    public User createWalletForUser(long userId, String name){
+        User newWallet = new User();
+        newWallet.setId(userId);
+        newWallet.setName(name);
+        return newWallet;
     }
 
 //    @Override
