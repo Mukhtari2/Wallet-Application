@@ -12,12 +12,7 @@ import lombok.*;
 @AllArgsConstructor
 public class UserDTO {
     private Long id;
-    @NotBlank(message = "Name is required")
-    @Size(min = 1, max = 50, message = "Name must be between the range of 1 to 50 characters")
     private String name;
-
-    @NotBlank(message = "Email is required")
-    @Email(message = "Invalid email, must be in lower case")
     private String email;
 
 

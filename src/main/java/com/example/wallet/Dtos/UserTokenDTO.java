@@ -8,8 +8,6 @@ import lombok.Data;
 @Data
 @Builder
 public class UserTokenDTO {
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_sequence")
     private Long id;
     private Long userId;
 

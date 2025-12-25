@@ -15,7 +15,8 @@ import lombok.NoArgsConstructor;
 @Builder
 public class UserToken {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_token_sequence")
+    @SequenceGenerator(name = "userToken", sequenceName = "userToken", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "userToken_sequence")
     private Long id;
     private Long userId;
 
