@@ -4,16 +4,21 @@ import com.example.wallet.Dtos.UserDTO;
 import com.example.wallet.Dtos.WalletDTO;
 import com.example.wallet.Repositories.UserRepository;
 import com.example.wallet.Repositories.WalletRepository;
+import lombok.Data;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
+
 import java.math.BigDecimal;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
+@Data
+@ActiveProfiles("test")
 class WalletServiceImplTest {
 
     @Autowired
@@ -23,7 +28,7 @@ class WalletServiceImplTest {
     private WalletRepository walletRepository;
 
     @Autowired
-    private UserServiceImpl userServicesImpl;
+    private UserService userService;
 
     @Autowired
     private UserRepository userRepository;
@@ -41,12 +46,13 @@ class WalletServiceImplTest {
             userDTO.setEmail("ZbbyMicheal23@gmail.com");
             userDTO.setName("Zubby") ;
 
-            UserDTO newUser = userServicesImpl.createNewUser(userDTO);
+            UserDTO newUser = userService.createNewUser(userDTO);
 
             WalletDTO walletDTO = new WalletDTO();
             walletDTO.setName("Binance" );
             walletDTO.setUserId(newUser.getId());
 
+            assertNotNull(newUser.getId());
             WalletDTO newWallet = walletServiceImpl.createNewWalletForUser(newUser.getId(), "Binance");
 
             assertNotNull(walletDTO);
@@ -60,7 +66,7 @@ class WalletServiceImplTest {
         UserDTO user1 = new UserDTO();
         user1.setEmail("ZubbyMicheal23@gmail.com");
         user1.setName("Zubby") ;
-        UserDTO newUser = userServicesImpl.createNewUser(user1);
+        UserDTO newUser = userService.createNewUser(user1);
 
         WalletDTO wallet1   = new WalletDTO();
         wallet1.setName("Nino wallet");
@@ -70,7 +76,7 @@ class WalletServiceImplTest {
         UserDTO user2 = new UserDTO();
         user2.setEmail("MusaDanladi21@gmail.com");
         user2.setName("Musa") ;
-        UserDTO newUser2 = userServicesImpl.createNewUser(user2);
+        UserDTO newUser2 = userService.createNewUser(user2);
 
         WalletDTO wallet2 = new WalletDTO();
         wallet2.setName("Binance");

@@ -6,4 +6,5 @@ import com.example.wallet.Dtos.UserTokenDTO;
 
 public interface TokenService {
     UserTokenDTO createToken(UserDTO userToken);
+    boolean verify(String token);
 }

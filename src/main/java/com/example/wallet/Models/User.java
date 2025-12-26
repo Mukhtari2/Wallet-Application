@@ -15,7 +15,6 @@ import lombok.*;
 @Table(name = "users")
 public class User {
     @Id
-    @SequenceGenerator(name = "users", sequenceName = "users", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_sequence")
     private Long id;
 

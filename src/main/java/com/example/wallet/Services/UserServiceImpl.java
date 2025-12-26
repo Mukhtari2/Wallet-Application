@@ -20,7 +20,7 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
-    private final TokenServiceImpl tokenServiceImpl;
+    private final TokenService tokenService;
     private final EmailService emailService;
 
     @Override
@@ -37,14 +37,13 @@ public class UserServiceImpl implements UserService {
         User saveNewUser = userRepository.save(user);
 
         if (saveNewUser.getId() != null){
-           createWalletForUser(saveNewUser.getId(), saveNewUser.getName());
+           createWalletForUser(saveNewUser.getId(), saveNewUser.getName(), saveNewUser.getEmail());
 
            UserDTO userDtoForToken = mapToUserDTO(saveNewUser);
-           UserTokenDTO token = tokenServiceImpl.createToken(userDtoForToken);
+           UserTokenDTO token = tokenService.createToken(userDtoForToken);
            String createdToken = token.getToken();
 
            emailService.sendEmail(createdToken, saveNewUser.getEmail());
-
         }
 
         return mapToUserEntity(saveNewUser);
@@ -94,11 +93,25 @@ public class UserServiceImpl implements UserService {
         return userId;
     }
 
-    public User createWalletForUser(long userId, String name){
+    public User createWalletForUser(long userId, String name, String email){
         User newWallet = new User();
         newWallet.setId(userId);
         newWallet.setName(name);
-        return newWallet;
+        newWallet.setEmail(email);
+        User savedUser = userRepository.save(newWallet);
+
+        UserDTO userDTO = new UserDTO();
+        userDTO.setId(savedUser.getId());
+        userDTO.setName(savedUser.getName());
+        userDTO.setEmail(savedUser.getEmail());
+        return savedUser;
+    }
+
+    private UserDTO mapToWalletUserDTO(User savedUser) {
+        UserDTO userDTO = new UserDTO();
+        userDTO.setId(savedUser.getId());
+        userDTO.setName(savedUser.getName());
+        return userDTO;
     }
 
 //    @Override

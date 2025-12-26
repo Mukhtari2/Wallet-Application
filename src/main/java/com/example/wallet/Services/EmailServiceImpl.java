@@ -23,7 +23,7 @@ public class EmailServiceImpl implements EmailService {
             MimeMessage mimeMessage = mailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, "utf-8");
 
-            String link = "http://localhost:8080/api/v1/auth/verify?token=" + token;
+            String link = "http://localhost:8080/api/auth/verify?token=" + token;
 
             String htmlContent = "<h3>Verify your email</h3>" +
                     "<p>Click the link below to activate your account:</p>" +
@@ -38,6 +38,5 @@ public class EmailServiceImpl implements EmailService {
         }catch (MessagingException exception){
             throw new IllegalStateException("Failed to send email", exception);
         }
-
     }
 }
