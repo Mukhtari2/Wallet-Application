@@ -1,6 +1,9 @@
 package com.example.wallet.Dtos;
 
+import com.example.wallet.Enum.Status;
 import jakarta.persistence.Column;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -14,6 +17,8 @@ public class UserDTO {
     private Long id;
     private String name;
     private String email;
+    @Enumerated(EnumType.STRING)
+    private Status status;
 
 
     public void setName(String name) {

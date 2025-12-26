@@ -37,7 +37,7 @@ public class UserServiceImpl implements UserService {
         User saveNewUser = userRepository.save(user);
 
         if (saveNewUser.getId() != null){
-           createWalletForUser(saveNewUser.getId(), saveNewUser.getName(), saveNewUser.getEmail());
+//           createWalletForUser(saveNewUser.getId(), saveNewUser.getName(), saveNewUser.getEmail());
 
            UserDTO userDtoForToken = mapToUserDTO(saveNewUser);
            UserTokenDTO token = tokenService.createToken(userDtoForToken);
@@ -54,6 +54,7 @@ public class UserServiceImpl implements UserService {
                 .id(newUser.getId())
                 .name(newUser.getName())
                 .email(newUser.getEmail())
+                .status(Status.INACTIVE)
                 .build();
 
     }
