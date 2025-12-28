@@ -2,6 +2,7 @@ package com.example.wallet.Controllers;
 
 
 import com.example.wallet.Dtos.WalletDTO;
+import com.example.wallet.Models.User;
 import com.example.wallet.Services.WalletService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -20,11 +21,11 @@ public class WalletController {
         this.wallet = wallet;
     }
 
-//    @PostMapping("/{userId}/wallet")
-//    public ResponseEntity<WalletDTO> createWalletForUser(@Valid @RequestBody WalletDTO walletDTO){
-//        WalletDTO createWallet = wallet.createNewWalletForUser(walletDTO.getUserId(), walletDTO.getName());
-//        return new ResponseEntity<>(createWallet, HttpStatus.CREATED);
-//    }
+    @PostMapping("/{userId}/wallet")
+    public ResponseEntity<WalletDTO> createWalletForUser(@Valid @RequestBody User user){
+        WalletDTO createWallet = wallet.createNewWalletForUser(user);
+        return new ResponseEntity<>(createWallet, HttpStatus.CREATED);
+    }
 
     @GetMapping
     public ResponseEntity<List<WalletDTO>> getListOfAllWallet(){
