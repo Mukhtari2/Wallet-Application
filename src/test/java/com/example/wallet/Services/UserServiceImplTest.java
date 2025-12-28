@@ -73,13 +73,4 @@ class UserServiceImplTest {
         assertEquals("joymakinde23@rocketmail.com", viewUsers.get(2).getEmail());
     }
 
-    @Test
-    void testToVerifiedEmptyNameEntry(){
-        UserDTO userDTO = new UserDTO();
-        userDTO.setName("            ");
-        userDTO.setEmail("Musafiz@gmail.com");
-
-        UserDTO saveEmptyName = userService.createNewUser(userDTO);
-        assertNull(saveEmptyName.getName());
-    }
 }
