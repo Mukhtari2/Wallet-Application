@@ -1,66 +1,66 @@
-//package com.example.wallet.Services;
-//
-//import com.example.wallet.Dtos.UserDTO;
-//import com.example.wallet.Dtos.WalletDTO;
-//import com.example.wallet.Repositories.UserRepository;
-//import com.example.wallet.Repositories.WalletRepository;
-//import lombok.Data;
-//import org.junit.jupiter.api.BeforeEach;
-//import org.junit.jupiter.api.Test;
-//import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.boot.test.context.SpringBootTest;
-//import org.springframework.test.context.ActiveProfiles;
-//
-//import java.math.BigDecimal;
-//import java.util.List;
-//
-//import static org.junit.jupiter.api.Assertions.*;
-//
-//@SpringBootTest
-//@Data
-//@ActiveProfiles("test")
-//class WalletServiceImplTest {
-//
-//    @Autowired
-//    private WalletServiceImpl walletServiceImpl;
-//
-//    @Autowired
-//    private WalletRepository walletRepository;
-//
-//    @Autowired
-//    private UserService userService;
-//
-//    @Autowired
-//    private UserRepository userRepository;
-//
-//
-//    @BeforeEach
-//    void setUp(){
-//        walletRepository.deleteAll();
-//    }
-//
-//
-//    @Test
-//    void testToCreateNewWalletForUser() {
-//            UserDTO userDTO = new UserDTO();
-//            userDTO.setEmail("ZbbyMicheal23@gmail.com");
-//            userDTO.setName("Zubby") ;
-//
-//            UserDTO newUser = userService.createNewUser(userDTO);
-//
-//            WalletDTO walletDTO = new WalletDTO();
-//            walletDTO.setName("Binance" );
-//            walletDTO.setUserId(newUser.getId());
-//
-//            assertNotNull(newUser.getId());
-//            WalletDTO newWallet = walletServiceImpl.createNewWalletForUser(newUser.getId(), "Binance");
-//
-//            assertNotNull(walletDTO);
-//            assertEquals("Binance", newWallet.getName());
-//            assertEquals(newUser.getId(), newWallet.getUserId());
-//            assertEquals("Zubby", newUser.getName());
-//    }
-//
+package com.example.wallet.Services;
+
+import com.example.wallet.Dtos.UserDTO;
+import com.example.wallet.Dtos.WalletDTO;
+import com.example.wallet.Models.User;
+import com.example.wallet.Repositories.UserRepository;
+import com.example.wallet.Repositories.WalletRepository;
+import lombok.Data;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
+
+import java.math.BigDecimal;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+@SpringBootTest
+@Data
+@ActiveProfiles("test")
+class WalletServiceImplTest {
+
+    @Autowired
+    private WalletService walletService;
+
+    @Autowired
+    private WalletRepository walletRepository;
+
+    @Autowired
+    private UserService userService;
+
+    @Autowired
+    private UserRepository userRepository;
+
+
+    @BeforeEach
+    void setUp(){
+        walletRepository.deleteAll();
+    }
+
+
+    @Test
+    void testToCreateNewWalletForUser() {
+            User user = new User();
+            user.setEmail("ZbbyMicheal23@gmail.com");
+            user.setName("Zubby") ;
+
+
+            WalletDTO walletDTO = new WalletDTO();
+            walletDTO.setName("Binance" );
+            walletDTO.setUserId(user.getId());
+            walletDTO.setBalance(new BigDecimal("300.00"));
+
+            WalletDTO newWallet = walletService.createNewWalletForUser(user);
+
+            assertNotNull(walletDTO);
+            assertEquals("Binance", newWallet.getName());
+            assertEquals(user.getId(), newWallet.getUserId());
+            assertEquals("Zubby", user.getName());
+    }
+
 //    @Test
 //    void testToViewAllWalletCreated(){
 //        UserDTO user1 = new UserDTO();
@@ -94,4 +94,4 @@
 //        assertEquals(new BigDecimal("9000.00"), savedWallets.getFirst().getBalance());
 //
 //    }
-//}
+}

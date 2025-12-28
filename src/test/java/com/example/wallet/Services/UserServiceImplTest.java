@@ -1,7 +1,9 @@
 package com.example.wallet.Services;
 
 import com.example.wallet.Dtos.UserDTO;
+import com.example.wallet.Enum.Status;
 import com.example.wallet.Repositories.UserRepository;
+import com.example.wallet.Repositories.WalletRepository;
 import lombok.Data;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -23,8 +25,12 @@ class UserServiceImplTest {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private WalletRepository walletRepository;
+
     @BeforeEach
     void setUp() {
+        walletRepository.deleteAll();
         userRepository.deleteAll();
     }
 
@@ -47,19 +53,19 @@ class UserServiceImplTest {
     void testToViewAllUsersCreated() throws IllegalStateException {
         UserDTO userDTO = new UserDTO();
         userDTO.setName("Musa");
-        userDTO.setEmail("MusaHAfiz@gmail.com");
+        userDTO.setEmail("MusddaHAfiz@gmail.com");
 
         UserDTO userDTO2 = new UserDTO();
         userDTO2.setName("Isah");
-        userDTO2.setEmail("IsahHAfiz@gmail.com");
+        userDTO2.setEmail("IsaaahHAfiz@gmail.com");
 
         UserDTO userDTO3 = new UserDTO();
         userDTO3.setName("Joy");
-        userDTO3.setEmail("JoyMakinde23@rocketmail.com");
+        userDTO3.setEmail("JoyMadakinde23@rocketmail.com");
 
         UserDTO userDTO4 = new UserDTO();
         userDTO4.setName("amos");
-        userDTO4.setEmail("amog2@gmail.com");
+        userDTO4.setEmail("amogac2@gmail.com");
 
         assertEquals(0, userRepository.findAll().size());
         userService.saveAllUsers(List.of(userDTO, userDTO2, userDTO3, userDTO4));
@@ -70,7 +76,25 @@ class UserServiceImplTest {
         assertNotNull(viewUsers);
         assertEquals(4, viewUsers.size());
         assertEquals("Isah", viewUsers.get(1).getName());
-        assertEquals("joymakinde23@rocketmail.com", viewUsers.get(2).getEmail());
+        assertEquals("joymadakinde23@rocketmail.com", viewUsers.get(2).getEmail());
+    }
+
+    @Test
+    void testToViewAnotherWallet(){
+        UserDTO userDTO = new UserDTO();
+        userDTO.setName("Yunus");
+        userDTO.setEmail("YunusDadday@gmail.com");
+        userDTO.setStatus(Status.INACTIVE);
+
+        assertEquals(0, userRepository.findAll().size() );
+        UserDTO newUser = userService.createNewUser(userDTO);
+        assertEquals(1, userRepository.findAll().size() );
+        assertEquals(1, walletRepository.findAll().size());
+        userService.createAnotherWallet(newUser.getId());
+        assertEquals(2, walletRepository.findAll().size());
+        assertNotNull(userDTO);
+        assertEquals(Status.INACTIVE, userDTO.getStatus());
+
     }
 
 }

@@ -49,7 +49,6 @@ public class UserServiceImpl implements UserService {
         }
         return mapToUserEntity(saveNewUser);
     }
-
     private UserDTO mapToUserEntity(User newUser) {
         return UserDTO.builder()
                 .id(newUser.getId())
@@ -91,7 +90,6 @@ public class UserServiceImpl implements UserService {
 
     public User findByUserId(long id){
         return userRepository.findById(id).orElseThrow();
-
     }
     public void createAnotherWallet(Long id) {
         User user = findByUserId(id);
@@ -101,7 +99,7 @@ public class UserServiceImpl implements UserService {
     }
 
 //    @Override
-//    public boolean verifyToken(Striongtoken) {
+//    public boolean verifyToken(String token) {
 //        Optional<VerificationToken> verificationTokenOpt = tokenRepository.findByToken(token);
 //
 //        if (verificationTokenOpt.isEmpty()) {

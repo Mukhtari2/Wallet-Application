@@ -11,5 +11,6 @@ public interface UserService {
     List<UserDTO> saveAllUsers(List<UserDTO> userDTOS);
     List<UserDTO> getAllUsers();
     User findByUserId(long id);
+    void createAnotherWallet(Long id);
 
 }
