@@ -20,8 +20,8 @@ public class TransactionController {
     }
 
     @PostMapping("/{walletId}/transactions")
-    public ResponseEntity<TransactionDTO> createTransaction(@Valid @PathVariable Long walletId, @RequestBody TransactionDTO dto){
-        TransactionDTO createTransaction = transaction.createNewTransaction(walletId, dto);
+    public ResponseEntity<TransactionDTO> createTransaction(@Valid @PathVariable Long walletId){
+        TransactionDTO createTransaction = transaction.createNewTransaction(walletId);
         return new ResponseEntity<>(createTransaction, HttpStatus.CREATED);
     }
 

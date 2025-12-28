@@ -20,11 +20,11 @@ public class WalletController {
         this.wallet = wallet;
     }
 
-    @PostMapping("/{userId}/wallet")
-    public ResponseEntity<WalletDTO> createWalletForUser(@Valid @RequestBody WalletDTO walletDTO){
-        WalletDTO createWallet = wallet.createNewWalletForUser(walletDTO.getUserId(), walletDTO.getName());
-        return new ResponseEntity<>(createWallet, HttpStatus.CREATED);
-    }
+//    @PostMapping("/{userId}/wallet")
+//    public ResponseEntity<WalletDTO> createWalletForUser(@Valid @RequestBody WalletDTO walletDTO){
+//        WalletDTO createWallet = wallet.createNewWalletForUser(walletDTO.getUserId(), walletDTO.getName());
+//        return new ResponseEntity<>(createWallet, HttpStatus.CREATED);
+//    }
 
     @GetMapping
     public ResponseEntity<List<WalletDTO>> getListOfAllWallet(){

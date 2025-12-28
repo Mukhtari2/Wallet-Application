@@ -4,10 +4,10 @@ import com.example.wallet.Dtos.WalletDTO;
 import com.example.wallet.Models.User;
 import com.example.wallet.Models.Wallet;
 import com.example.wallet.Repositories.WalletRepository;
-import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,22 +15,18 @@ import java.util.List;
 @RequiredArgsConstructor
 public class WalletServiceImpl implements WalletService {
     private final WalletRepository walletRepository;
-    private final UserService userService;
 
     @Override
-    public WalletDTO createNewWalletForUser(Long userId, String walletName) {
-        User userIdToCreateWallet = userService.findByUserId(userId);
-        if (userIdToCreateWallet == null) {
-            throw new EntityNotFoundException("No user id available to create wallet");
-        }
+    public WalletDTO createNewWalletForUser(User user) {
+        Long counter = walletRepository.count() + 1;
         Wallet wallet = new Wallet();
         wallet.setId(wallet.getId());
-        wallet.setName(walletName);
-        wallet.setUser(userIdToCreateWallet);
+        wallet.setName("wallet " + counter + " " + user.getName());
+        wallet.setUser(user);
+        wallet.setBalance(new BigDecimal("0.00"));
         Wallet saveWallet = walletRepository.save(wallet);
         return mapToWalletUserDTO(saveWallet);
     }
-
     private WalletDTO mapToWalletUserDTO(Wallet wallet) {
         WalletDTO walletDTO = new WalletDTO();
         walletDTO.setId(wallet.getId());
@@ -39,19 +35,14 @@ public class WalletServiceImpl implements WalletService {
         walletDTO.setUserId(wallet.getUserId().getId());
         return walletDTO;
     }
-
-    public List<WalletDTO> saveAllWallets (List<WalletDTO> dtoList){
+    public List<WalletDTO> saveAllWallets (List<WalletDTO> dtoList, User userId){
         List<Wallet> saveWallet = new ArrayList<>();
         for (WalletDTO dto : dtoList){
-            User user = userService.findByUserId(dto.getUserId());
-            if(user == null) {
-                throw new EntityNotFoundException("No user found with the id " + dto.getUserId());
-            }
                 Wallet wallet = new Wallet();
                 wallet.setId(dto.getId());
                 wallet.setName(dto.getName());
                 wallet.setBalance(dto.getBalance());
-                wallet.setUser(user);
+                wallet.setUser(userId);
                 saveWallet.add(wallet);
         }
         List<Wallet> walletList = walletRepository.saveAll(saveWallet);
@@ -62,7 +53,6 @@ public class WalletServiceImpl implements WalletService {
         }
         return dtoWalletList;
     }
-
     @Override
     public List<WalletDTO> listAllWalletForUser() {
         List<Wallet> walletEntities = walletRepository.findAll();
@@ -73,14 +63,10 @@ public class WalletServiceImpl implements WalletService {
         }
         return walletDTOs;
     }
-
     @Override
     public Wallet findByWalletId(Long walletId) {
-        Wallet wallet = new Wallet();
-        wallet.setId(walletId);
-        return wallet;
+        return walletRepository.findById(walletId).orElseThrow();
     }
-
 
 }
 

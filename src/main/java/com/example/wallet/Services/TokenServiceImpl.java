@@ -6,22 +6,18 @@ import com.example.wallet.Enum.Status;
 import com.example.wallet.Models.UserToken;
 import com.example.wallet.Repositories.TokenRepository;
 import com.example.wallet.Repositories.UserRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.UUID;
 @Service
+@RequiredArgsConstructor
 public class TokenServiceImpl implements TokenService {
 
     private final TokenRepository tokenRepository;
     private final EmailService emailService;
     private final UserRepository userRepository;
-
-    public TokenServiceImpl(TokenRepository tokenRepository, EmailService emailService, UserRepository userRepository) {
-        this.tokenRepository = tokenRepository;
-        this.emailService = emailService;
-        this.userRepository = userRepository;
-    }
 
     @Override
     public UserTokenDTO createToken(UserDTO createdUser) {

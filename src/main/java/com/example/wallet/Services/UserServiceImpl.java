@@ -22,6 +22,8 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final TokenService tokenService;
     private final EmailService emailService;
+    private final WalletService walletService;
+
 
     @Override
     @Transactional
@@ -37,15 +39,14 @@ public class UserServiceImpl implements UserService {
         User saveNewUser = userRepository.save(user);
 
         if (saveNewUser.getId() != null){
-//           createWalletForUser(saveNewUser.getId(), saveNewUser.getName(), saveNewUser.getEmail());
-
            UserDTO userDtoForToken = mapToUserDTO(saveNewUser);
            UserTokenDTO token = tokenService.createToken(userDtoForToken);
            String createdToken = token.getToken();
-
            emailService.sendEmail(createdToken, saveNewUser.getEmail());
+           walletService.createNewWalletForUser(saveNewUser);
+        }else {
+            userRepository.delete(saveNewUser);
         }
-
         return mapToUserEntity(saveNewUser);
     }
 
@@ -56,7 +57,6 @@ public class UserServiceImpl implements UserService {
                 .email(newUser.getEmail())
                 .status(Status.INACTIVE)
                 .build();
-
     }
 
     @Transactional
@@ -76,7 +76,6 @@ public class UserServiceImpl implements UserService {
       return savedUserDto;
     }
 
-
     @Override
     @Transactional()
     public List<UserDTO> getAllUsers() {
@@ -89,34 +88,18 @@ public class UserServiceImpl implements UserService {
     }
 
     public User findByUserId(long id){
-        User userId = new User();
-        userRepository.findById(userId.getId());
-        return userId;
+        return userRepository.findById(id).orElseThrow();
+
     }
-
-    public User createWalletForUser(long userId, String name, String email){
-        User newWallet = new User();
-        newWallet.setId(userId);
-        newWallet.setName(name);
-        newWallet.setEmail(email);
-        User savedUser = userRepository.save(newWallet);
-
-        UserDTO userDTO = new UserDTO();
-        userDTO.setId(savedUser.getId());
-        userDTO.setName(savedUser.getName());
-        userDTO.setEmail(savedUser.getEmail());
-        return savedUser;
-    }
-
-    private UserDTO mapToWalletUserDTO(User savedUser) {
-        UserDTO userDTO = new UserDTO();
-        userDTO.setId(savedUser.getId());
-        userDTO.setName(savedUser.getName());
-        return userDTO;
+    public void createAnotherWallet(Long id) {
+        User user = findByUserId(id);
+        if (user.getId() != null) {
+            walletService.createNewWalletForUser(user);
+        } else throw new EntityExistsException("User id does not exist");
     }
 
 //    @Override
-//    public boolean verifyToken(String token) {
+//    public boolean verifyToken(Striongtoken) {
 //        Optional<VerificationToken> verificationTokenOpt = tokenRepository.findByToken(token);
 //
 //        if (verificationTokenOpt.isEmpty()) {
