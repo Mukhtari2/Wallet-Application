@@ -24,20 +24,20 @@ public class TransactionServiceImpl implements TransactionService {
 
     @Override
     @Transactional
-    public TransactionDTO createNewTransaction(Long walletId) {
-        Wallet wallet = walletService.findByWalletId(walletId);
-        if (wallet != null) {
+    public TransactionDTO createNewTransaction(TransactionDTO dto) {
+        Wallet wallet = walletService.findByWalletId(dto.getWalletId());
+        if(wallet != null){
             Transaction transaction = new Transaction();
             transaction.setWallet(wallet);
-            transaction.setType(transaction.getType());
-            transaction.setAmount(transaction.getAmount());
-            transaction.setBillCategory(transaction.getBillCategory());
-            transaction.setDate(transaction.getDate());
-            transaction.setDescription(transaction.getDescription());
+            transaction.setType(dto.getType());
+            transaction.setAmount(dto.getAmount());
+            transaction.setBillCategory(dto.getBillCategory());
+            transaction.setDate(dto.getDate());
+            transaction.setDescription(dto.getDescription());
             Transaction savedTransaction = transactionRepository.save(transaction);
             return mapToTransactionDTO(savedTransaction);
-        }else throw new EntityNotFoundException("No wallet found for the transaction");
-    }
+        }else throw new RuntimeException("No wallet existing for the transaction");
+        }
 
     private TransactionDTO mapToTransactionDTO(Transaction transaction) {
         TransactionDTO dto = new TransactionDTO();
