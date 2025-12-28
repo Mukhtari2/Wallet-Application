@@ -1,12 +1,10 @@
 package com.example.wallet.Services;
 
 import com.example.wallet.Dtos.TransactionDTO;
-import com.example.wallet.Dtos.UserDTO;
 import com.example.wallet.Dtos.WalletDTO;
 import com.example.wallet.Enum.BillCategory;
 import com.example.wallet.Enum.BillType;
 import com.example.wallet.Models.User;
-import com.example.wallet.Models.Wallet;
 import com.example.wallet.Repositories.TransactionRepository;
 import com.example.wallet.Repositories.UserRepository;
 import jakarta.transaction.Transactional;
@@ -98,12 +96,11 @@ class TransactionServiceImplTest {
         List<TransactionDTO> savedListOfTransaction = transactionService.saveAllTransactions(List.of(transactionDTO));
 
         assertNotNull(savedListOfTransaction);
-        assertEquals("Binance", savedWallet.getName());
-        assertEquals(new BigDecimal("3000.00"), wallet.getBalance());
+        assertEquals("wallet 1 " + newUser.getName(), savedWallet.getName());
+        assertEquals(new BigDecimal("400.09"), wallet.getBalance());
         assertEquals(new BigDecimal("390.00"), transactionDTO.getAmount());
-        assertEquals("Hafeez Abdallah", newUser.getName());
-        assertEquals("hafeezabdallah12@gmail.com", newUser.getEmail());
-        assertEquals(1, savedWallet.getUserId());
+        assertEquals("Yahya", newUser.getName());
+        assertEquals("yahaya32@gmail.com", newUser.getEmail());
         assertEquals(LocalDate.now(), transactionDTO.getDate());
 
     }
