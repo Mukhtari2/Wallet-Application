@@ -45,15 +45,16 @@ class TransactionServiceImplTest {
     @Transactional
     @Test
     void createNewTransaction() {
-        User dto = new User();
-        dto.setName("Yahya");
-        dto.setEmail("yahaya32@gmail.com");
-        User newUser = userRepository.save(dto);
+        User user = new User();
+        user.setName("Yahya");
+        user.setEmail("yahaya32@gmail.com");
+        User newUser = userRepository.save(user);
 
         WalletDTO wallet = new WalletDTO();
         wallet.setName("wallet 1 " + newUser.getName());
         wallet.setUserId(newUser.getId());
-        WalletDTO savedWallet = walletService.createNewWalletForUser();
+        wallet.setBalance(new BigDecimal("400.09"));
+        WalletDTO savedWallet = walletService.createNewWalletForUser(user);
 
         TransactionDTO transactionDTO = new TransactionDTO();
         transactionDTO.setWalletId(savedWallet.getId());
@@ -63,49 +64,47 @@ class TransactionServiceImplTest {
         transactionDTO.setDate(LocalDate.now());
         transactionDTO.setDescription("transferring month December");
 
-
         TransactionDTO newTransaction = transactionService.createNewTransaction(transactionDTO);
 
         assertNotNull(newTransaction);
-        assertEquals(BillType.CABLE_SUBSCRIPTION, newTransaction.getType());
-        assertEquals("yahaya32@gmail.com", dto.getEmail());
+        assertEquals(BillType.ACCOMMODATION, newTransaction.getType());
+        assertEquals("yahaya32@gmail.com", user.getEmail());
         assertEquals("wallet 1 " + newUser.getName(), savedWallet.getName());
         assertEquals("transferring month December", newTransaction.getDescription());
         assertEquals(LocalDate.now(),newTransaction.getDate());
         assertEquals(new BigDecimal("300"), newTransaction.getAmount());
-        assertEquals(savedWallet.getUserId(), newTransaction.getWalletId());
     }
-//
-//    @Transactional
-//    @Test
-//    void testToViewAllTransactionsMade(){
-//        UserDTO user1 = new UserDTO();
-//        user1.setName("Hafeez Abdallah");
-//        user1.setEmail("HafeezAbdallah12@gmail.com");
-//        UserDTO saveUser = userServicesImpl.createNewUser(user1);
-//
-//        WalletDTO wallet1 = new WalletDTO();
-//        wallet1.setName("Binance");
-//        wallet1.setBalance(new BigDecimal("3000.00"));
-//        wallet1.setUserId(saveUser.getId());
-//        WalletDTO savedWallet = walletService.createNewWalletForUser(saveUser.getId());
-//
-//        TransactionDTO transactionDTO = new TransactionDTO();
-//        transactionDTO.setAmount(new BigDecimal("390.00"));
-//        transactionDTO.setDate(LocalDate.now());
-//        transactionDTO.setType(BillType.ACCOMMODATION);
-//        transactionDTO.setBillCategory(BillCategory.YEARLY);
-//        transactionDTO.setWalletId(savedWallet.getId());
-//        List<TransactionDTO> savedListOfTransaction = transactionServiceImpl.saveAllTransactions(List.of(transactionDTO));
-//
-//        assertNotNull(savedListOfTransaction);
-//        assertEquals("Binance", savedWallet.getName());
-//        assertEquals(new BigDecimal("3000.00"), wallet1.getBalance());
-//        assertEquals(new BigDecimal("390.00"), transactionDTO.getAmount());
-//        assertEquals("Hafeez Abdallah", saveUser.getName());
-//        assertEquals("hafeezabdallah12@gmail.com", saveUser.getEmail());
-//        assertEquals(1, savedWallet.getUserId());
-//        assertEquals(LocalDate.now(), transactionDTO.getDate());
-//
-//    }
+
+    @Transactional
+    @Test
+    void testToViewAllTransactionsMade(){
+        User user = new User();
+        user.setName("Yahya");
+        user.setEmail("yahaya32@gmail.com");
+        User newUser = userRepository.save(user);
+
+        WalletDTO wallet = new WalletDTO();
+        wallet.setName("wallet 1 " + newUser.getName());
+        wallet.setUserId(newUser.getId());
+        wallet.setBalance(new BigDecimal("400.09"));
+        WalletDTO savedWallet = walletService.createNewWalletForUser(user);
+
+        TransactionDTO transactionDTO = new TransactionDTO();
+        transactionDTO.setAmount(new BigDecimal("390.00"));
+        transactionDTO.setDate(LocalDate.now());
+        transactionDTO.setType(BillType.ACCOMMODATION);
+        transactionDTO.setBillCategory(BillCategory.YEARLY);
+        transactionDTO.setWalletId(savedWallet.getId());
+        List<TransactionDTO> savedListOfTransaction = transactionService.saveAllTransactions(List.of(transactionDTO));
+
+        assertNotNull(savedListOfTransaction);
+        assertEquals("Binance", savedWallet.getName());
+        assertEquals(new BigDecimal("3000.00"), wallet.getBalance());
+        assertEquals(new BigDecimal("390.00"), transactionDTO.getAmount());
+        assertEquals("Hafeez Abdallah", newUser.getName());
+        assertEquals("hafeezabdallah12@gmail.com", newUser.getEmail());
+        assertEquals(1, savedWallet.getUserId());
+        assertEquals(LocalDate.now(), transactionDTO.getDate());
+
+    }
 }

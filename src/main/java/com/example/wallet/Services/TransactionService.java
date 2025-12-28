@@ -9,4 +9,5 @@ import java.util.List;
 public interface TransactionService {
     List<TransactionDTO> getAllTransactions();
     TransactionDTO createNewTransaction(TransactionDTO transactionDTO);
+    List<TransactionDTO> saveAllTransactions(List<TransactionDTO> dtoList);
 }
