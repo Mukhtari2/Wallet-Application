@@ -1,6 +1,7 @@
 package com.example.wallet.Dtos;
 
 
+import com.example.wallet.Enum.BillCategory;
 import com.example.wallet.Enum.BillType;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.EnumType;
@@ -17,12 +18,13 @@ import java.time.LocalDate;
 @NoArgsConstructor
 public class TransactionDTO {
     private Long walletId;
-    @NotBlank(message = "Bill Category is required")
-    @Size(min = 2, max = 50, message = "characters must be between 2 - 50 length")
-    private String billCategory;
+
+    @Enumerated(EnumType.STRING)
+    private BillCategory billCategory;
 
     @Enumerated(EnumType.STRING)
     private BillType type;
+
     private BigDecimal amount;
     private String description;
     @JsonFormat(pattern = "d/M/yyyy")
