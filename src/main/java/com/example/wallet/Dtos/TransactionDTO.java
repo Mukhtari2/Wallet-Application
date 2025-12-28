@@ -1,7 +1,10 @@
 package com.example.wallet.Dtos;
 
 
+import com.example.wallet.Enum.BillType;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.*;
@@ -17,7 +20,9 @@ public class TransactionDTO {
     @NotBlank(message = "Bill Category is required")
     @Size(min = 2, max = 50, message = "characters must be between 2 - 50 length")
     private String billCategory;
-    private String type;
+
+    @Enumerated(EnumType.STRING)
+    private BillType type;
     private BigDecimal amount;
     private String description;
     @JsonFormat(pattern = "d/M/yyyy")
