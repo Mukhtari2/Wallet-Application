@@ -35,7 +35,8 @@ public class WalletServiceImpl implements WalletService {
         walletDTO.setUserId(wallet.getUserId().getId());
         return walletDTO;
     }
-    public List<WalletDTO> saveAllWallets (List<WalletDTO> dtoList, User userId){
+    public List<WalletDTO> saveAllWallets (List<WalletDTO> dtoList){
+        User userId = new User();
         List<Wallet> saveWallet = new ArrayList<>();
         for (WalletDTO dto : dtoList){
                 Wallet wallet = new Wallet();

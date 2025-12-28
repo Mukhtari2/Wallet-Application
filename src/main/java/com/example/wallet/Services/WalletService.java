@@ -8,6 +8,6 @@ import java.util.List;
 public interface WalletService {
     WalletDTO createNewWalletForUser(User user);
     List<WalletDTO> listAllWalletForUser();
-    List<WalletDTO> saveAllWallets(List<WalletDTO> dtoList, User userId);
+    List<WalletDTO> saveAllWallets(List<WalletDTO> dtoList);
     Wallet findByWalletId(Long walletId);
 }

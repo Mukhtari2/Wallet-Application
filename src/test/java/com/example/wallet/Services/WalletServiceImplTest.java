@@ -1,6 +1,7 @@
 package com.example.wallet.Services;
 
 import com.example.wallet.Dtos.WalletDTO;
+import com.example.wallet.Enum.Status;
 import com.example.wallet.Models.User;
 import com.example.wallet.Repositories.UserRepository;
 import com.example.wallet.Repositories.WalletRepository;
@@ -71,27 +72,28 @@ class WalletServiceImplTest {
         User user = new User();
         user.setName("Abu");
         user.setEmail("ZbbyMicheal23@gmail.com");
-        User user1 = userRepository.save(user);
+        user.setStatus(Status.INACTIVE);
 
+        User user2 = new User();
+        user2.setEmail("MusaDanladi21@gmail.com");
+        user2.setName("Musa") ;
+        user2.setStatus(Status.INACTIVE);
+        userRepository.saveAll(List.of(user, user2));
 
         WalletDTO wallet1 = new WalletDTO();
         wallet1.setName("Nino wallet");
-        wallet1.setBalance(new BigDecimal(9000.00));
-        wallet1.setUserId(newUser.getId());
-
-        UserDTO user2 = new UserDTO();
-        user2.setEmail("MusaDanladi21@gmail.com");
-        user2.setName("Musa") ;
-        UserDTO newUser2 = userService.createNewUser(user2);
+        wallet1.setBalance(new BigDecimal("9000.00"));
+        wallet1.setUserId(user.getId());
 
         WalletDTO wallet2 = new WalletDTO();
         wallet2.setName("Binance");
-        wallet2.setBalance(new BigDecimal(45000.00));
-        wallet2.setUserId(newUser2.getId());
+        wallet2.setBalance(new BigDecimal("45000.00"));
+        wallet2.setUserId(user2.getId());
 
-       walletServiceImpl.saveAllWallets(List.of(wallet1, wallet2));
 
-        List<WalletDTO> savedWallets = walletServiceImpl.listAllWalletForUser();
+       walletService.saveAllWallets(List.of(wallet1));
+
+        List<WalletDTO> savedWallets = walletService.listAllWalletForUser();
 
         assertNotNull(savedWallets);
         assertEquals(2, savedWallets.size());
