@@ -66,6 +66,7 @@ public class UserServiceImpl implements UserService {
           User user =  new User();
           user.setName(dto.getName());
           user.setEmail(dto.getEmail());
+          user.setStatus(dto.getStatus());
           userEntities.add(user);
       }
       List<User> saveNewUserEntities = userRepository.saveAll(userEntities);
