@@ -1,6 +1,5 @@
 package com.example.wallet.Services;
 
-import com.example.wallet.Dtos.UserDTO;
 import com.example.wallet.Dtos.WalletDTO;
 import com.example.wallet.Models.User;
 import com.example.wallet.Repositories.UserRepository;
@@ -38,6 +37,7 @@ class WalletServiceImplTest {
     @BeforeEach
     void setUp(){
         walletRepository.deleteAll();
+        userRepository.deleteAll();
     }
 
 
