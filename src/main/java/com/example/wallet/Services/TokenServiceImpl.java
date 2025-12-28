@@ -7,7 +7,6 @@ import com.example.wallet.Models.UserToken;
 import com.example.wallet.Repositories.TokenRepository;
 import com.example.wallet.Repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.UUID;
