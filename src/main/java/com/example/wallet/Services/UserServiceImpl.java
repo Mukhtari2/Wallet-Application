@@ -64,6 +64,7 @@ public class UserServiceImpl implements UserService {
       List<User> userEntities = new ArrayList<>();
       for (UserDTO dto : userDTOS){
           User user =  new User();
+          user.setId(dto.getId());
           user.setName(dto.getName());
           user.setEmail(dto.getEmail());
           user.setStatus(dto.getStatus());
