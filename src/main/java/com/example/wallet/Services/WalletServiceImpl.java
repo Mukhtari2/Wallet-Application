@@ -34,6 +34,7 @@ public class WalletServiceImpl implements WalletService {
         walletDTO.setBalance(wallet.getBalance());
         walletDTO.setUserId(wallet.getUserId().getId());
         return walletDTO;
+
     }
     public List<WalletDTO> saveAllWallets (List<WalletDTO> dtoList){
         User userId = new User();
