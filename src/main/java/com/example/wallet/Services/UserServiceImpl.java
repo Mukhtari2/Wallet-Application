@@ -26,6 +26,7 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
+
     @Transactional
     public UserDTO createNewUser(UserDTO userDTO) {
         if (userRepository.existsByEmail(userDTO.getEmail())) {
