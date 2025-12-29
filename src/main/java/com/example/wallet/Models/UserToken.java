@@ -21,5 +21,5 @@ public class UserToken {
 
     @Enumerated(EnumType.STRING)
     private Status status;
-    private String token;
+    private int token;
 }

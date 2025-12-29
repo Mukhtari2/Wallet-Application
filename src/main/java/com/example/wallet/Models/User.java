@@ -16,6 +16,10 @@ import lombok.*;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_sequence")
+    @SequenceGenerator(
+            name = "user_sequence", sequenceName = "user_sequence", allocationSize = 1
+    )
+
     private Long id;
 
     @NotBlank(message = "Name is required")

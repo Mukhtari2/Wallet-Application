@@ -9,6 +9,8 @@ import com.example.wallet.Repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.security.SecureRandom;
+import java.util.Scanner;
 import java.util.UUID;
 @Service
 @RequiredArgsConstructor
@@ -20,7 +22,8 @@ public class TokenServiceImpl implements TokenService {
 
     @Override
     public UserTokenDTO createToken(UserDTO createdUser) {
-        String token = UUID.randomUUID().toString();
+        SecureRandom secureRandom = new SecureRandom();
+        int token = secureRandom.nextInt(9000) + 1000;
         UserToken userToken = new UserToken();
         userToken.setUserId(createdUser.getId());
         userToken.setStatus(Status.ACTIVE);

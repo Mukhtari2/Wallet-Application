@@ -19,7 +19,7 @@ public class EmailServiceImpl implements EmailService {
 
     @Async
     @Override
-    public void sendEmail(String token, String email) {
+    public void sendEmail(int token, String email) {
         try {
             MimeMessage mimeMessage = mailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, "utf-8");
@@ -30,9 +30,9 @@ public class EmailServiceImpl implements EmailService {
                     "<p>Click the link below to activate your account:</p>" +
                     "<a href=\"" + link + "\">Activate Account</a>";
 
-            helper.setText(htmlContent, true); // 'true' enables HTML
+            helper.setText(htmlContent + "Your 4-digit verification code is: " + String.format("%04d", token), true); // 'true' enables HTML
             helper.setTo(email);
-            helper.setSubject("Confirm your Registration");
+            helper.setSubject("Your verification code");
             helper.setFrom("suleimannmukhtar@gmail.com");
 
             mailSender.send(mimeMessage);

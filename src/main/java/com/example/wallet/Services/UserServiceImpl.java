@@ -42,7 +42,7 @@ public class UserServiceImpl implements UserService {
         if (saveNewUser.getId() != null){
            UserDTO userDtoForToken = mapToUserDTO(saveNewUser);
            UserTokenDTO token = tokenService.createToken(userDtoForToken);
-           String createdToken = token.getToken();
+           int createdToken = token.getToken();
            emailService.sendEmail(createdToken, saveNewUser.getEmail());
            walletService.createNewWalletForUser(saveNewUser);
         }else {

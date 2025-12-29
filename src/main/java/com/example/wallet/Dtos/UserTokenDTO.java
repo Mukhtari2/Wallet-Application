@@ -13,5 +13,5 @@ public class UserTokenDTO {
 
     @Enumerated(EnumType.STRING)
     private Status status;
-    private String token;
+    private int token;
 }
