@@ -12,7 +12,6 @@ public class EmailServiceImpl implements EmailService {
 
     private final JavaMailSender mailSender;
 
-
     public EmailServiceImpl(JavaMailSender mailSender) {
         this.mailSender = mailSender;
     }
