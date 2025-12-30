@@ -15,6 +15,7 @@ import lombok.*;
 @AllArgsConstructor
 public class UserDTO {
     private Long id;
+
     private String name;
     private String email;
     @Enumerated(EnumType.STRING)
