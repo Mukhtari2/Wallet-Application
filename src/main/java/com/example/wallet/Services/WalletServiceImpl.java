@@ -41,7 +41,6 @@ public class WalletServiceImpl implements WalletService {
         List<Wallet> saveWallet = new ArrayList<>();
         for (WalletDTO dto : dtoList){
                 Wallet wallet = new Wallet();
-                
                 wallet.setId(dto.getId());
                 wallet.setName(dto.getName());
                 wallet.setBalance(dto.getBalance());
@@ -60,6 +59,7 @@ public class WalletServiceImpl implements WalletService {
     public List<WalletDTO> listAllWalletForUser() {
         List<Wallet> walletEntities = walletRepository.findAll();
         List<WalletDTO> walletDTOs = new ArrayList<>();
+
         for (Wallet wallet : walletEntities){
             WalletDTO listOfWalletDto = mapToWalletUserDTO(wallet);
             walletDTOs.add(listOfWalletDto);
