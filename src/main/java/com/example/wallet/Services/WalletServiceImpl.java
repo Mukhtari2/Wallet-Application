@@ -63,6 +63,7 @@ public class WalletServiceImpl implements WalletService {
         for (Wallet wallet : walletEntities){
             WalletDTO listOfWalletDto = mapToWalletUserDTO(wallet);
             walletDTOs.add(listOfWalletDto);
+
         }
         return walletDTOs;
     }
