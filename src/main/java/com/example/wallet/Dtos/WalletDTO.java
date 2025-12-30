@@ -10,6 +10,7 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 @AllArgsConstructor
 public class WalletDTO {
+
     private Long id;
     private Long userId;
 
