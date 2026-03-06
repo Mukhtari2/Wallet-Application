@@ -90,7 +90,6 @@ public class UserServiceImpl implements UserService {
     }
 
     public User findByUserId(long id){
-
         return userRepository.findById(id).orElseThrow();
     }
 

@@ -86,7 +86,6 @@ class WalletServiceImplTest {
         user2.setStatus(Status.INACTIVE);
 
         userRepository.saveAll(List.of(user, user2));
-
         entityManager.flush();
 
         WalletDTO wallet1 = new WalletDTO();
@@ -100,7 +99,7 @@ class WalletServiceImplTest {
         wallet2.setUserId(user2.getId());
 
 
-       walletService.saveAllWallets(List.of(wallet1, wallet2));
+        walletService.saveAllWallets(List.of(wallet1, wallet2));
 
         List<WalletDTO> savedWallets = walletService.listAllWalletForUser();
 

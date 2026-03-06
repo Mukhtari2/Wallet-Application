@@ -15,7 +15,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class WalletServiceImpl implements WalletService {
     private final WalletRepository walletRepository;
-    private final WalletMapper walletMapper;
+    private final UserService userService;
+
 
     @Override
     public WalletDTO createNewWalletForUser(User user) {
@@ -26,27 +27,27 @@ public class WalletServiceImpl implements WalletService {
         wallet.setUser(user);
         wallet.setBalance(new BigDecimal("0.00"));
         Wallet saveWallet = walletRepository.save(wallet);
-        return walletMapper.toDto(saveWallet);
+        return mapToWalletUserDTO(saveWallet);
     }
     private WalletDTO mapToWalletUserDTO(Wallet wallet) {
         WalletDTO walletDTO = new WalletDTO();
         walletDTO.setId(wallet.getId());
-        walletDTO
-                .setName(wallet.getName());
+        walletDTO.setName(wallet.getName());
         walletDTO.setBalance(wallet.getBalance());
         walletDTO.setUserId(wallet.getUserId().getId());
         return walletDTO;
 
     }
     public List<WalletDTO> saveAllWallets (List<WalletDTO> dtoList){
-        User userId = new User();
+
         List<Wallet> saveWallet = new ArrayList<>();
         for (WalletDTO dto : dtoList){
                 Wallet wallet = new Wallet();
                 wallet.setId(dto.getId());
                 wallet.setName(dto.getName());
                 wallet.setBalance(dto.getBalance());
-                wallet.setUser(userId);
+                User user = userService.findByUserId(dto.getUserId());
+                wallet.setUser(user);
                 saveWallet.add(wallet);
         }
         List<Wallet> walletList = walletRepository.saveAll(saveWallet);
@@ -65,7 +66,6 @@ public class WalletServiceImpl implements WalletService {
         for (Wallet wallet : walletEntities){
             WalletDTO listOfWalletDto = mapToWalletUserDTO(wallet);
             walletDTOs.add(listOfWalletDto);
-
         }
         return walletDTOs;
     }

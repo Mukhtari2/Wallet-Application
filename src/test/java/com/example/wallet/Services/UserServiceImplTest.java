@@ -96,5 +96,4 @@ class UserServiceImplTest {
         assertEquals(Status.INACTIVE, userDTO.getStatus());
 
     }
-
 }
