@@ -15,22 +15,24 @@ import java.util.List;
 @RequiredArgsConstructor
 public class WalletServiceImpl implements WalletService {
     private final WalletRepository walletRepository;
+    private final WalletMapper walletMapper;
 
     @Override
     public WalletDTO createNewWalletForUser(User user) {
         Long counter = walletRepository.count() + 1;
         Wallet wallet = new Wallet();
         wallet.setId(wallet.getId());
-        wallet.setName("wallet " + counter + " " + user.getName());
+        wallet.setName(String.format("wallet %d %s", counter, user.getName()));
         wallet.setUser(user);
         wallet.setBalance(new BigDecimal("0.00"));
         Wallet saveWallet = walletRepository.save(wallet);
-        return mapToWalletUserDTO(saveWallet);
+        return walletMapper.toDto(saveWallet);
     }
     private WalletDTO mapToWalletUserDTO(Wallet wallet) {
         WalletDTO walletDTO = new WalletDTO();
         walletDTO.setId(wallet.getId());
-        walletDTO.setName(wallet.getName());
+        walletDTO
+                .setName(wallet.getName());
         walletDTO.setBalance(wallet.getBalance());
         walletDTO.setUserId(wallet.getUserId().getId());
         return walletDTO;

@@ -92,7 +92,9 @@ public class UserServiceImpl implements UserService {
     public User findByUserId(long id){
         return userRepository.findById(id).orElseThrow();
     }
+
     public void createAnotherWallet(Long id) {
+
         User user = findByUserId(id);
         if (user.getId() != null) {
             walletService.createNewWalletForUser(user);
