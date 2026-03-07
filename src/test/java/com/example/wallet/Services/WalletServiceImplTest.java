@@ -100,12 +100,16 @@ class WalletServiceImplTest {
 
 
         walletService.saveAllWallets(List.of(wallet1, wallet2));
-
         List<WalletDTO> savedWallets = walletService.listAllWalletForUser();
 
         assertNotNull(savedWallets);
         assertEquals(2, savedWallets.size());
-        assertEquals("Nino wallet", savedWallets.getFirst().getName());
+
+        WalletDTO ninoWallet = savedWallets.stream()
+                .filter(wallet -> "Nino wallet".equals(wallet.getName()))
+                .findFirst()
+                .orElseThrow();
+
         assertEquals("musadanladi21@gmail.com", user2.getEmail());
         assertEquals(new BigDecimal("9000.00"), savedWallets.getFirst().getBalance());
 

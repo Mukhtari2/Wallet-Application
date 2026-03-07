@@ -3,8 +3,10 @@ package com.example.wallet.Services;
 import com.example.wallet.Dtos.WalletDTO;
 import com.example.wallet.Models.User;
 import com.example.wallet.Models.Wallet;
+import com.example.wallet.Repositories.UserRepository;
 import com.example.wallet.Repositories.WalletRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -12,11 +14,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-@RequiredArgsConstructor
 public class WalletServiceImpl implements WalletService {
     private final WalletRepository walletRepository;
     private final UserService userService;
 
+
+    public WalletServiceImpl(WalletRepository walletRepository, @Lazy UserService userService) {
+        this.walletRepository = walletRepository;
+        this.userService = userService;
+    }
 
     @Override
     public WalletDTO createNewWalletForUser(User user) {
@@ -39,15 +45,13 @@ public class WalletServiceImpl implements WalletService {
 
     }
     public List<WalletDTO> saveAllWallets (List<WalletDTO> dtoList){
-
         List<Wallet> saveWallet = new ArrayList<>();
         for (WalletDTO dto : dtoList){
                 Wallet wallet = new Wallet();
                 wallet.setId(dto.getId());
                 wallet.setName(dto.getName());
                 wallet.setBalance(dto.getBalance());
-                User user = userService.findByUserId(dto.getUserId());
-                wallet.setUser(user);
+                wallet.setUser(userService.findByUserId(dto.getUserId()));
                 saveWallet.add(wallet);
         }
         List<Wallet> walletList = walletRepository.saveAll(saveWallet);
@@ -60,18 +64,20 @@ public class WalletServiceImpl implements WalletService {
     }
     @Override
     public List<WalletDTO> listAllWalletForUser() {
-        List<Wallet> walletEntities = walletRepository.findAll();
-        List<WalletDTO> walletDTOs = new ArrayList<>();
+        List<Wallet> walletEntities = walletRepository.findAllWithUsers();
 
+        List<WalletDTO> walletDTOs = new ArrayList<>();
         for (Wallet wallet : walletEntities){
-            WalletDTO listOfWalletDto = mapToWalletUserDTO(wallet);
-            walletDTOs.add(listOfWalletDto);
+            walletDTOs.add(mapToWalletUserDTO(wallet));
         }
         return walletDTOs;
     }
+
+
     @Override
     public Wallet findByWalletId(Long walletId) {
-        return walletRepository.findById(walletId).orElseThrow();
+        return walletRepository.findById(walletId)
+                .orElseThrow(() -> new RuntimeException("Wallet not found"));
     }
 
 }

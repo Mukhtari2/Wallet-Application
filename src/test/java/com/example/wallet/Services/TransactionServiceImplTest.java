@@ -37,7 +37,9 @@ class TransactionServiceImplTest {
 
     @BeforeEach
     void setUp() {
+
         transactionRepository.deleteAll();
+        userRepository.deleteAll();
     }
 
     @Transactional

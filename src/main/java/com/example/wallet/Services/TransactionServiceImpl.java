@@ -9,26 +9,30 @@ import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
-@RequiredArgsConstructor
 public class TransactionServiceImpl implements TransactionService {
 
     private final TransactionRepository transactionRepository;
     private final WalletService walletService;
 
+    public TransactionServiceImpl(TransactionRepository transactionRepository, @Lazy WalletService walletService) {
+        this.transactionRepository = transactionRepository;
+        this.walletService = walletService;
+    }
 
     @Override
     @Transactional
     public TransactionDTO createNewTransaction(TransactionDTO dto) {
         Wallet wallet = walletService.findByWalletId(dto.getWalletId());
-        if(wallet != null){
+        if (wallet != null) {
             Transaction transaction = new Transaction();
-            transaction.setWallet(wallet);
+            transaction.setWallet(walletService.findByWalletId(dto.getWalletId()));
             transaction.setType(dto.getType());
             transaction.setAmount(dto.getAmount());
             transaction.setBillCategory(dto.getBillCategory());
@@ -36,8 +40,8 @@ public class TransactionServiceImpl implements TransactionService {
             transaction.setDescription(dto.getDescription());
             Transaction savedTransaction = transactionRepository.save(transaction);
             return mapToTransactionDTO(savedTransaction);
-        }else throw new RuntimeException("No wallet existing for the transaction");
-        }
+        } else throw new EntityNotFoundException();
+    }
 
     private TransactionDTO mapToTransactionDTO(Transaction transaction) {
         TransactionDTO dto = new TransactionDTO();
