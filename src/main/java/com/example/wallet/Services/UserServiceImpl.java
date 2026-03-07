@@ -8,6 +8,7 @@ import com.example.wallet.Repositories.UserRepository;
 import jakarta.persistence.EntityExistsException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
@@ -23,6 +24,7 @@ public class UserServiceImpl implements UserService {
     private final TokenService tokenService;
     private final EmailService emailService;
     private final WalletService walletService;
+    private final PasswordEncoder passwordEncoder;
 
 
     @Override
@@ -36,6 +38,8 @@ public class UserServiceImpl implements UserService {
         user.setId(userDTO.getId());
         user.setName(userDTO.getName());
         user.setEmail(userDTO.getEmail());
+        String hashedPw = passwordEncoder.encode(userDTO.getPassword());
+        user.setPassword(hashedPw);
         user.setStatus(Status.INACTIVE);
         User saveNewUser = userRepository.save(user);
 
@@ -68,6 +72,9 @@ public class UserServiceImpl implements UserService {
           user.setName(dto.getName());
           user.setEmail(dto.getEmail());
           user.setStatus(dto.getStatus());
+          if (dto.getPassword() != null) {
+              user.setPassword(passwordEncoder.encode(dto.getPassword()));
+          }
           userEntities.add(user);
       }
       List<User> saveNewUserEntities = userRepository.saveAll(userEntities);
