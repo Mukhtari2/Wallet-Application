@@ -1,6 +1,7 @@
 package com.example.wallet.Dtos;
 
 import com.example.wallet.Enum.Status;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.Column;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -21,6 +22,8 @@ public class UserDTO {
     @Enumerated(EnumType.STRING)
     private Status status;
 
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private String password;
 
     public void setName(String name) {
         if (name != null && !name.isBlank()) {
