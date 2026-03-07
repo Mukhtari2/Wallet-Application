@@ -114,4 +114,21 @@ class WalletServiceImplTest {
         assertEquals(new BigDecimal("9000.00"), savedWallets.getFirst().getBalance());
 
     }
+
+    @Test
+    void testDeleteWallet() {
+        User user = new User();
+        user.setName("Test User");
+        user.setEmail("test@delete.com");
+        user.setPassword("password123");
+        User savedUser = userRepository.save(user);
+
+        WalletDTO wallet = walletService.createNewWalletForUser(savedUser);
+        Long walletId = wallet.getId();
+
+        walletService.deleteWalletById(walletId);
+
+        assertFalse(walletRepository.existsById(walletId));
+    }
+
 }

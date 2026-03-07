@@ -39,6 +39,7 @@ class UserServiceImplTest {
         UserDTO userDTO = new UserDTO();
         userDTO.setName("Musa");
         userDTO.setEmail("MusaHAfiz@gmail.com");
+        userDTO.setPassword("password123");
 
         assertEquals(0, userRepository.findAll().size());
         UserDTO user1 = userService.createNewUser(userDTO);
@@ -54,18 +55,22 @@ class UserServiceImplTest {
         UserDTO userDTO = new UserDTO();
         userDTO.setName("Musa");
         userDTO.setEmail("MusddaHAfiz@gmail.com");
+        userDTO.setPassword("password123");
 
         UserDTO userDTO2 = new UserDTO();
         userDTO2.setName("Isah");
         userDTO2.setEmail("IsaaahHAfiz@gmail.com");
+        userDTO2.setPassword("password12");
 
         UserDTO userDTO3 = new UserDTO();
         userDTO3.setName("Joy");
         userDTO3.setEmail("JoyMadakinde23@rocketmail.com");
+        userDTO3.setPassword("password13");
 
         UserDTO userDTO4 = new UserDTO();
         userDTO4.setName("amos");
         userDTO4.setEmail("amogac2@gmail.com");
+        userDTO4.setPassword("password23");
 
         assertEquals(0, userRepository.findAll().size());
         userService.saveAllUsers(List.of(userDTO, userDTO2, userDTO3, userDTO4));
@@ -85,6 +90,7 @@ class UserServiceImplTest {
         userDTO.setName("Yunus");
         userDTO.setEmail("YunusDadday@gmail.com");
         userDTO.setStatus(Status.INACTIVE);
+        userDTO.setPassword("password1203");
 
         assertEquals(0, userRepository.findAll().size() );
         UserDTO newUser = userService.createNewUser(userDTO);

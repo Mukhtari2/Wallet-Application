@@ -5,6 +5,8 @@ import com.example.wallet.Models.User;
 import com.example.wallet.Models.Wallet;
 import com.example.wallet.Repositories.UserRepository;
 import com.example.wallet.Repositories.WalletRepository;
+import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
@@ -79,6 +81,21 @@ public class WalletServiceImpl implements WalletService {
         return walletRepository.findById(walletId)
                 .orElseThrow(() -> new RuntimeException("Wallet not found"));
     }
+
+    @Override
+    @Transactional
+    public void deleteWalletById(Long walletId) {
+        Wallet wallet = walletRepository.findById(walletId)
+                .orElseThrow(() -> new EntityNotFoundException("Wallet not found with ID: " + walletId));
+
+        if (wallet.getBalance().compareTo(BigDecimal.ZERO) > 0) {
+            throw new IllegalStateException("Cannot delete a wallet with a remaining balance of " + wallet.getBalance() +
+                    "please withdraw your balance hen proceed with deletion");
+        }
+
+        walletRepository.delete(wallet);
+    }
+
 
 }
 

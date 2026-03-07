@@ -10,5 +10,6 @@ public interface WalletService {
     List<WalletDTO> listAllWalletForUser();
     List<WalletDTO> saveAllWallets(List<WalletDTO> dtoList);
     Wallet findByWalletId(Long walletId);
+    void deleteWalletById(Long walletId);
 
 }

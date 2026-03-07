@@ -1,6 +1,9 @@
 package com.example.wallet.Repositories;
 
+import com.example.wallet.Models.Transaction;
 import com.example.wallet.Models.Wallet;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.OneToMany;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
