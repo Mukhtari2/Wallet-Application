@@ -1,6 +1,7 @@
 package com.example.wallet.Models;
 
 import com.example.wallet.Enum.Status;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -31,6 +32,12 @@ public class User {
     @Email(message = "Invalid email, must be in lower case")
     @Column(unique = true)
     private String email;
+
+    @NotNull(message = "Password must be provided")
+    @NotBlank(message = "password is required")
+    @Size(min = 8, message = "Password must be at least 8 characters")
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private String password;
 
     @Enumerated(EnumType.STRING)
     private Status status;
