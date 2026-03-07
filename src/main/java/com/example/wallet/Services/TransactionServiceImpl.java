@@ -30,9 +30,11 @@ public class TransactionServiceImpl implements TransactionService {
     @Transactional
     public TransactionDTO createNewTransaction(TransactionDTO dto) {
         Wallet wallet = walletService.findByWalletId(dto.getWalletId());
-        if (wallet != null) {
+        if (wallet == null) {
+            throw new EntityNotFoundException("Wallet not found with ID: " + dto.getWalletId());
+        }
             Transaction transaction = new Transaction();
-            transaction.setWallet(walletService.findByWalletId(dto.getWalletId()));
+            transaction.setWallet(wallet);
             transaction.setType(dto.getType());
             transaction.setAmount(dto.getAmount());
             transaction.setBillCategory(dto.getBillCategory());
@@ -40,12 +42,13 @@ public class TransactionServiceImpl implements TransactionService {
             transaction.setDescription(dto.getDescription());
             Transaction savedTransaction = transactionRepository.save(transaction);
             return mapToTransactionDTO(savedTransaction);
-        } else throw new EntityNotFoundException();
     }
 
     private TransactionDTO mapToTransactionDTO(Transaction transaction) {
         TransactionDTO dto = new TransactionDTO();
-        dto.setWalletId(transaction.getWallet().getId());
+        if (transaction.getWallet() != null) {
+            dto.setWalletId(transaction.getWallet().getId());
+        }
         dto.setType(transaction.getType());
         dto.setAmount(transaction.getAmount());
         dto.setBillCategory(transaction.getBillCategory());

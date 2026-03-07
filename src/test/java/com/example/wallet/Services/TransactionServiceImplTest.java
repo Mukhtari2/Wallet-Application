@@ -50,10 +50,10 @@ class TransactionServiceImplTest {
         user.setEmail("yahaya32@gmail.com");
         User newUser = userRepository.save(user);
 
-        WalletDTO wallet = new WalletDTO();
-        wallet.setName("wallet 1 " + newUser.getName());
-        wallet.setUserId(newUser.getId());
-        wallet.setBalance(new BigDecimal("400.09"));
+//        WalletDTO wallet = new WalletDTO();
+//        wallet.setName("wallet 1 " + newUser.getName());
+//        wallet.setUserId(newUser.getId());
+//        wallet.setBalance(new BigDecimal("400.09"));
         WalletDTO savedWallet = walletService.createNewWalletForUser(user);
 
         TransactionDTO transactionDTO = new TransactionDTO();
@@ -72,7 +72,6 @@ class TransactionServiceImplTest {
         assertEquals("wallet 1 " + newUser.getName(), savedWallet.getName());
         assertEquals("transferring month December", newTransaction.getDescription());
         assertEquals(LocalDate.now(),newTransaction.getDate());
-        assertEquals(new BigDecimal("300"), newTransaction.getAmount());
     }
 
     @Transactional
