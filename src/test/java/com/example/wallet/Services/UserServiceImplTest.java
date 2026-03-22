@@ -40,6 +40,7 @@ class UserServiceImplTest {
         userDTO.setName("Musa");
         userDTO.setEmail("MusaHAfiz@gmail.com");
         userDTO.setPassword("password123");
+        userDTO.setPhoneNumber("0801112223");
 
         assertEquals(0, userRepository.findAll().size());
         UserDTO user1 = userService.createNewUser(userDTO);
@@ -56,6 +57,7 @@ class UserServiceImplTest {
         userDTO.setName("Musa");
         userDTO.setEmail("MusddaHAfiz@gmail.com");
         userDTO.setPassword("password123");
+        userDTO.setPhoneNumber("0804311111");
 
         UserDTO userDTO2 = new UserDTO();
         userDTO2.setName("Isah");

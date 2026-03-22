@@ -38,6 +38,7 @@ public class UserServiceImpl implements UserService {
         user.setId(userDTO.getId());
         user.setName(userDTO.getName());
         user.setEmail(userDTO.getEmail());
+        user.setPhoneNumber(user.getPhoneNumber());
         String hashedPw = passwordEncoder.encode(userDTO.getPassword());
         user.setPassword(hashedPw);
         user.setStatus(Status.INACTIVE);
